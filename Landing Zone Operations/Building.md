@@ -1,6 +1,6 @@
 # Landing zone building
 
-Building the landing zone for Shared Services Canada is very similar to the process described for the [landing-zone-v2](https://github.com/ssc-spc-ccoe-cei/gcp-pubsec-declarative-toolkit/tree/ssc/solutions/landing-zone-v2/README.md) solution in the Google's Pubsec Toolkit repo.
+Building the landing zone for Shared Services Canada is very similar to the process described for the [landing-zone-v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/solutions/landing-zone-v2/README.md#Organization) solution in the Google's Pubsec Toolkit repo.
 
 This document will highlight the discrepancies instead of repeating the full process.
 
@@ -8,7 +8,7 @@ This document will highlight the discrepancies instead of repeating the full pro
 
 **Important** SSC is using Azure Devops Repositories and Pipelines as it's git solution.
 
-# [Organization](https://github.com/ssc-spc-ccoe-cei/gcp-pubsec-declarative-toolkit/tree/ssc/solutions/landing-zone-v2/README.md#Organization)
+# [Organization](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/solutions/landing-zone-v2/README.md#Organization)
 Shared Services Canada uses the "Multiple GCP organizations" achitecture.
 
 # Setup
@@ -25,7 +25,7 @@ Shared Services Canada uses the "Multiple GCP organizations" achitecture.
 ## 3. Deploy the infrastructure using either kpt or gitops-git or gitops-oci
 ****This procedure completely overrides the procedure on Google's pubsec repo.**
 
-As you saw in the ![Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo. To do so, we implement a [Gitops-Git](TODO:put link here) deployment.
+As you saw in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo. To do so, we implement a [Gitops-Git](TODO:put link here) deployment.
 
 ### Infra repo
 This section will implement the Infra repo
@@ -74,15 +74,15 @@ This section will implement the Infra repo
     ```
 1. Customize the landing zone package and all of it subpackages
     
-    Refer to the `Make Code Changes` section of the ![Changing.md](Changing.md)
+    Refer to the `Make Code Changes` section of the [Changing.md](Changing.md#Make%20code%20changes)
 
 1. Generate hydrated files
 
-    Refer to the `Generate hydrated files` section of the ![Changing.md](Changing.md)
+    Refer to the `Generate hydrated files` section of the [Changing.md](Changing.md#Generate%20hydrated%20files)
 
 1. Add changes to repository
     
-    Refer to the `Add changes to repository` section of the ![Changing.md](Changing.md).
+    Refer to the `Add changes to repository` section of the [Changing.md](Changing.md#Add%20changes%20to%20repository).
     
     **You will need to push to main when running git push**
     
@@ -124,15 +124,15 @@ The ConfigSync operator requires a ConfigSync repo to identify what version of t
     ```
 1. Customize the root-sync package
     
-    Refer to the `Make Code Changes` section of the ![Changing.md](Changing.md)
+    Refer to the `Make Code Changes` section of the ![Changing.md](Changing.md#Make%20code%20changes)
 
 1. Generate hydrated files
 
-    Refer to the `Generate hydrated files` section of the ![Changing.md](Changing.md)
+    Refer to the `Generate hydrated files` section of the ![Changing.md](Changing.md#Generate%20hydrated%20files)
 
 1. Add changes to repository
     
-    Refer to the `Add changes to repository` section of the ![Changing.md](Changing.md).
+    Refer to the `Add changes to repository` section of the ![Changing.md](Changing.md#Add%20changes%20to%20repository).
     
     **You will need to push to main when running git push**
     

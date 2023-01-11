@@ -39,15 +39,15 @@
 
 1. To modify any of the files in these packages (like setters.yaml) follow this generic guidance
   
-    Refer to the `Make Code Changes` section of the ![Changing.md](Changing.md)
+    Refer to the `Make Code Changes` section of the [Changing.md](../Landing%20Zone%20Operations/Changing.md#Make%20code%20changes)
 
 1. Generate hydrated files
 
-    Refer to the `Generate hydrated files` section of the ![Changing.md](Changing.md)
+    Refer to the `Generate hydrated files` section of the [Changing.md](../Landing%20Zone%20Operations/Changing.md#Generate%20hydrated%20files)
 
 1. Add changes to repository
     
-    Refer to the `Add changes to repository` section of the ![Changing.md](Changing.md).
+    Refer to the `Add changes to repository` section of the [Changing.md](../Landing%20Zone%20Operations/Changing.md#Add%20changes%20to%20repository)
 
 
 ## Add tenant Tier2-ConfigSync
