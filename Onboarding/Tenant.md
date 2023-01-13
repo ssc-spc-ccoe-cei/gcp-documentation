@@ -1,5 +1,8 @@
 # Tenant Onboarding
 
+### Required Information
+1. Tenant's Name 
+
 ### Pre-requisite
 1. locally clone the landing zone repo for this environment
 1. create a branch of main
@@ -10,7 +13,7 @@
     ```
     cd source-base
     ```
-1. get the hierarchy/tenant package
+1. Get the hierarchy/tenant package
     - Sandbox
       ```
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-sandbox@main ./landing-zone/hierarchy/Workloads/<tenant name>
