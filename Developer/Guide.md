@@ -49,21 +49,37 @@ SSC has built 4 distincts GCP organizations to isolate each environment from eac
 ![organizations](img/organizations.png)
 
 
-### Sandbox
+### Experimentation
 
   This environment provides a great level of flexibility and autonomy to application developer. The objective is really to allow you to experiment any GCP services without requiring the implication of the platform administrator. 
-  
-  ### Permissions
-
-  Your team gets granted `Editor` role on the GCP project. 
   
   ### Cost
 
   This project is linked to a GCP billing account owned by **"your organization"**. 
   
+  ### Permissions
+
+  Your team gets granted `Editor` role on the GCP project. 
+  
   ### Working with GCP
 
   Interaction with GCP is possible through the [cloud console](https://console.cloud.google.com/) or using [Gcloud SDK](https://cloud.google.com/sdk/docs/) from [Cloud Shell](https://cloud.google.com/shell/docs/) or any other Linux or windows computer, you can also interact with the GCP API directly. To do so, you authenticate with your Google Cloud Identity user account.
+
+  ### Networking
+
+  You project comes with an existing networking configuration. This configuration meets the 30 days [Guardrails](https://github.com/canada-ca/cloud-guardrails-gcp) requirements for experimentation (Guardrails 1,2,4,8,12)
+
+  Below is the list of networking resources that have been deployed in your experimentation project :
+  - VPC (flow logs enabled)
+  - Subnets (Montreal and Toronto regions)
+      - PAZ
+      - APPRZ
+      - DATARZ
+  - Route to the internet (resources requires a tag)
+  - Cloud NAT
+  - DNS logging policy
+
+  ![sandbox networking](img/sandbox-networking.png)
 
 ### DEV, UAT and PROD
 
