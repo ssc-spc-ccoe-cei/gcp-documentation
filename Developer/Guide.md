@@ -42,14 +42,14 @@ Example of policy use cases
 
 ![config controller](img/config-controller.png)
 
-## Shared Services Canada - GCP Landing zone
+# Shared Services Canada - GCP Landing zone
 
 SSC has built 4 distincts GCP organizations to isolate each environment from each other. The environments are experimentation, DEV, UAT and PROD.
 
 ![organizations](img/organizations.png)
 
 
-### Experimentation
+## Experimentation
 
   This environment provides a great level of flexibility and autonomy to application developer. The objective is really to allow you to experiment any GCP services without requiring the implication of the platform administrator. 
   
@@ -81,7 +81,22 @@ SSC has built 4 distincts GCP organizations to isolate each environment from eac
 
   ![sandbox networking](img/sandbox-networking.png)
 
-### DEV, UAT and PROD
+## DEV, UAT and PROD
+### Cost
+
+This project is linked to a GCP billing account owned by **"your organization"**. 
+
+### Permissions
+
+Your team (developers) gets granted `Viewer` role on the GCP project in the Dev Organization only. The application operator will be granted that same role for UAT and PROD.
+
+### Working with GCP
+
+TODO:
+
+### Networking
+
+TODO:
 
 ## Training
 - GCP
