@@ -3,26 +3,28 @@
 ## Required Information
 ### Common
 
-1. Naming Convention for project-id : "\<tenant-code>\<environment-code>\<region-code>\<data-classification>-\<project-owner>-\<user defined string>"
+1. Naming convention for project-id : `<tenant-code><environment-code><region-code><data-classification>`-`<project-owner>`-`<user defined string>`
+
+    *Notice the 2 "-" before and after `<project-owner>`
     - tenant-code (2 characters)
     - environment-code (1 character)
     - region-code (1 character) : "m" projects are always a global/multi-region resource
     - data-classification (1 character): "u" or "a" or "b"
-    - project-owner (**total project-id string lenght cannot exceed 30 characters**)
-    - user defined string (**total project-id string lenght cannot exceed 30 characters**):
+    - project-owner: string (**total project-id string lenght cannot exceed 30 characters**)
+    - user defined string: string (**total project-id string lenght cannot exceed 30 characters**):
     
 1. Billing Account ID to be associated with this project
 
 ### Sandbox
 
-  1. user, group or serviceAccount with editor role at project level
+1. user, group or serviceAccount with editor role at project level
   
-      **user or group has to exist in a Google Cloud Identity (any existing domain)**
+    **user or group has to exist in a Google Cloud Identity (any existing domain)**
 
 
 ### DEV, UAT, PROD
 
-  1. TBD
+1. Host Project ID (with a Shared VPC) that exist to connect this workload/service project
 
 ## Pre-requisite
 

@@ -1,6 +1,7 @@
 # Platform or Security Admin Onboarding
 
-### Pre-requisite
+## Pre-requisite
+
 1. locally clone the sandbox landing zone repo
 1. create a branch of main
 
