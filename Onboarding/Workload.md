@@ -36,13 +36,16 @@
     cd source-base
     ```
 1. Get the workload package
+    *Some folders may need to be created beforehand like `<data classification>`
     - Sandbox
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-sandbox@main ./landing-zone/hierarchy/Workloads/<tenant name>/<project-id>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-sandbox@main ./landing-zone/hierarchy/Tenants/<tenant name>/Workloads/<project-id>
       ```
 
     - DEV, UAT, PROD
-      - TBD
+      ```
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-sandbox@main ./landing-zone/hierarchy/Tenants/<tenant name>/Workloads/<data classification>/<project-id>
+      ```
 
 1. To modify any of the files in this package (like setters.yaml) follow this generic guidance
   

@@ -1,7 +1,8 @@
 # Tenant Onboarding
 
 ### Required Information
-1. Tenant's Name 
+1. Tenant's Name
+1. User or Group that should be granted Folder Viewer role on the tenant's folder structure
 
 ### Pre-requisite
 1. locally clone the landing zone repo for this environment
@@ -16,19 +17,12 @@
 1. Get the hierarchy/tenant package
     - Sandbox
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-sandbox@main ./landing-zone/hierarchy/Workloads/<tenant name>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-sandbox@main ./landing-zone/hierarchy/Tenants/<tenant name>
       ```
 
     - DEV, UAT, PROD
       ```
-      # Automation
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-env@main ./landing-zone/hierarchy/Automation/<tenant name>
-
-      # Workloads
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-env@main ./landing-zone/hierarchy/Workloads/<tenant name>
-
-      # Workloads-Infrastructure
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-env@main ./landing-zone/hierarchy/Networking/Workloads-Infrastructure/<tenant name>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-env@main ./landing-zone/hierarchy/Tenants/<tenant name>
       ```
 
 1. Add tenant Host Project(s) and Shared VPC
