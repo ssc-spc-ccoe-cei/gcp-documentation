@@ -36,6 +36,7 @@
     cd source-base
     ```
 1. Get the workload package
+    
     *Some folders may need to be created beforehand like `<data classification>`
     - Sandbox
       ```

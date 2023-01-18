@@ -25,7 +25,7 @@ Shared Services Canada uses the "Multiple GCP organizations" achitecture.
 ## 3. Deploy the infrastructure using either kpt or gitops-git or gitops-oci
 ****This procedure completely overrides the procedure on Google's pubsec repo.**
 
-As you saw in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo. To do so, we implement a [Gitops-Git](TODO:put link here) deployment.
+As you saw in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo. To do so, we implement a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
 
 ### Infra repo
 This section will implement the Infra repo

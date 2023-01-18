@@ -4,6 +4,15 @@
 1. Tenant's Name
 1. User or Group that should be granted Folder Viewer role on the tenant's folder structure
 
+    ![folder](img/folder-structure.png)
+
+1. User or Group that should be granted Essential Contacts Admin role on the tenant's folder structure
+
+    ![folder](img/essential-contacts.png)
+
+1. User or Group that should be granted Essential Contacts Viewer role on the tenant's folder structure
+
+
 ### Pre-requisite
 1. locally clone the landing zone repo for this environment
 1. create a branch of main
