@@ -58,7 +58,7 @@ TODO: update diagram to reflect experimentation
   
   ### Permissions
 
-  Your team gets granted `Editor` role on the GCP project. 
+  Your team gets granted `Editor` role on the GCP project.
   
   ### Working with GCP
 
@@ -66,7 +66,7 @@ TODO: update diagram to reflect experimentation
 
   ### Networking
 
-  You project comes with an existing networking configuration. This configuration meets the 30 days [Guardrails](https://github.com/canada-ca/cloud-guardrails-gcp) requirements for experimentation (Guardrails 1,2,4,8,12)
+  You project comes with an existing networking configuration. This configuration meets the 30 days [Guardrails](https://github.com/canada-ca/cloud-guardrails-gcp) requirements for experimentation (Guardrails 1,2,4,8,12). The `Editor` role grants you permissions to create, for example, firewall rule.
 
   Below is the list of networking resources that have been deployed in your experimentation project:
   - VPC (flow logs enabled)
@@ -98,7 +98,7 @@ Your team (developers) gets granted `Viewer` role on the GCP project in the Dev 
 
 As a developer/operator, you will be granted access to git repositories. Those repo are observed by ACM - ConfigSync ([see above](#1-config-sync)) so that the existing Kubernetes manifest will be automatically applied by ACM. The GCP resources (GCE, GCS, etc.) you require for your application needs to be defined as manifest file following the config connector [schema](https://cloud.google.com/config-connector/docs/reference/overview).
 
-The landing zone uses 3 different tiers of git repositories to manage GCP resources. The diagram below demonstrates what resource type is defined in each tier as well as what role and permissions is configured for each one of them.
+The landing zone uses 3 different tiers of git repositories to manage GCP resources. The diagram below demonstrates what resource type is defined in each tier as well as what roles and permissions is configured for each one of them.
 
 ![repo-structure](img/repo-structure.png)
 
@@ -112,11 +112,13 @@ So, when you want a change implemented on your tier 2 repo, you have two options
 
 Once that change is merged into the main branch, a new tag on the repo gets created. That tag is a version number following the [standard](https://semver.org/) major.minor.patch. TODO: update with tagging process requirements (changelog, etc.)
 
-ConfigSync is not configured to observe the main branch, instead, it is configured to watch a specific tag. If you want to get your new version in effect for DEV, UAT or PROD, you need to change that tag inside the `ConfigSync` repo. 
+ConfigSync is not configured to observe the main branch, instead, it is configured to watch a specific tag on the `Infra` repo. If you want to get your new version in effect for DEV, UAT or PROD, you need to change that tag inside the `ConfigSync` repo. 
 
 That full process is illustrated in this diagram
 
 ![gitops](img/gitops-ssc.png)
+
+TODO: provide an example
 
 ### Repositories naming convention
 
@@ -127,7 +129,7 @@ The diagram below describes the naming convention for repositories and uses NRCa
 ### Networking
 
 Below is the networking High level Design. 
-TODO: provide more details
+TODO: provide more details once network design is finalized
 ![hld](img/networking-hld-env.png)
 
 ## Training
