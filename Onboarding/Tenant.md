@@ -7,11 +7,13 @@
 
     ![folder](img/folder-structure.png)
 
-1. User or Group that should be granted Essential Contacts Admin role on the tenant's folder structure
+
+### TODO: Future enhancement
+1. User or Group that should be granted `Essential Contacts` Admin role on the tenant's folder structure
 
     ![folder](img/essential-contacts.png)
 
-1. User or Group that should be granted Essential Contacts Viewer role on the tenant's folder structure
+1. User or Group that should be granted `Essential Contacts` Viewer role on the tenant's folder structure
 
 ## Pre-requisite
 
