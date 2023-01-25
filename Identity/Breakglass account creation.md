@@ -1,1 +1,1 @@
-PLACEHOLDER
+This document is not made available publicly
