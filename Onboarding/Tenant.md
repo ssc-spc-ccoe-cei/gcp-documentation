@@ -18,7 +18,7 @@
 ## Pre-requisite
 
 1. locally clone the landing zone repo for this environment
-1. create a branch of main
+1. create a branch from main
 
 ## Add tenant folder(s) to the landing zone repository
 

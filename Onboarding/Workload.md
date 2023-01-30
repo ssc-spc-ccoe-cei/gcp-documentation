@@ -28,8 +28,9 @@
 
 ## Pre-requisite
 
-1. locally clone the landing zone repo for this environment
-1. create a branch of main
+1. Ensure service account `projects-sa` has been granted `Billing Account User` role on the Billing Account.
+1. Locally clone the landing zone repo for this environment
+1. Create a branch from main
 
 ## Add tenant's workload to the landing zone repository
 

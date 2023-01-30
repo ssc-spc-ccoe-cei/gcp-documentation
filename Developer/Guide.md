@@ -6,13 +6,13 @@ Shared Services Canada offers the GCP landing zone as-a-service. This landing zo
 
 ## Purpose
 
-This guide will provide the necessary information that any Application Developer or Application Operator needs to successfully host a workload in the SSC landing zone and streamline it's ATO process. 
+This guide will provide the necessary information that any Application Developer or Application Operator needs to successfully host a workload in the SSC landing zone and streamline it's ATO process.
 
 ## Technology Overview
 
-SSC chose Anthos Config Management to manage the Infrastructure-as-code. ACM uses Kubernetes config connector manifest to control resources deployed in GCP. Most developer have some level of experience with Kubernetes manifest file format and should not feel lost when looking, for the first time, at a Kubernetes config connector resource definition.
+SSC chose Anthos Config Management to manage the Infrastructure-as-code. ACM uses Kubernetes config connector manifest to control resources deployed in GCP. Most developers have some level of experience with Kubernetes manifest file format and should not feel lost when looking, for the first time, at a Kubernetes config connector resource definition.
 
-### The Anthos Config Management components are 
+### The Anthos Config Management components are:
 
 ![ACM Components](img/acm-components.png)
 
@@ -50,11 +50,11 @@ TODO: update diagram to reflect experimentation
 
 ## Experimentation
 
-  This environment provides a great level of flexibility and autonomy to application developer. The objective is really to allow you to experiment any GCP services without requiring the implication of the platform administrator. 
+  This environment provides a great level of flexibility and autonomy to application developers. The objective is really to allow you to experiment any GCP services without requiring the implication of the platform administrator.
   
   ### Cost
 
-  This project is linked to a GCP billing account owned by **"your organization"**. 
+  This project is linked to a GCP billing account owned by **"your organization"**.
   
   ### Permissions
 
@@ -74,7 +74,7 @@ TODO: update diagram to reflect experimentation
       - PAZ
       - APPRZ
       - DATARZ
-  - Route to the internet (resources requires a `tag`)
+  - Route to the internet (resources requires a `network tag`)
   - Cloud NAT
   - DNS logging policy
 
@@ -88,7 +88,7 @@ As you may expect, the number of security controls implemented for DEV, UAT and 
 
 ### Cost
 
-Your projects are linked to a GCP billing account owned by **"your organization"**. 
+Your projects are linked to a GCP billing account owned by **"your organization"**.
 
 ### Permissions
 
@@ -112,7 +112,7 @@ So, when you want a change implemented on your tier 2 repo, you have two options
 
 Once that change is merged into the main branch, a new tag on the repo gets created. That tag is a version number following the [standard](https://semver.org/) major.minor.patch. TODO: update with tagging process requirements (changelog, etc.)
 
-ConfigSync is not configured to observe the main branch, instead, it is configured to watch a specific tag on the `Infra` repo. If you want to get your new version in effect for DEV, UAT or PROD, you need to change that tag inside the `ConfigSync` repo. 
+ConfigSync is not configured to observe the main branch, instead, it is configured to watch a specific tag on the `Infra` repo. If you want to get your new version in effect for DEV, UAT or PROD, you need to change that tag inside the `ConfigSync` repo.
 
 That full process is illustrated in this diagram
 
@@ -128,7 +128,7 @@ The diagram below describes the naming convention for repositories and uses NRCa
 
 ### Networking
 
-Below is the networking High level Design. 
+Below is the networking High level Design.
 TODO: provide more details once network design is finalized
 ![hld](img/networking-hld-env.png)
 
@@ -142,4 +142,4 @@ TODO: provide more details once network design is finalized
 
 ## Links
 
-1. https://cloud.google.com/config-connector/docs/reference/overview
+1. [https://cloud.google.com/config-connector/docs/reference/overview](https://cloud.google.com/config-connector/docs/reference/overview)
