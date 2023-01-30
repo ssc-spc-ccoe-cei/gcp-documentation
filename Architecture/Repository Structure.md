@@ -55,11 +55,12 @@ Below is a brief explanation of key repo components.  Some directories include s
 ### Git Submodule: `tools`
 As mentionned above, the [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools) repo is configured as a git submodule in `.gitmodules`.  This git configuration is limited to specifying a branch.
 
-A mechanism to checkout (pin) a specific tag or commit SHA is implemented with `modupdate.sh` and `modversions.yaml`.
+To overcome this limitation and checkout a specific tag or commit SHA, run `modupdate.sh` to checkout the version configured in `modversions.yaml`.
 ```bash
-# clone and checkout submodule by running:
 bash modupdate.sh
 ```
+To update to a new version of the tools sub module, edit `modversions.yaml` then re-run `modupdate.sh`.
+
 ### Hydration Process
 
 > **!!!** `kpt fn render` should never be executed manually in any directory.  This ensures better package updates and minimizes hydration issues.
@@ -87,6 +88,6 @@ In summary:
 
 It is good practice to pin a repo reference to a specific commit using tags or commit SHA.
 
-A simple tagging pipeline can be used to increment a repo's version.  Samples can be found in the [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/tagging) repo.
+A simple version tagging pipeline can be used to increment a repo's version with git tags.  Samples can be found in the [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging) repo.
 
 Alternatively, the commit SHA can be used.  Although not as intuitive as tags, it is considered more secure.
