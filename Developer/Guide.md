@@ -10,7 +10,7 @@ This guide will provide the necessary information that any Application Developer
 
 ## Technology Overview
 
-SSC chose Anthos Config Management to manage the Infrastructure-as-code. ACM uses Kubernetes config connector manifest to control resources deployed in GCP. Most developers have some level of experience with Kubernetes manifest file format and should not feel lost when looking, for the first time, at a Kubernetes config connector resource definition.
+SSC chose [Anthos Config Management](https://cloud.google.com/anthos/config-management) to manage the Infrastructure-as-code. ACM uses Kubernetes config connector manifest to control resources deployed in GCP. Most developers have some level of experience with Kubernetes manifest file format and should not feel lost when looking, for the first time, at a Kubernetes [config connector](https://cloud.google.com/config-connector/docs/reference/overview) resource definition.
 
 ### The Anthos Config Management components are:
 
@@ -20,7 +20,7 @@ SSC chose Anthos Config Management to manage the Infrastructure-as-code. ACM use
 
 Manifest files are stored, and version controlled in a git repository.
 
-A Kubernetes operator running on the ACM Kubernetes cluster called "Config Sync" observe that git repository and auto-magically apply all manifests following a GitOps process.
+A Kubernetes operator running on the ACM Kubernetes cluster called "Config Sync" observe that git repository and reconcile all manifests following a GitOps process.
 
 ![Config-Sync](img/config-sync.png)
 ![GitOps](img/gitops.png)
@@ -48,9 +48,11 @@ TODO: update diagram to reflect experimentation
 ![organizations](img/organizations.png)
 
 
-## Experimentation
+## Experimentation / Sandbox
 
   This environment provides a great level of flexibility and autonomy to application developers. The objective is really to allow you to experiment any GCP services without requiring the implication of the platform administrator.
+
+  It meets [TBS Cloud Usage Profile 1](https://canada-ca.github.io/cloud-guardrails/EN/00_Applicable-Scope.html) requirements and only allows **Unclassified** workloads.
   
   ### Cost
 
@@ -80,7 +82,7 @@ TODO: update diagram to reflect experimentation
 
   ![sandbox networking](img/sandbox-networking.png)
 
-## DEV, UAT and PROD
+## DEV, UAT and PROD (UNDER CONSTRUCTION)
 
 The DEV environment is where you will be developing your application. UAT and PROD should be used for code promotion with your choice of CD pipeline.
 

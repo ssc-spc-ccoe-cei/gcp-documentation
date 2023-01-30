@@ -50,7 +50,7 @@
     Refer to the `Add changes to repository` section of the [Changing.md](../Landing%20Zone%20Operations/Changing.md#Add%20changes%20to%20repository)
 
 
-## Add tenant Tier2-ConfigSync (DEV, UAT, PROD only)
+## Add tenant Tier2-ConfigSync (DEV, UAT, PROD only) (UNDER CONSTRUCTION)
 
 TODO: complete this steps
 
