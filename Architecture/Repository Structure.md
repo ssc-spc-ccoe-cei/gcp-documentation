@@ -36,20 +36,30 @@ These repos have a common directory structure with slight variations.
 Below is a brief explanation of key repo components.  Some directories include sub-directories for each environment it configures (sandbox, dev, uat, prod).  For simplicity, they will be expressed below as `<env_subdirs>`.
 
 - `repo root`:
-    - `azure-pipelines`: pipelines YAML files.
+    - `.azure-pipelines` or `.github`: pipelines YAML files.
     - `bootstrap`: (only in the "infra" repos)
         - `<env_subdirs>`: contains `.env` file needed to create the management project which includes the Config Controller GKE cluster.
-    - `deploy`: its content is automatically generated and should not be edited manually.
+    - `deploy`: ("WET" folder) its content is automatically generated and must not be edited manually.
         - `<env_subdirs>`: contains the hydrated YAML files to be deployed.  **This is the directory used by Config Sync.**
-    - `source-base`: contains a collection of packages that will be deployed to all environments.  
+    - `source-base`: ("DRY" folder) contains a collection of *unedited* packages that will be deployed to all environments.  
     - `source-customization`:
         - `<env_subdirs>`: contains the customization files that will overwrite the base for the environment.  Directory and file names must be replicated.  For example, to customize `source-base/landing-zone/setters.yaml`, it should be copied, then edited, in `source-customization/<env_subdir>/landing-zone/setters.yaml`. 
     - `tools`: git submodule from [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools)
     - `temp-workspace`: used temporarily during hydration, included in `.gitignore`.
-    - `pre-commit-config.yaml`: the pre-commit will trigger `tools/scripts/kpt/hydrate.sh` to ensure all changes to source base and/or customization was hydrated.
-    - `modupdate.sh`: script to pull in the tools submodule.
+    - `pre-commit-config.yaml`: the pre-commit will trigger `tools/scripts/kpt/hydrate.sh` to ensure all changes to source-base and/or source-customization were hydrated.
+    - `modupdate.sh`: script to checkout the git submodules, i.e. tools.
+    - `modversions.yaml`: file used by modupdate.sh to specify which versions of git sub modules to checkout.
 
 **A repo template is available [here](https://github.com/ssc-spc-ccoe-cei/gcp-repo-template).**
+
+### Git Submodule: `tools`
+As mentionned above, the [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools) repo is configured as a git submodule in `.gitmodules`.  This git configuration is limited to specifying a branch.
+
+To overcome this limitation and checkout a specific tag or commit SHA, run `modupdate.sh` to checkout the version configured in `modversions.yaml`.
+```bash
+bash modupdate.sh
+```
+To update to a new version of the tools sub module, edit `modversions.yaml` then re-run `modupdate.sh`.
 
 ### Hydration Process
 
@@ -69,5 +79,15 @@ At a high level, the script will:
     - Run `nomos vet` in `deploy/<env>` to validate syntax.
 1. If any change was detected, exit the script with failure.  This will fail the pre-commit or the pipeline, the operator will have to address any errors or simply re-run `bash tools/scripts/kpt/hydrate.sh` if no errors were found.
 
+In summary:
+
+1. `source-base` + `source-customization/<env>` = `temp-workspace/<env>`
+1. hydrate `temp-workspace/<env>` to `deploy/<env>`
+
 ## Versioning
-> TODO: Until git tagging pipelines are created, all submodules, config sync, etc will point to `main`.
+
+It is good practice to pin a repo reference to a specific commit using tags or commit SHA.
+
+A simple version tagging pipeline can be used to increment a repo's version with git tags.  Samples can be found in the [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging) repo.
+
+Alternatively, the commit SHA can be used.  Although not as intuitive as tags, it is considered more secure.
