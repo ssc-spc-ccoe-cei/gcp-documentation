@@ -1,8 +1,24 @@
 # Tenant Onboarding
 
-### Pre-requisite
+## Required Information
+
+1. Tenant's Name
+1. User or Group that should be granted Folder Viewer role on the tenant's folder structure
+
+    ![folder](img/folder-structure.png)
+
+
+### TODO: Future enhancement
+1. User or Group that should be granted `Essential Contacts` Admin role on the tenant's folder structure
+
+    ![folder](img/essential-contacts.png)
+
+1. User or Group that should be granted `Essential Contacts` Viewer role on the tenant's folder structure
+
+## Pre-requisite
+
 1. locally clone the landing zone repo for this environment
-1. create a branch of main
+1. create a branch from main
 
 ## Add tenant folder(s) to the landing zone repository
 
@@ -10,32 +26,16 @@
     ```
     cd source-base
     ```
-1. get the hierarchy/tenant package
+1. Get the hierarchy/tenant package
     - Sandbox
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-sandbox@main ./landing-zone/hierarchy/Workloads/<tenant name>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-sandbox@main ./landing-zone/hierarchy/Tenants/<tenant name>
       ```
 
     - DEV, UAT, PROD
       ```
-      # Automation
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-env@main ./landing-zone/hierarchy/Automation/<tenant name>
-
-      # Workloads
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-env@main ./landing-zone/hierarchy/Workloads/<tenant name>
-
-      # Workloads-Infrastructure
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-env@main ./landing-zone/hierarchy/Networking/Workloads-Infrastructure/<tenant name>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/tenant-env@main ./landing-zone/hierarchy/Tenants/<tenant name>
       ```
-
-1. Add tenant Host Project(s) and Shared VPC
-    - Sandbox
-      
-      n/a
-
-    - DEV, UAT, PROD
-
-       TODO: complete this steps
 
 1. To modify any of the files in these packages (like setters.yaml) follow this generic guidance
   
@@ -50,6 +50,7 @@
     Refer to the `Add changes to repository` section of the [Changing.md](../Landing%20Zone%20Operations/Changing.md#Add%20changes%20to%20repository)
 
 
-## Add tenant Tier2-ConfigSync
+## Add tenant Tier2-ConfigSync (DEV, UAT, PROD only) (UNDER CONSTRUCTION)
+
 TODO: complete this steps
 
