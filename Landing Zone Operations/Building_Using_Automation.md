@@ -16,47 +16,6 @@ Shared Services Canada uses the "Multiple GCP organizations" achitecture.
 
 As you saw in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo. To do so, we implement a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
 
-### Infra repo
-This section will implement the Infra repo
-1. Create a new `tier1-infra` repo in your Azure Devops project
-    - Sandbox
-          
-        repo name = `gcp-sandbox-tier1-infra`
-    - DEV, UAT, PROD
-
-        repo name = `gcp-tier1-infra`
-1. Clone locally the `gcp-repo-template` in order to build the new `tier1-infra` repo
-    - Sandbox
-      ```bash
-      git clone https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git gcp-sandbox-tier1-infra
-      ```
-    
-    - DEV, UAT, PROD
-        ```bash
-        git clone https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git gcp-tier1-infra
-        ```
-1. Move into the new folder corresponding to that repo
-    - Sandbox
-        ```bash
-        cd gcp-sandbox-tier1-infra
-        ```
-    - DEV, UAT, PROD
-        ```bash
-        cd gcp-tier1-infra
-        ```
-1. Change repo upstream
-    ```bash
-    # Remove the origin pointing to the template repo
-    git remote remove origin
-    # Add the new origin with your repo url
-    git remote add origin <YOUR NEW REPO URL>
-    ```
-    **You will need to push to main when running git push**
-    
-    `git push --set-upstream origin main`
-
-1. Excellent ! You have your `tier1-infra` repository ready for further steps.
-
 ### ConfigSync
 The ConfigSync operator requires a ConfigSync repo to identify what version of the `tier1-infra` it should observe. To implement this, we will :
 
@@ -108,14 +67,59 @@ The ConfigSync operator requires a ConfigSync repo to identify what version of t
 1. Excellent ! You have your `tier1-configsync` repository for further steps.
 
 
+### Infra repo
+This section will implement the Infra repo
+1. Create a new `tier1-infra` repo in your Azure Devops project
+    - Sandbox
+          
+        repo name = `gcp-sandbox-tier1-infra`
+    - DEV, UAT, PROD
+
+        repo name = `gcp-tier1-infra`
+1. Clone locally the `gcp-repo-template` in order to build the new `tier1-infra` repo
+    - Sandbox
+      ```bash
+      git clone https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git gcp-sandbox-tier1-infra
+      ```
+    
+    - DEV, UAT, PROD
+        ```bash
+        git clone https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git gcp-tier1-infra
+        ```
+1. Move into the new folder corresponding to that repo
+    - Sandbox
+        ```bash
+        cd gcp-sandbox-tier1-infra
+        ```
+    - DEV, UAT, PROD
+        ```bash
+        cd gcp-tier1-infra
+        ```
+1. Change repo upstream
+    ```bash
+    # Remove the origin pointing to the template repo
+    git remote remove origin
+    # Add the new origin with your repo url
+    git remote add origin <YOUR NEW REPO URL>
+    ```
+    **You will need to push to main when running git push**
+    
+    `git push --set-upstream origin main`
+
+1. Excellent ! You have your `tier1-infra` repository ready for further steps.
+
 
 ## 2. Get the GCP-Tools Repo
-- Step: Clone the gcp-tools github repo
+- Step: Enter inside the tier1-repo and run the modupdate script
+```
+cd <tier1-infra-REPO>
+bash modupdate.sh
+```
+This will create the tools folder inside the tier1-repo.
     
-    git clone  https://github.com/ssc-spc-ccoe-cei/gcp-tools.git
 
 ## 3. Create the .env file
-- Step: There is an example.env file in the gcp-tools repo , the same should be used to create a local .env file with appropriate inputs that will be used by setup-kcc script to create the KCC cluster and project.
+- Step: There is an example.env file in the `tools/scripts/bootstrap` folder , the same should be used to create a local .env file with appropriate inputs that will be used by setup-kcc script to create the KCC cluster and project.
 
 ## 4. Running the setup-kcc bootstrap procedure
 - Step: There are two ways to run the setup-kcc bash script.
@@ -128,18 +132,12 @@ bash setup-kcc.sh local
 The command above will use the local .env file to create project , FW settings , Clour router , PSC endpoint and the Kcc config controller cluster. It will also create a root-sync.yaml file.
 
 At the end we need to copy the two files `.env` and `root-sync.yaml` copy it into this `tier1-infra` repo under the folder `bootstrap/<env>`
-
-If we check in the .env file in the tier1-Infra-REPO (Or a .env file alredy exists in the repo) , then we can use:
-
+Since the tools folder is a submodule in the tier1-infra-repo , 
+So we can copy the files from tools folder to bootstrap folder in tier1-infra repo.
 ```
-bash setup-kcc.sh <ENV> <tier1-infra-REPO-URL>
-
-<ENV> is dev/uat/prod (ENV name inside the bootstrap folder in tier1 Infra repo)
+cp tools/scripts/bootstrap/.env bootstrap/<ENV>
+cp tools/scripts/bootstrap/root-sync.yaml bootstrap/<ENV>
 ```
-
-
-In this case the .env file from the ENV specific folder from tier1-infra-REPO gets used to spin the Kcc resources.
-At the end we still will need to check in the  `root-sync.yaml` file to the `tier1-infra` repo
 
 
 # 5. Create your landing zone
