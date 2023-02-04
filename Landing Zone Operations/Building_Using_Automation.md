@@ -121,7 +121,7 @@ The automated script requires a `.env` file to deploy the environment.
 
 1. Copy the example.env file from the `tools/scripts/bootstrap` folder.
     ```bash
-    cp tools/scripts/bootstrap/example.env bootstrap/<ENV>/.env
+    cp tools/scripts/bootstrap/.env.sample bootstrap/<ENV>/.env
     ```
 
 2. **Important** Customize the new file with the approriate values for the landing zone you are building.
