@@ -1,20 +1,21 @@
 # Landing zone building
 
-Building the landing zone for Shared Services Canada is very similar to the process described for the [landing-zone-v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/solutions/landing-zone-v2/README.md#Organization) solution in the Google's Pubsec Toolkit repo.
+Shared Services Canada has automated a portion of the deployment process described for the [landing-zone-v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/solutions/landing-zone-v2/README.md#Organization) solution in the Google's Pubsec Toolkit repo.
 
-This document will describe how automated scripts can be used for building.
+This document will describe how the automated scripts can be used for building a landing zone.
 
 **We recommend that you read the entire procedure before initiating it**
 
 **Important** SSC is using Azure Devops Repositories and Pipelines as it's git solution.
 
-# [Organization](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/solutions/landing-zone-v2/README.md#Organization)
-Shared Services Canada uses the "Multiple GCP organizations" achitecture.
+# Organization
+Shared Services Canada uses the "[Multiple GCP organizations](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/solutions/landing-zone-v2/README.md#Organization)" achitecture.
 
 # Setup
 ## 1. Repo Setup
 
-As you saw in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo. To do so, we implement a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
+SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
+As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo. 
 
 ### ConfigSync Repo
 The ConfigSync operator requires a ConfigSync repo to identify what version of the `tier1-infra` it should observe.
@@ -60,7 +61,7 @@ The ConfigSync operator requires a ConfigSync repo to identify what version of t
     
     `git push --set-upstream origin main`
 
-1. Excellent ! You have your `tier1-configsync` repository for further steps.
+1. Excellent ! You have your `tier1-configsync` repository ready for next steps..
 
 
 ### Infra repo
@@ -104,7 +105,7 @@ Let's create the other repo observed by ConfigSync: `tier1-infra`.
     
     `git push --set-upstream origin main`
 
-1. Excellent ! You have your `tier1-infra` repository ready for further steps.
+1. Excellent ! You have your `tier1-infra` repository ready for next steps.
 
 
 ## 2. Pull the tools submodule
@@ -118,16 +119,16 @@ Populate the `tools` folder with the content from the `gcp-tools` repository. En
 
 The automated script requires a `.env` file to deploy the environment.
 
-1. Copy the example.env file in the `tools/scripts/bootstrap` folder.
+1. Copy the example.env file from the `tools/scripts/bootstrap` folder.
     ```bash
     cp tools/scripts/bootstrap/example.env bootstrap/<ENV>/.env
     ```
 
-2. Customize the new file with the approriate value for the landing zone you are building.
+2. **Important** Customize the new file with the approriate values for the landing zone you are building.
 
 ## 4. Running the setup-kcc automated script
 
-The script creates a project , the FW settings , a Cloud router and Cloud NAT , a private service connect endpoint and the Anthos Config Controller cluster. It will also create a root-sync.yaml file.
+The script creates a project, the FW settings, a Cloud router, a Cloud NAT, a private service connect endpoint and the Anthos Config Controller cluster. It also creates a root-sync.yaml file.
     ```
     bash setup-kcc.sh <PATH TO .ENV FILE>
     ```
@@ -137,16 +138,14 @@ Once the script has completed, you need to move the `root-sync.yaml` file into t
     mv root-sync.yaml bootstrap/<ENV>
     ```
 
-
 ## 5. Create your landing zone
+
+We will be using kpt to obtain the packages. For more information on the `kpt get` command, please refer to this link : https://kpt.dev/reference/cli/pkg/get/
 
 1. Move into `source-base` folder
     ```bash
     cd source-base
     ```
-
-We will be using kpt to obtain the packages. For more information on the `kpt get` command, please refer to this link : https://kpt.dev/reference/cli/pkg/get/
-
 1. Get the landing zone package
     ```bash
     kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2@main ./landing-zone
@@ -187,8 +186,7 @@ We will be using kpt to obtain the packages. For more information on the `kpt ge
     
     **You will need to push to main when running git push**
     
-    `git push --set-upstream origin main`
- 
+    `git push --set-upstream origin main` 
 
 # 6. Validate the landing zone deployment
 Perform this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment) as described
