@@ -9,7 +9,7 @@ This document will describe how the automated scripts can be used for building a
 **Important** SSC is using Azure Devops Repositories and Pipelines as it's git solution.
 
 # Organization
-Shared Services Canada uses the "[Multiple GCP organizations](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/solutions/landing-zone-v2/README.md#Organization)" achitecture.
+Shared Services Canada uses the "[Multiple GCP organizations](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#multiple-gcp-organizations)" achitecture.
 
 # Setup
 ## 1. Repo Setup
@@ -47,15 +47,15 @@ The ConfigSync operator requires a ConfigSync repo to identify what version of t
     ```
 1. Customize the root-sync package
     
-    Refer to the `Make Code Changes` section of the ![Changing.md](Changing.md#Make%20code%20changes)
+    Refer to the `Make Code Changes` section of the [Changing.md](Changing.md#Make%20code%20changes)
 
 1. Generate hydrated files
 
-    Refer to the `Generate hydrated files` section of the ![Changing.md](Changing.md#Generate%20hydrated%20files)
+    Refer to the `Generate hydrated files` section of the [Changing.md](Changing.md#Generate%20hydrated%20files)
 
 1. Add changes to repository
     
-    Refer to the `Add changes to repository` section of the ![Changing.md](Changing.md#Add%20changes%20to%20repository).
+    Refer to the `Add changes to repository` section of the [Changing.md](Changing.md#Add%20changes%20to%20repository).
     
     **You will need to push to main when running git push**
     
