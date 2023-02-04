@@ -16,13 +16,9 @@ Shared Services Canada uses the "Multiple GCP organizations" achitecture.
 
 As you saw in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo. To do so, we implement a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
 
-### ConfigSync
-The ConfigSync operator requires a ConfigSync repo to identify what version of the `tier1-infra` it should observe. To implement this, we will :
+### ConfigSync Repo
+The ConfigSync operator requires a ConfigSync repo to identify what version of the `tier1-infra` it should observe.
 
-1. Create a ConfigSync repo.
-
-
-### 1. Create a ConfigSync repo.
 1. Create a new `gcp-tier1-configsync` repo in your Azure Devops project
 
 1. Clone locally the repository template repo in order to build the new `gcp-tier1-configsync`
@@ -68,7 +64,9 @@ The ConfigSync operator requires a ConfigSync repo to identify what version of t
 
 
 ### Infra repo
-This section will implement the Infra repo
+
+Let's create the other repo observed by ConfigSync: `tier1-infra`.
+
 1. Create a new `tier1-infra` repo in your Azure Devops project
     - Sandbox
           
@@ -109,43 +107,43 @@ This section will implement the Infra repo
 1. Excellent ! You have your `tier1-infra` repository ready for further steps.
 
 
-## 2. Get the GCP-Tools Repo
-- Step: Enter inside the tier1-repo and run the modupdate script
-```
-cd <tier1-infra-REPO>
-bash modupdate.sh
-```
-This will create the tools folder inside the tier1-repo.
+## 2. Pull the tools submodule
+
+Populate the `tools` folder with the content from the `gcp-tools` repository. Ensure you are still at the root of the `tier1-infra` repo and execute `modupdate.sh`
+    ```bash
+    bash modupdate.sh
+    ```
     
-
 ## 3. Create the .env file
-- Step: There is an example.env file in the `tools/scripts/bootstrap` folder , the same should be used to create a local .env file with appropriate inputs that will be used by setup-kcc script to create the KCC cluster and project.
 
-## 4. Running the setup-kcc bootstrap procedure
-- Step: There are two ways to run the setup-kcc bash script.
-If we want to use the local .env file as it is we can run:
+The automated script requires a `.env` file to deploy the environment.
 
-```
-bash setup-kcc.sh local
-```
+1. Copy the example.env file in the `tools/scripts/bootstrap` folder.
+    ```bash
+    cp tools/scripts/bootstrap/example.env bootstrap/<ENV>/.env
+    ```
 
-The command above will use the local .env file to create project , FW settings , Clour router , PSC endpoint and the Kcc config controller cluster. It will also create a root-sync.yaml file.
+2. Customize the new file with the approriate value for the landing zone you are building.
 
-At the end we need to copy the two files `.env` and `root-sync.yaml` copy it into this `tier1-infra` repo under the folder `bootstrap/<env>`
-Since the tools folder is a submodule in the tier1-infra-repo , 
-So we can copy the files from tools folder to bootstrap folder in tier1-infra repo.
-```
-cp tools/scripts/bootstrap/.env bootstrap/<ENV>
-cp tools/scripts/bootstrap/root-sync.yaml bootstrap/<ENV>
-```
+## 4. Running the setup-kcc automated script
+
+The script creates a project , the FW settings , a Cloud router and Cloud NAT , a private service connect endpoint and the Anthos Config Controller cluster. It will also create a root-sync.yaml file.
+    ```
+    bash setup-kcc.sh <PATH TO .ENV FILE>
+    ```
+
+Once the script has completed, you need to move the `root-sync.yaml` file into the `bootstrap/<env>` folder of the `tier1-infra` repo.
+    ```bash
+    mv root-sync.yaml bootstrap/<ENV>
+    ```
 
 
-# 5. Create your landing zone
+## 5. Create your landing zone
 
-## Fetch the packages
-
-You will be running the following commands from a linux machine. GCP Cloud Shell can be used to serve that purpose.
-
+1. Move into `source-base` folder
+    ```bash
+    cd source-base
+    ```
 
 We will be using kpt to obtain the packages. For more information on the `kpt get` command, please refer to this link : https://kpt.dev/reference/cli/pkg/get/
 
@@ -174,22 +172,7 @@ We will be using kpt to obtain the packages. For more information on the `kpt ge
 1. Get the logging package
     
     TODO: TBD
-1. etc.
     
-1. Customize Packages
-
-    Review and customize all packages `setters.yaml` with the unique configuration of your landing zone. 
-
-
-1. Clone the `tier1-infra` repo created earlier or cd into that repo if already cloned
-    ```bash
-    git clone <REPO_URL>
-    cd <REPO_FOLDER>
-    ```
-Copy the landing-zone folder created when performing `2. Create your landing zone` to this new repo/source-base.
-    ```bash
-    copy -R ../landing-zone source-base
-    ```
 1. Customize the landing zone package and all of it subpackages
     
     Refer to the `Make Code Changes` section of the [Changing.md](Changing.md#Make%20code%20changes)
@@ -205,15 +188,13 @@ Copy the landing-zone folder created when performing `2. Create your landing zon
     **You will need to push to main when running git push**
     
     `git push --set-upstream origin main`
+ 
 
-1. Excellent ! You have completed your `tier1-infra` repository
-    
+# 6. Validate the landing zone deployment
+Perform this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment) as described
 
-# 4. Validate the landing zone deployment
-Perform this procedure as described
-
-# 5. Perform the post-deployment steps
-Perform this procedure as described
+# 7. Perform the post-deployment steps
+Perform this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#5-perform-the-post-deployment-steps) as described
 
 # THE END
 Congratulations! You have completed the deployment of your landing zone as per SSC implementation.
