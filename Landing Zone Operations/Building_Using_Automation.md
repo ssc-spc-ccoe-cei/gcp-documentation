@@ -128,12 +128,12 @@ The automated script requires a `.env` file to deploy the environment.
 
 ## 4. Running the setup-kcc automated script
 
-The script creates a project, the FW settings, a Cloud router, a Cloud NAT, a private service connect endpoint and the Anthos Config Controller cluster. It also creates a root-sync.yaml file.
+1. The script creates a project, the FW settings, a Cloud router, a Cloud NAT, a private service connect endpoint and the Anthos Config Controller cluster. It also creates a root-sync.yaml file.
     ```
     bash setup-kcc.sh <PATH TO .ENV FILE>
     ```
 
-Once the script has completed, you need to move the `root-sync.yaml` file into the `bootstrap/<env>` folder of the `tier1-infra` repo.
+1. Once the script has completed, you need to move the `root-sync.yaml` file into the `bootstrap/<env>` folder of the `tier1-infra` repo.
     ```bash
     mv root-sync.yaml bootstrap/<ENV>
     ```
