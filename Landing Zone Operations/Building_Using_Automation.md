@@ -110,7 +110,7 @@ Let's create the other repo observed by ConfigSync: `tier1-infra`.
 
 ## 2. Pull the tools submodule
 
-Populate the `tools` folder with the content from the `gcp-tools` repository. Ensure you are still at the root of the `tier1-infra` repo and execute `modupdate.sh`
+1. Populate the `tools` folder with the content from the `gcp-tools` repository. Ensure you are still at the root of the `tier1-infra` repo and execute `modupdate.sh`
     ```bash
     bash modupdate.sh
     ```
