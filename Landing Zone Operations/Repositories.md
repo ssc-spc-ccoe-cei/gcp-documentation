@@ -109,7 +109,27 @@ The repo is now created and the main branch is protected.  [Pipelines](./Pipelin
 
 - To use semantic versioning during deployment operations, the `Infra` repos can be setup with a git tagging pipeline, such as [version-tagging](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging).
 
-## Syncronizing New Configs
+## Synchronizing / Promoting Configs
 TODO: place this in proper markdown file
 
-Changes to `infra` repos will only be applied to GCP when the `configsync` repo is updated.
+Changes to `infra` repos will only be applied to GCP when the `configsync` repo is updated.  The concept is similar for all repos, this example will focus on `gcp-tier1-infra` and `gcp-tier1-configsync`.
+
+1. Change configs in `gcp-tier1-infra`.
+    > **!!! It's important to add the `source-customization` for each environment.  This will ensure all environments are rendered, validated and tagged at the same time. !!!**
+1. Once the PR is merged, note the new tag version or commit SHA.
+1. At this point the changes have not been deployed to GCP. Change configs in `gcp-tier1-configsync` to do so for each environment.
+1. `dev`:
+    - Set `version:` in `source-customization/dev/tier1-root-sync/setters-version.yaml` to the new tag or commit SHA noted earlier.
+    - Hydrate the repo and create a PR.
+    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/dev`.
+    - Validate the `dev` environment in GCP.  Proceed to `uat` if successful, restart the process if not.
+1. `uat`:
+    - Set `version:` in `source-customization/uat/tier1-root-sync/setters-version.yaml` to the same value as `dev`.
+    - Hydrate the repo and create a PR.
+    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/uat`.
+    - Validate the `uat` environment in GCP.  Proceed to `prod` if successful, restart the process if not.
+1. `prod`:
+    - Set `version:` in `source-customization/prod/tier1-root-sync/setters-version.yaml` to the same value as `uat`.
+    - Hydrate the repo and create a PR.
+    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/prod`.
+    - Validate the `prod` environment in GCP.  Restart the process if not successful.
