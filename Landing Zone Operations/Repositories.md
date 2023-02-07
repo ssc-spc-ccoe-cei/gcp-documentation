@@ -6,8 +6,8 @@ SSC is using Azure Devops Repositories (AzDO Repos) and Pipelines as its git sol
 SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
 As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo.
 
-## Create Deployment Repo
-Deployment repos are created the same way, from cloning [gcp-repo-template](https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git).  These steps will need to be repeated for each repo name.  For example, `gcp-sandbox-tier1-infra`, `gcp-tier1-configsync`, etc.
+## Create New Deployment Repo
+Deployment repos are initially created the same way, from cloning [gcp-repo-template](https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git).  These steps will need to be repeated for each repo name.  For example, `gcp-sandbox-tier1-infra`, `gcp-tier1-configsync`, etc.
 
 The git credentials will need to be appropriately set for your AzDO org.
 
@@ -46,18 +46,46 @@ The git credentials will need to be appropriately set for your AzDO org.
     ```bash
     bash modupdate.sh
     ```
-1. Stage, commit and push the local changes to your new repo.  **You will need to push to main.**
+1. Remove pipelines directories which are not required:
+    - If the repo is hosted in Azure DevOps:
+        ```bash
+        # remove the '.github' pipelines directory
+        rm --recursive '.github'
+        ```
+    - If the repo is hosted in GitHub:
+        ```bash
+        # remove the '.azure-pipelines' pipelines directory
+        rm --recursive '.azure-pipelines'
+        ```
+1. For **`Infra`** repos, remove the environment sub-directories which are not required. **Never delete '.gitkeep' files in folders that remain.**
+    - If the repo is for sandbox. For example, `gcp-sandbox-tier1-infra`:
+        ```bash
+        # remove the 'dev', 'uat' and 'prod' sub-directories
+        for env_subdir in dev uat prod; do
+            rm --recursive "deploy/${env_subdir}/"
+            rm --recursive "source-customization/${env_subdir}/"
+        done
+        ```
+    - If the repo is for dev, uat and prod. For example, `gcp-tier1-infra`:
+        ```bash
+        # remove the 'sandbox' sub-directory
+        for env_subdir in sandbox; do
+            rm --recursive "deploy/${env_subdir}/"
+            rm --recursive "source-customization/${env_subdir}/"
+        done
+        ```
+1. Review your local changes then stage, commit and push them to your new repo.  **You will need to push to main.**
     ```bash
     git add .
     git commit -m 'initializing repo from template'
     git push --set-upstream origin main
     ```
-1. The repo is now created! It's now time to protect the main branch.
+1. The repo is created! It's now time to protect the main branch.
 
-### Branch Protection
+### Add Branch Protection
 It's recommended to protect the `main` branch and use Pull Requests (PR) for any changes to the repos.
 
-These settings can be set at the AzDO Project level.
+These settings could also be set at the AzDO Project level.
 
 At the very least, the [Require a minimum number of reviewers](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#require_reviewers) branch policy should be set to 2.
 
@@ -65,3 +93,23 @@ To do so:
 1. Navigate to **Project Settings > Repos/Repositories > {repo} > Policies > Branch Policies > main**
 1. Toggle on **Require a minimum number of reviewers**, the *Minimum number of reviewers* will default to 2.
     - You can also enable *When new changes are pushed:* > *Reset all approval votes*
+
+These other policies can also be enabled as needed:
+- **Check for linked work items**: *Required*
+- **Check for comment resolution**: *Required*
+- **Limit merge types**: only allow *Squash merge*
+
+### Extra Settings for `ConfigSync` Repos
+TODO:...
+
+### Add Pipelines
+The repo is now created and the main branch is protected.  [Pipelines](./Pipelines.md) can be created.
+
+- All deployment repos should have the "configs-validation" pipeline.  TODO: update doc when it exists
+
+- To use semantic versioning during deployment operations, the `Infra` repos can be setup with a git tagging pipeline, such as [version-tagging](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging).
+
+## Syncronizing New Configs
+TODO: place this in proper markdown file
+
+Changes to `infra` repos will only be applied to GCP when the `configsync` repo is updated.
