@@ -17,7 +17,7 @@ Shared Services Canada uses the "[Multiple GCP organizations](https://github.com
 SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
 As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo. 
 
-### ConfigSync Repo
+### Configsync Repo
 The ConfigSync operator requires a ConfigSync repo to identify what version of the `tier1-infra` it should observe.
 
 1. Create a new `gcp-tier1-configsync` repo in your Azure Devops project
