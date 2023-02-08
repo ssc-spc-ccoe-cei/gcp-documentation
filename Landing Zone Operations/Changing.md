@@ -1,5 +1,5 @@
-
 # Implementing a change on the landing zone
+There can be different types of changes but they all start and end the same way.  This document will go through the different steps.
 
 1. ## Repo cloning
     - Clone locally the repository requiring code change
@@ -12,6 +12,10 @@
         git checkout -b <BRANCH NAME>
         ```
 1. ## Make code changes 
+- Adding a package
+- Modifying a package
+- Updating a package
+- Removing a package
     - Edit any file as required
 
     - Customizing the content of a `source-base` package.

@@ -83,7 +83,7 @@ The git credentials will need to be appropriately set for your AzDO org.
 1. The repo is created! It's now time to protect the main branch.
 
 ### Add Branch Protection
-It's recommended to protect the `main` branch and use Pull Requests (PR) for any changes to the repos.
+It's recommended to protect the `main` branch and use [Pull Requests (PR)](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops&tabs=browser) for any changes to the repos.
 
 These settings could also be set at the AzDO Project level.
 
