@@ -7,9 +7,9 @@
 
    For example, when creating a tenant folder to represent Shared Services Canada, employ both the official English and French abbreviation separated by a dash (e.g. SSC-SPC).
 
-   ![folder](img/departments-and-agencies-en.png)
+   ![folder](img/departments-and-agencies-en-ssc.png)
 
-   ![folder](img/departments-and-agencies-fr.png)
+   ![folder](img/departments-and-agencies-fr-spc.png)
     
    In order to uphold folder name requirements in the Google Cloud Console ([Creating and managing folders](https://cloud.google.com/resource-manager/docs/creating-managing-folders#:~:text=For%20example%2C%20to%20create%20folders,%2C%20spaces%2C%20hyphens%20and%20underscores)), avoid using accented characters in French.
 
