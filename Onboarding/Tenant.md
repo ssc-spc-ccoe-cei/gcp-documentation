@@ -5,7 +5,7 @@
 1. Tenant's Name
 1. When creating the name of a tenant folder, it must adhere to a bilingual nomenclature and leverage the official abbreviation list of current Government of Canada departments, agencies, Crown Corporations and special operating agencies: [https://www.canada.ca/en/government/dept.html](https://www.canada.ca/en/government/dept.html).
 
-   For example, when creating a tenant folder to represent the Public Health Agency of Canada, employ both the official English and French abbreviation separated by a dash (e.g. PHAC-ASPC).
+   For example, when creating a tenant folder to represent Shared Services Canada, employ both the official English and French abbreviation separated by a dash (e.g. SSC-SPC).
 
    ![folder](img/departments-and-agencies-en.png)
 
@@ -13,11 +13,11 @@
     
    In order to uphold folder name requirements in the Google Cloud Console ([Creating and managing folders](https://cloud.google.com/resource-manager/docs/creating-managing-folders#:~:text=For%20example%2C%20to%20create%20folders,%2C%20spaces%2C%20hyphens%20and%20underscores)), avoid using accented characters in French.
 
-    ![folder](img/folder-structure-phac-aspc.png)
+    ![folder](img/folder-structure-ssc-spc.png)
 
 1. User or Group that should be granted Folder Viewer role on the tenant's folder structure
 
-    ![folder](img/folder-structure-phac-aspc.png)
+    ![folder](img/folder-structure-ssc-spc.png)
 
 
 ### TODO: Future enhancement
