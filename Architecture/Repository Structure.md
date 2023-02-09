@@ -59,13 +59,7 @@ To overcome this limitation and checkout a specific tag or commit SHA, run `modu
 
 ### Hydration Process
 
-> **!!!** `kpt fn render` should never be executed manually in any directory.  This ensures better package updates and minimizes hydration issues.
-
-The tools submodule contains a script to hydrate the configs with `kpt`.  The script must be executed when any changes to `source-base` and/or `source-customization` are made.  It is configured to run as a pre-commit hook for local validation and also in a validation pipeline during PR creation (TODO: create pipeline).
-
-```bash
-bash tools/scripts/kpt/hydrate.sh
-```
+The tools submodule contains a `hydrate.sh` script to hydrate the configs with `kpt`.  The script must be executed when any changes to `source-base` and/or `source-customization` are made.  It is configured to run as a pre-commit hook for local validation and also in a validation pipeline during PR creation (TODO: create pipeline).
 
 At a high level, the script will:
 1. For each environment (sandbox, dev, uat, prod), check if `source-customization/` contains that sub directory.  If so:
@@ -74,11 +68,6 @@ At a high level, the script will:
     - Check if newly hydrated files in `temp-workspace/<env>` are different than `deploy/<env>`.  If so, copy them to `deploy/<env>`.
     - Run `nomos vet` in `deploy/<env>` to validate syntax.
 1. If any change was detected, exit the script with failure.  This will fail the pre-commit or the pipeline, the operator will have to address any errors or simply re-run `bash tools/scripts/kpt/hydrate.sh` if no errors were found.
-
-In summary:
-
-1. `source-base` + `source-customization/<env>` = `temp-workspace/<env>`
-1. hydrate `temp-workspace/<env>` to `deploy/<env>`
 
 ## Versioning
 
