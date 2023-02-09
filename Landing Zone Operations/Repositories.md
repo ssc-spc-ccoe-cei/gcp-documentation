@@ -89,9 +89,9 @@ It's recommended to protect the `main` branch and use pull requests for any chan
 
 These settings could also be set at the AzDO Project level.
 
-At the very least, the [Require a minimum number of reviewers](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#require_reviewers) branch policy should be set to 2.
+At the very least, the [Require a minimum number of reviewers](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#require_reviewers) branch policy should be enabled on the `main` branch. By doing so, the branch cannot be deleted and changes must be made via pull request.
 
-To do so:
+To enable the policy:
 1. Navigate to **Project Settings > Repos/Repositories > {repo} > Policies > Branch Policies > main**
 1. Toggle on **Require a minimum number of reviewers**, the *Minimum number of reviewers* will default to 2.
     - You can also enable *When new changes are pushed:* > *Reset all approval votes*

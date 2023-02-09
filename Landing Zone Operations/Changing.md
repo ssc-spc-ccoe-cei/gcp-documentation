@@ -18,6 +18,10 @@ From your local environment:
     ```bash
     git clone <REPO URL>
     ```
+1. Move into the new folder corresponding to that repo:
+    ```bash
+    cd <REPO NAME>
+    ```
 1. Create a new branch, use naming convention if applicable (for example, add issue/work item # in the branch name):
     ```bash
     git checkout -b <BRANCH NAME>
@@ -29,7 +33,7 @@ From your local environment:
 ## Step 2 - The Change
 There are different types of changes.  Follow the appropriate section for instructions.
 
-### Add a Package
+### A) Add a Package
 This is accomplished with the [`kpt pkg get`](https://kpt.dev/reference/cli/pkg/get/) command.
 
 As a rule, packages should only be added in a deployment repo's `source-base` folder and **never** manually edited from there.  All customizations are to be made from the `source-customization/<env>` folders.
@@ -46,7 +50,7 @@ Follow these steps for add a package:
     # for example, 'https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-env'
     export PKG_URL=''
 
-    # the version to get
+    # the version to get, look in the pkg CHANGELOG.md, use 'main' if not available
     # for example, '0.0.1'
     export VERSION=''
 
@@ -84,7 +88,7 @@ It will need to be customized for each environment.  This is a manual process, a
 1. Once all customizations have been reviewed locally, it's time for hydration.
 1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, it's time for hydration.
 
-### Modify a Package
+### B) Modify a Package
 By design, this is accomplished by modifying configs in the `source-customization/<env>`.  Files in other directories should never be modified manually.
 
 Follow these steps to modify a package:
@@ -92,7 +96,7 @@ Follow these steps to modify a package:
 1. Modify the configs for each applicable environment in `source-customization/<env>`
 1. Once all customizations have been reviewed locally, it's time for hydration.
 
-### Update a Package
+### C) Update a Package
 This is accomplished with the [`kpt pkg update`](https://kpt.dev/reference/cli/pkg/update/) command.  
 
 The default `resource-merge` strategy is usually appropriate but can sometimes omit certain file structure changes (blank line between comments, etc.).  
@@ -141,8 +145,10 @@ For example, if the landing-zone package is updated, compare `source-customizati
     - If a change is detected, manually update the file in `source-customization/<env>`.
 1. Once all customizations have been reviewed locally, it's time for hydration.
 
-### Remove a Package
+### D) Remove a Package
 This is accomplished by simply deleting the package files in `source-base` and its customizations in `source-customization/<env>`.
+
+> **!!! IMPORTANT !!!** Before deleting a package, confirm that it does not have subpackages that are still needed.
 
 Follow these steps to remove a package:
 1. Move into the `source-base` folder:
@@ -152,7 +158,7 @@ Follow these steps to remove a package:
 1. You can update and set these variables to make it easier to run subsequent commands:
     ```bash
     # the folder of the pkg to be removed
-    # for example, 'landing-zone/hierarchy'
+    # for example, 'landing-zone/logging'
     export PKG_PATH=''
     ```
 1. Remove the package:
@@ -177,7 +183,7 @@ Follow these steps to remove a package:
 ## Step 3 - The Hydration
 This is accomplished with the `hydrate.sh` script located in the tools submodule.  In part, it uses the [`kpt fn render`](https://kpt.dev/reference/cli/fn/render/) command.
 
-> **!!!** `kpt fn render` should never be executed manually in any directory.  This ensures better package updates and minimizes hydration issues.
+> **!!! IMPORTANT !!!** `kpt fn render` should never be executed manually in any directory.  This ensures better package updates and minimizes hydration issues.
 
 In summary, the script will:
 - add (`source-base` + `source-customization/<env>`) to `temp-workspace/<env>`
