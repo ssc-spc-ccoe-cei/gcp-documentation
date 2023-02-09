@@ -62,11 +62,11 @@ It will need to be customized for each environment.  This is a manual process, a
     ```
 1. Ensure all files copied under `source-customization` have been edited to reflect each environment.
     > ***Advanced customization tip.***<br>
-    In some cases, certain resource YAML files may need to be edited for some environments, but not others.  This should be avoided as much as possible because it will complicate the update process.<br>
+    In some cases, certain resource YAML files may need to be edited for some environments, but not others.  This should be avoided as much as possible because it  complicates the update process.<br>
     For example, to completely remove a specific org policy from sandbox:<br>
-    Copy that org policy's YAML file in the sandbox customization folder, ***making sure to maintain the same directory structure***.<br> 
-    Put the entire file in a comment block.<br>
-    The hydration process will then ignore this commented resource definition, effectively removing it.
+        - Copy that org policy's YAML file in the sandbox customization folder, ***making sure to maintain the same directory structure***.<br> 
+        - Put the entire file in a comment block.<br>
+        - The hydration process will then ignore this commented resource definition, effectively removing it.
 1. Once all customizations have been reviewed locally, it's time for hydration.
 1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, it's time for hydration.
 
@@ -159,3 +159,29 @@ Follow these steps to remove a package:
     done
     ```
 1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, it's time for hydration.
+
+
+# Synchronizing / Promoting Configs
+TODO: place this in proper markdown file
+
+Changes to `infra` repos will only be applied to GCP when the `configsync` repo is updated.  The concept is similar for all repos, this example will focus on `gcp-tier1-infra` and `gcp-tier1-configsync`.
+
+1. Change configs in `gcp-tier1-infra`.
+    > **!!! It's important to add the `source-customization` for each environment.  This will ensure all environments are rendered, validated and tagged at the same time. !!!**
+1. Once the PR is merged, note the new tag version or commit SHA.
+1. At this point the changes have not been deployed to GCP. Change configs in `gcp-tier1-configsync` to do so for each environment.
+1. `dev`:
+    - Set `version:` in `source-customization/dev/tier1-root-sync/setters-version.yaml` to the new tag or commit SHA noted earlier.
+    - Hydrate the repo and create a PR.
+    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/dev`.
+    - Validate the `dev` environment in GCP.  Proceed to `uat` if successful, restart the process if not.
+1. `uat`:
+    - Set `version:` in `source-customization/uat/tier1-root-sync/setters-version.yaml` to the same value as `dev`.
+    - Hydrate the repo and create a PR.
+    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/uat`.
+    - Validate the `uat` environment in GCP.  Proceed to `prod` if successful, restart the process if not.
+1. `prod`:
+    - Set `version:` in `source-customization/prod/tier1-root-sync/setters-version.yaml` to the same value as `uat`.
+    - Hydrate the repo and create a PR.
+    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/prod`.
+    - Validate the `prod` environment in GCP.  Restart the process if not successful.

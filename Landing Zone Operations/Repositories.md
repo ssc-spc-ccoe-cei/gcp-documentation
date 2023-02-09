@@ -11,6 +11,8 @@ Deployment repos are initially created the same way, from cloning [gcp-repo-temp
 
 The git credentials will need to be appropriately set for your AzDO org.
 
+### 1. Build the Repo
+
 > If your AzDO org has project-wide branch policies set on repositories, you may need to work with branches / Pull Requests or temporarily give yourself permission to "Bypass policies when pushing" on the repo.
 
 1. Create a new **empty** repository (no README.md) to hold the configs in [Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops).  Once created, copy the HTTPS URL.  It will be required for the next step.
@@ -82,7 +84,7 @@ The git credentials will need to be appropriately set for your AzDO org.
     ```
 1. The repo is created! It's now time to protect the main branch.
 
-### Add Branch Protection
+### 2. Add Branch Protection
 It's recommended to protect the `main` branch and use [Pull Requests (PR)](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops&tabs=browser) for any changes to the repos.
 
 These settings could also be set at the AzDO Project level.
@@ -99,37 +101,24 @@ These other policies can also be enabled as needed:
 - **Check for comment resolution**: *Required*
 - **Limit merge types**: only allow *Squash merge*
 
-### Extra Settings for `ConfigSync` Repos
+### 3. Verify Service Account Permissions
+An AzDO service account should be used for authenticating Config Sync.  It requires read access to the repo.
+
+Depending on your organization, this could be set at different levels and with groups.  These steps will assume the service account has already been configured.
+
+To confirm:
+1. Navigate to **Project Settings > Repos/Repositories > {repo} > Security**.
+1. Find and click on the appropriate service account user or group.
+1. Confirm the **Read** permission is set to **Allow**.  All other permissions should be "Not set" or "Deny".
+
+A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with scope of **Code (Read)** will also need to be created for the service account.  This should only need to be done once per service account.
+
+### 4. Extra Settings for `ConfigSync` Repos
 TODO:...
 
-### Add Pipelines
+### 5. Add Pipelines
 The repo is now created and the main branch is protected.  [Pipelines](./Pipelines.md) can be created.
 
 - All deployment repos should have the "configs-validation" pipeline.  TODO: update doc when it exists
 
 - To use semantic versioning during deployment operations, the `Infra` repos can be setup with a git tagging pipeline, such as [version-tagging](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging).
-
-## Synchronizing / Promoting Configs
-TODO: place this in proper markdown file
-
-Changes to `infra` repos will only be applied to GCP when the `configsync` repo is updated.  The concept is similar for all repos, this example will focus on `gcp-tier1-infra` and `gcp-tier1-configsync`.
-
-1. Change configs in `gcp-tier1-infra`.
-    > **!!! It's important to add the `source-customization` for each environment.  This will ensure all environments are rendered, validated and tagged at the same time. !!!**
-1. Once the PR is merged, note the new tag version or commit SHA.
-1. At this point the changes have not been deployed to GCP. Change configs in `gcp-tier1-configsync` to do so for each environment.
-1. `dev`:
-    - Set `version:` in `source-customization/dev/tier1-root-sync/setters-version.yaml` to the new tag or commit SHA noted earlier.
-    - Hydrate the repo and create a PR.
-    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/dev`.
-    - Validate the `dev` environment in GCP.  Proceed to `uat` if successful, restart the process if not.
-1. `uat`:
-    - Set `version:` in `source-customization/uat/tier1-root-sync/setters-version.yaml` to the same value as `dev`.
-    - Hydrate the repo and create a PR.
-    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/uat`.
-    - Validate the `uat` environment in GCP.  Proceed to `prod` if successful, restart the process if not.
-1. `prod`:
-    - Set `version:` in `source-customization/prod/tier1-root-sync/setters-version.yaml` to the same value as `uat`.
-    - Hydrate the repo and create a PR.
-    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/prod`.
-    - Validate the `prod` environment in GCP.  Restart the process if not successful.

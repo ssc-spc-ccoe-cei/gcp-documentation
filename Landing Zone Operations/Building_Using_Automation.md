@@ -6,7 +6,7 @@ This document will describe how the automated scripts can be used for building a
 
 **We recommend that you read the entire procedure before initiating it**
 
-**Important** SSC is using Azure Devops Repositories and Pipelines as it's git solution.
+**Important** SSC is using Azure Devops Repositories and Pipelines as its git solution.
 
 # Organization
 Shared Services Canada uses the "[Multiple GCP organizations](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#multiple-gcp-organizations)" achitecture.
