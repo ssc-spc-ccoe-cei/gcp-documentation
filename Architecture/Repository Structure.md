@@ -56,10 +56,6 @@ Below is a brief explanation of key repo components.  Some directories include s
 As mentionned above, the [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools) repo is configured as a git submodule in `.gitmodules`.  This git configuration is limited to specifying a branch.
 
 To overcome this limitation and checkout a specific tag or commit SHA, run `modupdate.sh` to checkout the version configured in `modversions.yaml`.
-```bash
-bash modupdate.sh
-```
-To update to a new version of the tools sub module, edit `modversions.yaml` then re-run `modupdate.sh`.
 
 ### Hydration Process
 

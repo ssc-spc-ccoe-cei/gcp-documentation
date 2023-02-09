@@ -101,6 +101,8 @@ These other policies can also be enabled as needed:
 - **Check for comment resolution**: *Required*
 - **Limit merge types**: only allow *Squash merge*
 
+> TODO: Extra policy for tier2 "configsync" repos only. "Automatically included reviewers" with path filter on setters-version.yaml
+
 ### 3. Verify Service Account Permissions
 An AzDO service account should be used for authenticating Config Sync.  It requires read access to the repo.
 
@@ -111,14 +113,36 @@ To confirm:
 1. Find and click on the appropriate service account user or group.
 1. Confirm the **Read** permission is set to **Allow**.  All other permissions should be "Not set" or "Deny".
 
-A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with scope of **Code (Read)** will also need to be created for the service account.  This should only need to be done once per service account.
+A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with scope of **Code (Read)** will also need to be created for the service account.  This should only need to be done once per service account.  Note the expiration date, it will need to be periodically re-generated.
 
-### 4. Extra Settings for `ConfigSync` Repos
-TODO:...
-
-### 5. Add Pipelines
+### 4. Add Pipelines
 The repo is now created and the main branch is protected.  [Pipelines](./Pipelines.md) can be created.
 
 - All deployment repos should have the "configs-validation" pipeline.  TODO: update doc when it exists
 
 - To use semantic versioning during deployment operations, the `Infra` repos can be setup with a git tagging pipeline, such as [version-tagging](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging).
+
+## Update Deployment Repo
+This section is for updating the deployment repo itself, not the YAML configs.
+
+As with any other change, they should be done through a PR process.
+
+### Update from Template
+The [gcp-repo-template](https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git) remains fairly static, but it can sometimes contain important changes.
+
+Follow these steps to update your deployment repo with changes from `gcp-repo-template`:
+
+TODO: test and add steps
+
+### Update `tools` Submodule
+The tools submodule can easily be updated to a new version.
+
+Follow these steps to 
+1. Clone the deployment repo and checkout a new branch.
+1. Edit `modversions.yaml` to pin the `tools` submodule to a new [release tag](https://github.com/ssc-spc-ccoe-cei/gcp-tools/releases) or commit SHA.
+1. Clone and checkout the proper version of the tools submodule by running:
+    ```bash
+    bash modupdate.sh
+    ```
+1. If your repo contains pipelines that were created from `tools/pipeline-samples`, compare the YAML files to see if changes are required.
+1. Stage, commit and push your branch to create a PR.
