@@ -177,7 +177,7 @@ Perform this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarati
 
 You should now see two Root Syncs:
 - `root-sync`: to your `...gcp-tier1-configsync/deploy/<env>@main` repo containing 1 rootsync resource which defines...
-- the root sync to your `...tier1-infra/deploy/<env>@<version>` repo
+- the root sync to your `...tier1-infra/deploy/<env>@<version>` repo containing the landing zone resources.
 
 ## 6. Perform the post-deployment steps
 Perform this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#5-perform-the-post-deployment-steps) as described
