@@ -9,7 +9,7 @@ As a high level overview, a package will usually include files that are used spe
 - `setters.yaml`: used to set customizable data.
 - `Kptfile`: used to keep track of package versions and [declaratively set which functions](https://kpt.dev/book/04-using-functions/01-declarative-function-execution) should run during rendering. For example, [apply-setters](https://catalog.kpt.dev/apply-setters/v0.2/).
 
-## Step 1 - The Setup
+## Step 1 - Setup
 For any type of change, you should start with a new branch and a clean git working tree (all files are staged and committed).  This will make it easier to visualize changes in [VSCode's Git Source Control](https://code.visualstudio.com/docs/sourcecontrol/overview) (or `git diff`) and revert if needed.  
 You can confirm that a working tree is clean by running `git status`.
 
@@ -30,7 +30,7 @@ From your local environment:
     ```bash
     bash modupdate.sh
     ```
-## Step 2 - The Change
+## Step 2 - Change
 There are different types of changes.  Follow the appropriate section for instructions.
 
 ### A) Add a Package
@@ -38,7 +38,7 @@ This is accomplished with the [`kpt pkg get`](https://kpt.dev/reference/cli/pkg/
 
 As a rule, packages should only be added in a deployment repo's `source-base` folder and **never** manually edited from there.  All customizations are to be made from the `source-customization/<env>` folders.
 
-Follow these steps for add a package:
+Follow these steps to add a package:
 
 1. Move into the `source-base` folder:
     ```bash
@@ -180,7 +180,7 @@ Follow these steps to remove a package:
     ```
 1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, it's time for hydration.
 
-## Step 3 - The Hydration
+## Step 3 - Hydrate
 This is accomplished with the `hydrate.sh` script located in the tools submodule.  In part, it uses the [`kpt fn render`](https://kpt.dev/reference/cli/fn/render/) command.
 
 > **!!! IMPORTANT !!!** `kpt fn render` should never be executed manually in any directory.  This ensures better package updates and minimizes hydration issues.
@@ -197,7 +197,7 @@ Follow these steps to hydrate your change:
 1. Address errors, if any.
 1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`, specifically the hydrated files in the `deploy/<env>` folders.  If satisfied, it's time for publishing.
 
-## Step 4 - The Publishing
+## Step 4 - Publish
 At this point, the changes only exist locally. They are now ready to be published for peer review and approval.
 
 Follow these steps to publish the changes:
@@ -218,7 +218,7 @@ Follow these steps to publish the changes:
 1. Complete the pull request once all required checks are successful.
 1. That's it!
 
-# Synchronizing / Promoting Configs
+# Synchronize / Promote Configs
 This section contains additional information on how changes can be promoted between environments.
 
 Changes to `infra` repos will only be applied to GCP when the `configsync` repo is updated.  The concept is similar for all repos

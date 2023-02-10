@@ -23,7 +23,7 @@ The steps assume these repos have already been created by following the "Create 
     - `gcp-tier1-infra`: if building a dev, uat or prod landing-zone.
 - `gcp-tier1-configsync`: to identify which git revision of `tier1-infra` the Config Sync operator should observe.
 
-1. Start a new change for your `tier1-infra` repo, refer to "Step 1 - The Setup" section of [Changing.md](./Changing.md).
+1. Start a new change for your `tier1-infra` repo, refer to the "Step 1 - Setup" section of [Changing.md](./Changing.md).
     - Sandbox
 
         repo name = `gcp-sandbox-tier1-infra`
@@ -65,57 +65,89 @@ From the root of your `tier1-infra` repo:
 1. Validate the Config Controller deployment.  You should see that the `root-sync` is successfully synchronized and contains zero resource.
 Perform this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment) as described
 
-## 5. Create your landing zone
+## 4. Build your landing zone
 
-We will be using kpt to obtain the packages. For more information on the `kpt get` command, please refer to this link : https://kpt.dev/reference/cli/pkg/get/
+We will build the landing zone by adding a collection of packages to the `tier1-infra` repo.
 
-1. Move into `source-base` folder
-    ```bash
-    cd source-base
-    ```
-1. Get the landing zone package
-    ```bash
-    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2@main ./landing-zone
-    ```
-1. Get the hierarchy package
-    - Sandbox
-      ```bash
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-sandbox@main ./landing-zone/hierarchy
-      ```
+### Add Packages
+Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of these packages:
 
-    - DEV, UAT, PROD
-      ```bash
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-env@main ./landing-zone/hierarchy
-      ```
-1. Get the gatekeeper policies package
-    ```bash
-    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/gatekeeper-policies@main ./landing-zone/gatekeeper-policies
-    ```
-1. Get the organization policies package
-    ```bash
-    kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/org-policies@main ./landing-zone/org-policies
-    ```
-1. Get the logging package
+1. The landing zone package:
+    - Package details:
+        ```bash
+        export PKG_URL='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2'
+
+        # the version to add, look in the pkg CHANGELOG.md, use 'main' if not available
+        export VERSION=''
+
+        export DEST_FOLDER='landing-zone'
+        ```
+    - Customization:
+        ```bash
+        export FILE_TO_CUSTOMIZE='landing-zone/setters.yaml'
+        ```
+1. The hierarchy package:
+    - Package details:
+        ```bash
+        # for sandbox
+        export PKG_URL='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-sandbox'
+        # OR
+        # for dev, uat, prod
+        export PKG_URL='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-env'
+
+        # the version to add, look in the pkg CHANGELOG.md, use 'main' if not available
+        export VERSION=''
+
+        export DEST_FOLDER='landing-zone/hierarchy'
+        ```
+    - Customization: none required, the `landing-zone/setters.yaml` contains the values.  They will be applied at that level.
+
+1. The Gatekeeper policies package:
+    - Package details:
+        ```bash
+        export PKG_URL='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/gatekeeper-policies'
+
+        # the version to add, look in the pkg CHANGELOG.md, use 'main' if not available
+        export VERSION=''
+
+        export DEST_FOLDER='landing-zone/gatekeeper-policies'
+        ```
+    - Customization:
+        ```bash
+        export FILE_TO_CUSTOMIZE='landing-zone/gatekeeper-policies/naming-rules/project/setters.yaml'
+        ```
+
+1. The organization policies package:
+    - Package details:
+        ```bash
+        export PKG_URL='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/org-policies'
+
+        # the version to add, look in the pkg CHANGELOG.md, use 'main' if not available
+        export VERSION=''
+
+        export DEST_FOLDER='landing-zone/org-policies'
+        ```
+    - Customization:
+        ```bash
+        export FILE_TO_CUSTOMIZE='landing-zone/org-policies/setters.yaml'
+        ```
+        For sandbox, you may also want to remove some org policies.
+    
+1. The logging package:
     
     TODO: TBD
-    
-1. Customize the landing zone package and all of it subpackages
-    
-    Refer to the `Make Code Changes` section of the [Changing.md](Changing.md#Make%20code%20changes)
 
-1. Generate hydrated files
+### Complete the Infra Repo
+The packages are now added and customized in the `tier1-infra` repo, it's time to hydrate and publish them.
 
-    Refer to the `Generate hydrated files` section of the [Changing.md](Changing.md#Generate%20hydrated%20files)
+1. Generate hydrated files, follow step 3 "Hydrate" of [Changing.md](./Changing.md).
 
-1. Add changes to repository
-    
-    Refer to the `Add changes to repository` section of the [Changing.md](Changing.md#Add%20changes%20to%20repository).
-    
-    **You will need to push to main when running git push**
-    
-    `git push --set-upstream origin main` 
+1. Publish changes to repository, follow step 4 "Publish" of [Changing.md](./Changing.md).
 
-### ConfigSync Repo
+1. Once the PR is merged, note the new tag version or commit SHA.  It will be required in the next section.
+
+## 5. Synchronize your landing zone
+Your landing zone is now built and published in the `tier1-infra` repo, but Config Sync is not aware yet.  This is where the `configsync` repo comes in to fill the gap.
 
 1. Get the root-sync kpt package
     ```bash
