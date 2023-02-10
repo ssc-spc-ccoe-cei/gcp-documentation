@@ -76,15 +76,15 @@ This section will implement the Infra repo
     ```
 1. Customize the landing zone package and all of it subpackages
     
-    Refer to the `Make Code Changes` section of the [Changing.md](Changing.md#Make%20code%20changes)
+    Refer to the `Add a Package` section of the [Changing.md](Changing.md)
 
 1. Generate hydrated files
 
-    Refer to the `Generate hydrated files` section of the [Changing.md](Changing.md#Generate%20hydrated%20files)
+    Refer to the `Hydrate` section of the [Changing.md](Changing.md)
 
 1. Add changes to repository
     
-    Refer to the `Add changes to repository` section of the [Changing.md](Changing.md#Add%20changes%20to%20repository).
+    Refer to the `Publish` section of the [Changing.md](Changing.md).
     
     **You will need to push to main when running git push**
     
@@ -126,15 +126,15 @@ The ConfigSync operator requires a ConfigSync repo to identify what version of t
     ```
 1. Customize the root-sync package
     
-    Refer to the `Make Code Changes` section of the ![Changing.md](Changing.md#Make%20code%20changes)
+    Refer to the `Add a Package` section of the [Changing.md](Changing.md)
 
 1. Generate hydrated files
 
-    Refer to the `Generate hydrated files` section of the ![Changing.md](Changing.md#Generate%20hydrated%20files)
+    Refer to the `Hydrate` section of the [Changing.md](Changing.md)
 
 1. Add changes to repository
     
-    Refer to the `Add changes to repository` section of the ![Changing.md](Changing.md#Add%20changes%20to%20repository).
+    Refer to the `Publish` section of the [Changing.md](Changing.md).
     
     **You will need to push to main when running git push**
     
