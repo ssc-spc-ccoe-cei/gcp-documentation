@@ -32,9 +32,11 @@ The steps assume these repos have already been created by following the "Create 
         repo name = `gcp-tier1-infra`
 1. Your terminal should now be at the root of your `tier1-infra` repo, on a new branch.
 
-## 2. Create the .env file
+## 2. Bootstrap the Config Controller Project
 
-The automated script requires a `.env` file to deploy the environment.
+The automated script creates a project, the FW settings, a Cloud router, a Cloud NAT, a private service connect endpoint and the Anthos Config Controller cluster. It also creates a root-sync.yaml file.
+
+The script requires a `.env` file to deploy the environment.
 
 From the root of your `tier1-infra` repo:
 
@@ -51,9 +53,7 @@ From the root of your `tier1-infra` repo:
     export TOKEN='xxxxxxxxxxxxxxx'
     ```
 
-## 3. Run the setup-kcc automated script
-
-1. The script creates a project, the FW settings, a Cloud router, a Cloud NAT, a private service connect endpoint and the Anthos Config Controller cluster. It also creates a root-sync.yaml file.
+1. Run the setup-kcc automated script:
     ```
     bash tools/scripts/bootstrap/setup-kcc.sh <PATH TO .ENV FILE>
     ```
@@ -62,10 +62,11 @@ From the root of your `tier1-infra` repo:
     ```bash
     mv root-sync.yaml bootstrap/<ENV>
     ```
-1. Validate the Config Controller deployment.  You should see that the `root-sync` is successfully synchronized and contains zero resource.
+
+1. Validate the Config Controller deployment.  You should see a synchronized `root-sync` to your `...gcp-tier1-configsync/deploy/<env>@main` repo containing no resource.
 Perform this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment) as described
 
-## 4. Build your landing zone
+## 3. Build the Landing Zone Packages
 
 We will build the landing zone by adding a collection of packages to the `tier1-infra` repo.
 
@@ -146,37 +147,40 @@ The packages are now added and customized in the `tier1-infra` repo, it's time t
 
 1. Once the PR is merged, note the new tag version or commit SHA.  It will be required in the next section.
 
-## 5. Synchronize your landing zone
-Your landing zone is now built and published in the `tier1-infra` repo, but Config Sync is not aware yet.  This is where the `configsync` repo comes in to fill the gap.
+## 4. Synchronize the Landing Zone
+Your landing zone is now built and published in the `tier1-infra` repo, but Config Sync is not aware yet.  This is where the `gcp-tier1-configsync` repo comes in to fill the gap by creating a new Root Sync.
 
-1. Get the root-sync kpt package
-    ```bash
-    TODO: kpt pkg get URL ./tier1-root-sync
-    ```
-1. Customize the root-sync package
-    
-    Refer to the `Make Code Changes` section of the [Changing.md](Changing.md#Make%20code%20changes)
+1. Follow step 1-4 of [Changing.md](./Changing.md) to **add** the tier1 Root Sync package (step 2A).  If the package already exists from bootstrapping other environments, **modify** it for the new environment (step 2B).
+    - Package details:
+        ```bash
+        export PKG_URL='TODO: publish package'
 
-1. Generate hydrated files
+        # the version to add, look in the pkg CHANGELOG.md, use 'main' if not available
+        export VERSION=''
 
-    Refer to the `Generate hydrated files` section of the [Changing.md](Changing.md#Generate%20hydrated%20files)
+        export DEST_FOLDER='tier1-root-sync'
+        ```
+    - Customization: you will need to customize 2 files.   
+        > **!!! IMPORTANT !!!** Only customize for the environment your are bootstrapping.
 
-1. Add changes to repository
-    
-    Refer to the `Add changes to repository` section of the [Changing.md](Changing.md#Add%20changes%20to%20repository).
-    
-    **You will need to push to main when running git push**
-    
-    `git push --set-upstream origin main`
+        - `tier1-root-sync/setters.yaml`: general settings to create the new Root Sync.  Some values to customize are:
+            - `env`: the environment you are bootstrapping.
+            - `repo-url`: the URL of your `tier1-infra` repo.
+            - `repo-dir`: the `deploy/<env>` folder to observe.
+        - `tier1-root-sync/setters-version.yaml`: setting to control the version of `tier1-infra` to observe.
+            - `version`: the new tag or commit SHA noted earlier.
 
-1. Excellent ! You have your `tier1-configsync` repository ready for next steps..
+1. Once your PR is merged, Config Sync will pick up the new Root Sync to create.  This new Root Sync will in turn pick up all the resources you have built and hydrated earlier in the `tier1-infra/deploy/<env>` directory.
 
-
-# 6. Validate the landing zone deployment
+## 5. Validate the landing zone deployment
 Perform this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment) as described
 
-# 7. Perform the post-deployment steps
+You should now see two Root Syncs:
+- `root-sync`: to your `...gcp-tier1-configsync/deploy/<env>@main` repo containing 1 rootsync resource which defines...
+- the root sync to your `...tier1-infra/deploy/<env>@<version>` repo
+
+## 6. Perform the post-deployment steps
 Perform this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#5-perform-the-post-deployment-steps) as described
 
-# THE END
+## THE END
 Congratulations! You have completed the deployment of your landing zone as per SSC implementation.
