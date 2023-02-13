@@ -64,7 +64,7 @@ From the root of your `tier1-infra` repo:
     ```
 
 1. Validate the Config Controller deployment.  You should see a synchronized `root-sync` to your `...gcp-tier1-configsync/deploy/<env>@main` repo containing no resource.
-Perform this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment) as described
+Perform step 4 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment).
 
 ## 3. Build the Landing Zone Packages
 
@@ -76,12 +76,14 @@ Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of th
 1. The landing zone package:
     - Package details:
         ```bash
-        export PKG_URL='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/landing-zone-v2'
+        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
 
-        # the version to add, look in the pkg CHANGELOG.md, use 'main' if not available
+        export PKG_PATH='solutions/landing-zone-v2'
+
+        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
-        export DEST_FOLDER='landing-zone'
+        export LOCAL_DEST_DIRECTORY='landing-zone'
         ```
     - Customization:
         ```bash
@@ -90,28 +92,32 @@ Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of th
 1. The hierarchy package:
     - Package details:
         ```bash
+        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
+
         # for sandbox
-        export PKG_URL='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-sandbox'
+        export PKG_PATH='solutions/hierarchy/core-sandbox'
         # OR
         # for dev, uat, prod
-        export PKG_URL='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-env'
+        export PKG_PATH='solutions/hierarchy/core-env'
 
-        # the version to add, look in the pkg CHANGELOG.md, use 'main' if not available
+        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
-        export DEST_FOLDER='landing-zone/hierarchy'
+        export LOCAL_DEST_DIRECTORY='landing-zone/hierarchy'
         ```
     - Customization: none required, the `landing-zone/setters.yaml` contains the values.  They will be applied at that level.
 
 1. The Gatekeeper policies package:
     - Package details:
         ```bash
-        export PKG_URL='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/gatekeeper-policies'
+        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
 
-        # the version to add, look in the pkg CHANGELOG.md, use 'main' if not available
+        export PKG_PATH='solutions/gatekeeper-policies'
+
+        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
-        export DEST_FOLDER='landing-zone/gatekeeper-policies'
+        export LOCAL_DEST_DIRECTORY='landing-zone/gatekeeper-policies'
         ```
     - Customization:
         ```bash
@@ -121,12 +127,14 @@ Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of th
 1. The organization policies package:
     - Package details:
         ```bash
-        export PKG_URL='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/org-policies'
+        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
 
-        # the version to add, look in the pkg CHANGELOG.md, use 'main' if not available
+        export PKG_PATH='solutions/org-policies'
+
+        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
-        export DEST_FOLDER='landing-zone/org-policies'
+        export LOCAL_DEST_DIRECTORY='landing-zone/org-policies'
         ```
     - Customization:
         ```bash
@@ -153,12 +161,14 @@ Your landing zone is now built and published in the `tier1-infra` repo, but Conf
 1. Follow step 1-4 of [Changing.md](./Changing.md) to **add** the tier1 Root Sync package (step 2A).  If the package already exists from bootstrapping other environments, **modify** it for the new environment (step 2B).
     - Package details:
         ```bash
-        export PKG_URL='TODO: publish package'
+        export REPO_URI='TODO: publish package'
 
-        # the version to add, look in the pkg CHANGELOG.md, use 'main' if not available
+        export PKG_PATH='TODO: publish package'
+
+        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
-        export DEST_FOLDER='tier1-root-sync'
+        export LOCAL_DEST_DIRECTORY='tier1-root-sync'
         ```
     - Customization: you will need to customize 2 files.   
         > **!!! IMPORTANT !!!** Only customize for the environment your are bootstrapping.
@@ -173,14 +183,14 @@ Your landing zone is now built and published in the `tier1-infra` repo, but Conf
 1. Once your PR is merged, Config Sync will pick up the new Root Sync to create.  This new Root Sync will in turn pick up all the resources you have built and hydrated earlier in the `tier1-infra/deploy/<env>` directory.
 
 ## 5. Validate the landing zone deployment
-Perform this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment) as described
+Perform step 4 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment).
 
 You should now see two Root Syncs:
 - `root-sync`: to your `...gcp-tier1-configsync/deploy/<env>@main` repo containing 1 rootsync resource which defines...
 - the root sync to your `...tier1-infra/deploy/<env>@<version>` repo containing the landing zone resources.
 
 ## 6. Perform the post-deployment steps
-Perform this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#5-perform-the-post-deployment-steps) as described
+Perform step 5 this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#5-perform-the-post-deployment-steps).
 
 ## THE END
 Congratulations! You have completed the deployment of your landing zone as per SSC implementation.

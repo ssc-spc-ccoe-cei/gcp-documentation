@@ -61,4 +61,4 @@
 
 1. Add changes to repository
     
-    Refer to the `Publish` section of the [Changing.md](Changing.md).
+    Refer to the `Publish` section of the [Changing.md](Changing.md)

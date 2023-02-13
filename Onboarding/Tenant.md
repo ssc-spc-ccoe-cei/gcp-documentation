@@ -61,7 +61,7 @@
 
 1. Add changes to repository
     
-    Refer to the `Publish` section of the [Changing.md](Changing.md).
+    Refer to the `Publish` section of the [Changing.md](Changing.md)
 
 
 ## Add tenant Tier2-ConfigSync (DEV, UAT, PROD only) (UNDER CONSTRUCTION)

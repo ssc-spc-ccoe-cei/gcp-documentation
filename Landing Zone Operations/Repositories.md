@@ -113,7 +113,7 @@ To confirm:
 1. Find and click on the appropriate service account user or group.
 1. Confirm the **Read** permission is set to **Allow**.  All other permissions should be "Not set" or "Deny".
 
-A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with scope of **Code (Read)** will also need to be created for the service account.  This should only need to be done once per service account.  Note the expiration date, it will need to be periodically re-generated.
+A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with scope of **Code (Read)** will also need to be created for the service account.  This should only need to be done once per service account.  **Note the expiration date, it will need to be periodically re-generated.**
 
 ### 4. Add Pipelines
 The repo is now created and the main branch is protected.  [Pipelines](./Pipelines.md) can be created.

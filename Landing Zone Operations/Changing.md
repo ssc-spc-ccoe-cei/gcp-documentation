@@ -46,21 +46,25 @@ Follow these steps to add a package:
     ```
 1. You can update and set these variables to make it easier to run subsequent commands:
     ```bash
-    # pkg repo url including directories
-    # for example, 'https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/core-env'
-    export PKG_URL=''
+    # URI of the git repo containing the package
+    # for example, 'https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
+    export REPO_URI=''
 
-    # the version to get, look in the pkg CHANGELOG.md, use 'main' if not available
+    # subdirectory of the package, relative to root of repo
+    # for example, 'solutions/hierarchy/core-env'
+    export PKG_PATH=''
+
+    # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
     # for example, '0.0.1'
     export VERSION=''
 
-    # the destination folder to save the pkg
+    # the local destination directory to save the package, relative to 'source-base'
     # for example, 'landing-zone/hierarchy'
-    export DEST_FOLDER=''
+    export LOCAL_DEST_DIRECTORY=''
     ```
 1. Add the package with the following command:
     ```bash
-    kpt pkg get ${PKG_URL}@${VERSION} ${DEST_FOLDER}
+    kpt pkg get ${REPO_URI}/${PKG_PATH}@${VERSION} ${LOCAL_DEST_DIRECTORY}
     ```
 1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.
 1. Review the package's documentation for specific instructions.  Most will require some sort of customization, such as editing the `setters.yaml`.  
@@ -85,11 +89,12 @@ It will need to be customized for each environment.  This is a manual process, a
         - Copy that org policy's YAML file in the sandbox customization folder, ***making sure to maintain the same directory structure***.<br> 
         - Put the entire file in a comment block.<br>
         - The hydration process will then ignore this commented resource definition, effectively removing it.
-1. Once all customizations have been reviewed locally, it's time for hydration.
-1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, it's time for hydration.
+1. Review all customizations with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, it's time for hydration.
 
 ### B) Modify a Package
 By design, this is accomplished by modifying configs in the `source-customization/<env>`.  Files in other directories should never be modified manually.
+
+***Standard customization should only involve the `setters.yaml` file.***
 
 Follow these steps to modify a package:
 
@@ -207,7 +212,7 @@ Follow these steps to publish the changes:
     ```
 1. Commit your changes:
     ```bash
-    git commit -m '<MEANINGFULL MESSAGE GOES HERE>
+    git commit -m '<MEANINGFULL MESSAGE GOES HERE>'
     ```
 1. Push your changes to the repo's origin:
     ```bash
@@ -233,14 +238,17 @@ This example will focus on `gcp-tier1-infra` and `gcp-tier1-configsync`:
     - Set `version:` in `source-customization/dev/tier1-root-sync/setters-version.yaml` to the new tag or commit SHA noted earlier.
     - Hydrate the repo and create a PR.
     - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/dev`.
-    - Validate the `dev` environment in GCP.  Proceed to `uat` if successful, restart the process if not.
+    - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
+    - Validate landing zone and workload functionalities for the `dev` environment in GCP.  Proceed to `uat` if successful, restart the process if not.
 1. `uat`:
     - Set `version:` in `source-customization/uat/tier1-root-sync/setters-version.yaml` to the same value as `dev`.
     - Hydrate the repo and create a PR.
     - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/uat`.
-    - Validate the `uat` environment in GCP.  Proceed to `prod` if successful, restart the process if not.
+    - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
+    - Validate landing zone and workload functionalities for the `uat` environment in GCP.  Proceed to `prod` if successful, restart the process if not.
 1. `prod`:
     - Set `version:` in `source-customization/prod/tier1-root-sync/setters-version.yaml` to the same value as `uat`.
     - Hydrate the repo and create a PR.
     - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/prod`.
-    - Validate the `prod` environment in GCP.  Restart the process if not successful.
+    - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
+    - Validate landing zone and workload functionalities for the `prod` environment in GCP.  Restart the process if not successful.
