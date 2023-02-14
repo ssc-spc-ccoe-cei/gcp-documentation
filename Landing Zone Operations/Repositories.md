@@ -44,7 +44,7 @@ The git credentials will need to be appropriately set for your AzDO org.
     git remote --verbose
     ```
 1. Edit `modversions.yaml` to pin the `tools` submodule to a specific [release tag](https://github.com/ssc-spc-ccoe-cei/gcp-tools/releases) or commit SHA.
-1. Clone and checkout the proper version of the tools sub module by running:
+1. Run the following to get the proper version of the tools submodule:
     ```bash
     bash modupdate.sh
     ```
@@ -140,7 +140,7 @@ The tools submodule can easily be updated to a new version.
 Follow these steps to 
 1. Clone the deployment repo and checkout a new branch.
 1. Edit `modversions.yaml` to pin the `tools` submodule to a new [release tag](https://github.com/ssc-spc-ccoe-cei/gcp-tools/releases) or commit SHA.
-1. Clone and checkout the proper version of the tools submodule by running:
+1. Run the following to get the proper version of the tools submodule:
     ```bash
     bash modupdate.sh
     ```

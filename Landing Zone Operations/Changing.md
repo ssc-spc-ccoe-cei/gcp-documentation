@@ -26,7 +26,7 @@ From your local environment:
     ```bash
     git checkout -b <BRANCH NAME>
     ```
-1. Clone and checkout the proper version of the tools sub module by running:
+1. Run the following to get the proper version of the tools submodule:
     ```bash
     bash modupdate.sh
     ```
@@ -89,7 +89,7 @@ It will need to be customized for each environment.  This is a manual process, a
         - Copy that org policy's YAML file in the sandbox customization folder, ***making sure to maintain the same directory structure***.<br> 
         - Put the entire file in a comment block.<br>
         - The hydration process will then ignore this commented resource definition, effectively removing it.
-1. Review all customizations with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, it's time for hydration.
+1. Review all customizations with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ### B) Modify a Package
 By design, this is accomplished by modifying configs in the `source-customization/<env>`.  Files in other directories should never be modified manually.
@@ -99,7 +99,7 @@ By design, this is accomplished by modifying configs in the `source-customizatio
 Follow these steps to modify a package:
 
 1. Modify the configs for each applicable environment in `source-customization/<env>`
-1. Once all customizations have been reviewed locally, it's time for hydration.
+1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ### C) Update a Package
 This is accomplished with the [`kpt pkg update`](https://kpt.dev/reference/cli/pkg/update/) command.  
@@ -148,7 +148,7 @@ Follow these steps to update a package:
 1. For each file under `source-customization/<env>`, verify if it changed in `source-base`.  
 For example, if the landing-zone package is updated, compare `source-customization/dev/landing-zone/setters.yaml` with `source-base/landing-zone/setters.yaml`.
     - If a change is detected, manually update the file in `source-customization/<env>`.
-1. Once all customizations have been reviewed locally, it's time for hydration.
+1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ### D) Remove a Package
 This is accomplished by simply deleting the package files in `source-base` and its customizations in `source-customization/<env>`.
@@ -183,7 +183,7 @@ Follow these steps to remove a package:
         fi
     done
     ```
-1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, it's time for hydration.
+1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ## Step 3 - Hydrate
 This is accomplished with the `hydrate.sh` script located in the tools submodule.  In part, it uses the [`kpt fn render`](https://kpt.dev/reference/cli/fn/render/) command.

@@ -8,11 +8,10 @@ This document will describe how the automated scripts can be used for building a
 
 **Important** SSC is using Azure Devops Repositories and Pipelines as its git solution.
 
-# Organization
+# Requirements
 Shared Services Canada uses the "[Multiple GCP organizations](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#multiple-gcp-organizations)" achitecture.
 
-# Setup
-## 1. Repo Setup
+Review the requirements listed [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#requirements).
 
 SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
 As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo. 
@@ -23,23 +22,22 @@ The steps assume these repos have already been created by following the "Create 
     - `gcp-tier1-infra`: if building a dev, uat or prod landing-zone.
 - `gcp-tier1-configsync`: to identify which git revision of `tier1-infra` the Config Sync operator should observe.
 
-1. Start a new change for your `tier1-infra` repo, refer to the "Step 1 - Setup" section of [Changing.md](./Changing.md).
+# Setup
+
+## 1. Bootstrap the Config Controller Project
+
+The automated script creates a project, the FW settings, a Cloud router, a Cloud NAT, a private service connect endpoint and the Anthos Config Controller cluster. It also creates a root-sync.yaml file.
+
+The script requires a `.env` file to deploy the environment.
+
+1. Start a new change for your `tier1-infra` repo, follow the "Step 1 - Setup" section of [Changing.md](./Changing.md).
     - Sandbox
 
         repo name = `gcp-sandbox-tier1-infra`
     - DEV, UAT, PROD
 
         repo name = `gcp-tier1-infra`
-1. Your terminal should now be at the root of your `tier1-infra` repo, on a new branch.
-
-## 2. Bootstrap the Config Controller Project
-
-The automated script creates a project, the FW settings, a Cloud router, a Cloud NAT, a private service connect endpoint and the Anthos Config Controller cluster. It also creates a root-sync.yaml file.
-
-The script requires a `.env` file to deploy the environment.
-
-From the root of your `tier1-infra` repo:
-
+1. Your terminal should now be at the root of your `tier1-infra` repo, on a new branch and with the tools submodule populated.
 1. If it doesn't exist, create a `bootstrap/<env>` directory.  It will be used to backup files generated during bootstrapping.
 1. Copy the example.env file from the `tools/scripts/bootstrap` folder.
     ```bash
@@ -66,7 +64,7 @@ From the root of your `tier1-infra` repo:
 1. Validate the Config Controller deployment.  You should see a synchronized `root-sync` to your `...gcp-tier1-configsync/deploy/<env>@main` repo containing no resource.
 Perform step 4 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment).
 
-## 3. Build the Landing Zone Packages
+## 2. Build the Landing Zone Packages
 
 We will build the landing zone by adding a collection of packages to the `tier1-infra` repo.
 
@@ -155,7 +153,7 @@ The packages are now added and customized in the `tier1-infra` repo, it's time t
 
 1. Once the PR is merged, note the new tag version or commit SHA.  It will be required in the next section.
 
-## 4. Synchronize the Landing Zone
+## 3. Synchronize the Landing Zone
 Your landing zone is now built and published in the `tier1-infra` repo, but Config Sync is not aware yet.  This is where the `gcp-tier1-configsync` repo comes in to fill the gap by creating a new Root Sync.
 
 1. Follow step 1-4 of [Changing.md](./Changing.md) to **add** the tier1 Root Sync package (step 2A).  If the package already exists from bootstrapping other environments, **modify** it for the new environment (step 2B).
@@ -182,15 +180,15 @@ Your landing zone is now built and published in the `tier1-infra` repo, but Conf
 
 1. Once your PR is merged, Config Sync will pick up the new Root Sync to create.  This new Root Sync will in turn pick up all the resources you have built and hydrated earlier in the `tier1-infra/deploy/<env>` directory.
 
-## 5. Validate the landing zone deployment
+## 4. Validate the landing zone deployment
 Perform step 4 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment).
 
 You should now see two Root Syncs:
 - `root-sync`: to your `...gcp-tier1-configsync/deploy/<env>@main` repo containing 1 rootsync resource which defines...
 - the root sync to your `...tier1-infra/deploy/<env>@<version>` repo containing the landing zone resources.
 
-## 6. Perform the post-deployment steps
-Perform step 5 this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#5-perform-the-post-deployment-steps).
+## 5. Perform the post-deployment steps
+Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#5-perform-the-post-deployment-steps).
 
 ## THE END
 Congratulations! You have completed the deployment of your landing zone as per SSC implementation.
