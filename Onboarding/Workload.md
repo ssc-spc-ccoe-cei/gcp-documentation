@@ -15,7 +15,7 @@
     
 1. Billing Account ID to be associated with this project
 
-### Sandbox
+### Experimentation
 
 1. user, group or serviceAccount with editor role at project level
   
@@ -41,14 +41,14 @@
 1. Get the workload package
     
     *Some folders may need to be created beforehand like `<data classification>`
-    - Sandbox
+    - Experimentation
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-sandbox@main ./landing-zone/hierarchy/clients/<client name>/Workloads/<project-id>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@main ./landing-zone/hierarchy/clients/<client name>/Workloads/<project-id>
       ```
 
     - DEV, UAT, PROD
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-sandbox@main ./landing-zone/hierarchy/clients/<client name>/Workloads/<data classification>/<project-id>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@main ./landing-zone/hierarchy/clients/<client name>/Workloads/<data classification>/<project-id>
       ```
 
 1. To modify any of the files in this package (like setters.yaml) follow this generic guidance
