@@ -124,7 +124,7 @@ TODO: provide an example
 
 ### Repositories naming convention
 
-The diagram below describes the naming convention for repositories and uses NRCan, as a tenant, to provide examples.
+The diagram below describes the naming convention for repositories and uses NRCan, as a client, to provide examples.
 
 ![naming](img/naming-repos.png)
 

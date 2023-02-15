@@ -2,7 +2,7 @@
 
 ## Pre-requisite
 
-1. locally clone the sandbox landing zone repo
+1. locally clone the experimentation landing zone repo
 1. create a branch of main
 
 ## Add admin folder(s) to the landing zone repository

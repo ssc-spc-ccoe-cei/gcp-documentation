@@ -24,7 +24,7 @@ The git repos are organized in different categories:
 - Deployment repos: two types exists, one to manage Config Sync repos, the other to store infrastructure configurations.
     - `gcp-tier1-configsync` is where the initial `root-sync` object is pointing and is used to manage the root sync objects and versioning of the tier1 infrastructure in sandbox, dev, uat and prod.
     - `gcp-tier1-infra` contains the landing zone configs for dev, uat and prod.
-    - `gcp-sandbox-tier1-infra` contains the landing zone configs for sandbox.
+    - `gcp-sandbox-tier1-infra` contains the landing zone configs for experimentation.
 - `gcp-tools` contains common scripts and pipeline templates used by repos above as a git submodule.
 - `gcp-blueprints-catalog` **private repo** contains SSC specific packages that are used to build a landing zone.
 
@@ -62,7 +62,7 @@ To overcome this limitation and checkout a specific tag or commit SHA, run `modu
 The tools submodule contains a `hydrate.sh` script to hydrate the configs with `kpt`.  The script must be executed when any changes to `source-base` and/or `source-customization` are made.  It is configured to run as a pre-commit hook for local validation and also in a validation pipeline during PR creation (TODO: create pipeline).
 
 At a high level, the script will:
-1. For each environment (sandbox, dev, uat, prod), check if `source-customization/` contains that sub directory.  If so:
+1. For each environment (experimentation, dev, uat, prod), check if `source-customization/` contains that sub directory.  If so:
     - Create a `temp-workspace/<env>` directory to copy the `source-base/` and then copy `source-customization/<env>/`, this adds customization specific to that environment.
     - Run `kpt fn render` and remove local configs in `temp-workspace/<env>`.
     - Check if newly hydrated files in `temp-workspace/<env>` are different than `deploy/<env>`.  If so, copy them to `deploy/<env>`.

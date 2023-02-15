@@ -32,14 +32,14 @@ As you saw in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) dia
 ### Infra repo
 This section will implement the Infra repo
 1. Create a new `tier1-infra` repo in your Azure Devops project
-    - Sandbox
+    - Experimentation
           
         repo name = `gcp-sandbox-tier1-infra`
     - DEV, UAT, PROD
 
         repo name = `gcp-tier1-infra`
 1. Clone locally the `gcp-repo-template` in order to build the new `tier1-infra` repo
-    - Sandbox
+    - Experimentation
       ```bash
       git clone https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git gcp-sandbox-tier1-infra
       ```
@@ -49,7 +49,7 @@ This section will implement the Infra repo
         git clone https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git gcp-tier1-infra
         ```
 1. Move into the new folder corresponding to that repo
-    - Sandbox
+    - Experimentation
         ```bash
         cd gcp-sandbox-tier1-infra
         ```
@@ -178,7 +178,7 @@ Now let's deploy that first root-sync that will make the magic happen and get yo
       git:
         repo: <REPO_URL> # This is the url to your gcp-tier1-configsync repo
         branch: main
-        dir: deploy/<env> # env should be replaced by sandbox or dev or uat or prod depending on what landing zone you are building
+        dir: deploy/<env> # env should be replaced by experimentation or dev or uat or prod depending on what landing zone you are building
         revision: HEAD
         auth: token
         secretRef:
