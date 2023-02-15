@@ -18,7 +18,7 @@ As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops)
 
 The steps assume these repos have already been created by following the "Create New Deployment Repo" section in [Repositories.md](./Repositories.md):
 - One of the two infra repos:
-    - `gcp-sandbox-tier1-infra`: if building a sandbox landing-zone.
+    - `gcp-sandbox-tier1-infra`: if building a experimentation landing-zone.
     - `gcp-tier1-infra`: if building a dev, uat or prod landing-zone.
 - `gcp-tier1-configsync`: to identify which git revision of `tier1-infra` the Config Sync operator should observe.
 
@@ -31,7 +31,7 @@ The automated script creates a project, the FW settings, a Cloud router, a Cloud
 The script requires a `.env` file to deploy the environment.
 
 1. Start a new change for your `tier1-infra` repo, follow the "Step 1 - Setup" section of [Changing.md](./Changing.md).
-    - Sandbox
+    - Experimentation
 
         repo name = `gcp-sandbox-tier1-infra`
     - DEV, UAT, PROD
@@ -92,8 +92,8 @@ Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of th
         ```bash
         export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
 
-        # for sandbox
-        export PKG_PATH='solutions/hierarchy/core-sandbox'
+        # for experimentation
+        export PKG_PATH='solutions/hierarchy/core-experimentation'
         # OR
         # for dev, uat, prod
         export PKG_PATH='solutions/hierarchy/core-env'
@@ -138,7 +138,7 @@ Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of th
         ```bash
         export FILE_TO_CUSTOMIZE='landing-zone/org-policies/setters.yaml'
         ```
-        For sandbox, you may also want to remove some org policies.
+        For experimentation, you may also want to remove some org policies.
     
 1. The logging package:
     
