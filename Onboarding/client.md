@@ -5,7 +5,7 @@
 1. Client's Name
 1. When creating the name of a client folder, it must adhere to a bilingual nomenclature and leverage the official abbreviation list of current Government of Canada departments, agencies, Crown Corporations and special operating agencies: [https://www.canada.ca/en/government/dept.html](https://www.canada.ca/en/government/dept.html).
 
-   For example, when creating a client folder to represent Shared Services Canada, employ both the official English and French abbreviation separated by a dash (e.g. SSC-SPC).
+   For example, when creating a client folder to represent Shared Services Canada, employ both the official English and French abbreviation separated by a dash (e.g. ssc-spc).
 
    ![folder](img/departments-and-agencies-en-ssc.png)
 
@@ -43,7 +43,7 @@
 1. Get the hierarchy/client package
     - Experimentation
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/client-sandbox@main ./landing-zone/hierarchy/clients/<client name>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/client-experimentation@main ./landing-zone/hierarchy/clients/<client name>
       ```
 
     - DEV, UAT, PROD

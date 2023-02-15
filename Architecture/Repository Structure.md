@@ -22,9 +22,9 @@ The process to implement a code change goes like this:
 The git repos are organized in different categories:
 - `gcp-documentation` (this repo) contains documentation for the landing zone.
 - Deployment repos: two types exists, one to manage Config Sync repos, the other to store infrastructure configurations.
-    - `gcp-tier1-configsync` is where the initial `root-sync` object is pointing and is used to manage the root sync objects and versioning of the tier1 infrastructure in sandbox, dev, uat and prod.
+    - `gcp-tier1-configsync` is where the initial `root-sync` object is pointing and is used to manage the root sync objects and versioning of the tier1 infrastructure in experimentation, dev, uat and prod.
     - `gcp-tier1-infra` contains the landing zone configs for dev, uat and prod.
-    - `gcp-sandbox-tier1-infra` contains the landing zone configs for experimentation.
+    - `gcp-experimentation-tier1-infra` contains the landing zone configs for experimentation.
 - `gcp-tools` contains common scripts and pipeline templates used by repos above as a git submodule.
 - `gcp-blueprints-catalog` **private repo** contains SSC specific packages that are used to build a landing zone.
 
@@ -33,7 +33,7 @@ TODO: tier2 and tier3 repos
 ## Deployment Repos
 These repos have a common directory structure with slight variations. 
 
-Below is a brief explanation of key repo components.  Some directories include sub-directories for each environment it configures (sandbox, dev, uat, prod).  For simplicity, they will be expressed below as `<env_subdirs>`.
+Below is a brief explanation of key repo components.  Some directories include sub-directories for each environment it configures (experimentation, dev, uat, prod).  For simplicity, they will be expressed below as `<env_subdirs>`.
 
 - `repo root`:
     - `.azure-pipelines` or `.github`: pipelines YAML files.

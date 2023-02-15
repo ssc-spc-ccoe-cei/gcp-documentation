@@ -32,7 +32,7 @@
 1. Locally clone the landing zone repo for this environment
 1. Create a branch from main
 
-## Add client's workload to the landing zone repository
+## Add client's application to the landing zone repository
 
 1. Move into source-base folder
     ```
@@ -43,12 +43,12 @@
     *Some folders may need to be created beforehand like `<data classification>`
     - Experimentation
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@main ./landing-zone/hierarchy/clients/<client name>/Workloads/<project-id>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@main ./landing-zone/hierarchy/clients/<client name>/applications/<project-id>
       ```
 
     - DEV, UAT, PROD
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@main ./landing-zone/hierarchy/clients/<client name>/Workloads/<data classification>/<project-id>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@main ./landing-zone/hierarchy/clients/<client name>/applications/<data classification>/<project-id>
       ```
 
 1. To modify any of the files in this package (like setters.yaml) follow this generic guidance
