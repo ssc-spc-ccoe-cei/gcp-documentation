@@ -18,7 +18,7 @@ As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops)
 
 The steps assume these repos have already been created by following the "Create New Deployment Repo" section in [Repositories.md](./Repositories.md):
 - One of the two infra repos:
-    - `gcp-sandbox-tier1-infra`: if building a experimentation landing-zone.
+    - `gcp-experimentation-tier1-infra`: if building a experimentation landing-zone.
     - `gcp-tier1-infra`: if building a dev, uat or prod landing-zone.
 - `gcp-tier1-configsync`: to identify which git revision of `tier1-infra` the Config Sync operator should observe.
 
@@ -33,7 +33,7 @@ The script requires a `.env` file to deploy the environment.
 1. Start a new change for your `tier1-infra` repo, follow the "Step 1 - Setup" section of [Changing.md](./Changing.md).
     - Experimentation
 
-        repo name = `gcp-sandbox-tier1-infra`
+        repo name = `gcp-experimentation-tier1-infra`
     - DEV, UAT, PROD
 
         repo name = `gcp-tier1-infra`
