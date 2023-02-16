@@ -11,9 +11,9 @@
     ```
     cd source-base
     ```
-1. get the hierarchy/admin-sandbox package
+1. get the hierarchy/admin-experimentation package
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/admin-sandbox@main ./landing-zone/hierarchy/Testing/Admins/<admin name>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/admin-experimentation@main ./landing-zone/hierarchy/tests/admins/<admin name>
       ```
 1. To modify any of the files in this package (like setters.yaml) follow this generic guidance
   

@@ -80,7 +80,7 @@ TODO: update diagram to reflect experimentation
   - Cloud NAT
   - DNS logging policy
 
-  ![sandbox networking](img/sandbox-networking.png)
+  ![experimentation networking](img/experimentation-networking.png)
 
 ## DEV, UAT and PROD (UNDER CONSTRUCTION)
 

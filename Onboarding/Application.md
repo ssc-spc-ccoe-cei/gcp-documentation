@@ -1,4 +1,4 @@
-# Workload Onboarding
+# Application Onboarding
 
 ## Required Information
 ### Common

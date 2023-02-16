@@ -34,14 +34,14 @@ This section will implement the Infra repo
 1. Create a new `tier1-infra` repo in your Azure Devops project
     - Experimentation
           
-        repo name = `gcp-sandbox-tier1-infra`
+        repo name = `gcp-experimentation-tier1-infra`
     - DEV, UAT, PROD
 
         repo name = `gcp-tier1-infra`
 1. Clone locally the `gcp-repo-template` in order to build the new `tier1-infra` repo
     - Experimentation
       ```bash
-      git clone https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git gcp-sandbox-tier1-infra
+      git clone https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git gcp-experimentation-tier1-infra
       ```
     
     - DEV, UAT, PROD
@@ -51,7 +51,7 @@ This section will implement the Infra repo
 1. Move into the new folder corresponding to that repo
     - Experimentation
         ```bash
-        cd gcp-sandbox-tier1-infra
+        cd gcp-experimentation-tier1-infra
         ```
     - DEV, UAT, PROD
         ```bash
