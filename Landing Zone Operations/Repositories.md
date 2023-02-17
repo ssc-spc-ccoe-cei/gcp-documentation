@@ -7,7 +7,7 @@ SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-decl
 As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo.
 
 ## Create New Deployment Repo
-Deployment repos are initially created the same way, from cloning [gcp-repo-template](https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git).  These steps will need to be repeated for each repo name.  For example, `gcp-sandbox-tier1-infra`, `gcp-tier1-configsync`, etc.
+Deployment repos are initially created the same way, from cloning [gcp-repo-template](https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git).  These steps will need to be repeated for each repo name.  For example, `gcp-experimentation-tier1-infra`, `gcp-tier1-configsync`, etc.
 
 The git credentials will need to be appropriately set for your AzDO org.
 
@@ -60,7 +60,7 @@ The git credentials will need to be appropriately set for your AzDO org.
         rm --recursive '.azure-pipelines'
         ```
 1. For **`Infra`** repos, remove the environment sub-directories which are not required. **Never delete '.gitkeep' files in folders that remain.**
-    - If the repo is for sandbox. For example, `gcp-sandbox-tier1-infra`:
+    - If the repo is for experimentation. For example, `gcp-experimentation-tier1-infra`:
         ```bash
         # remove the 'dev', 'uat' and 'prod' sub-directories
         for env_subdir in dev uat prod; do
@@ -70,8 +70,8 @@ The git credentials will need to be appropriately set for your AzDO org.
         ```
     - If the repo is for dev, uat and prod. For example, `gcp-tier1-infra`:
         ```bash
-        # remove the 'sandbox' sub-directory
-        for env_subdir in sandbox; do
+        # remove the 'experimentation' sub-directory
+        for env_subdir in experimentation; do
             rm --recursive "deploy/${env_subdir}/"
             rm --recursive "source-customization/${env_subdir}/"
         done

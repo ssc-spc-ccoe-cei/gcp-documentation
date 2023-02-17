@@ -80,7 +80,7 @@ TODO: update diagram to reflect experimentation
   - Cloud NAT
   - DNS logging policy
 
-  ![sandbox networking](img/sandbox-networking.png)
+  ![experimentation networking](img/experimentation-networking.png)
 
 ## DEV, UAT and PROD (UNDER CONSTRUCTION)
 
@@ -124,7 +124,7 @@ TODO: provide an example
 
 ### Repositories naming convention
 
-The diagram below describes the naming convention for repositories and uses NRCan, as a tenant, to provide examples.
+The diagram below describes the naming convention for repositories and uses na, as a client, to provide examples.
 
 ![naming](img/naming-repos.png)
 

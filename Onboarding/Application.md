@@ -1,12 +1,12 @@
-# Workload Onboarding
+# Application Onboarding
 
 ## Required Information
 ### Common
 
-1. Naming convention for project-id : `<tenant-code><environment-code><region-code><data-classification>`-`<project-owner>`-`<user defined string>`
+1. Naming convention for project-id : `<client-code><environment-code><region-code><data-classification>`-`<project-owner>`-`<user defined string>`
 
     *Notice the 2 "-" before and after `<project-owner>`
-    - tenant-code (2 characters)
+    - client-code (2 characters)
     - environment-code (1 character)
     - region-code (1 character) : "m" projects are always a global/multi-region resource
     - data-classification (1 character): "u" or "a" or "b"
@@ -15,7 +15,7 @@
     
 1. Billing Account ID to be associated with this project
 
-### Sandbox
+### Experimentation
 
 1. user, group or serviceAccount with editor role at project level
   
@@ -32,7 +32,7 @@
 1. Locally clone the landing zone repo for this environment
 1. Create a branch from main
 
-## Add tenant's workload to the landing zone repository
+## Add client's application to the landing zone repository
 
 1. Move into source-base folder
     ```
@@ -41,14 +41,14 @@
 1. Get the workload package
     
     *Some folders may need to be created beforehand like `<data classification>`
-    - Sandbox
+    - Experimentation
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-sandbox@main ./landing-zone/hierarchy/Tenants/<tenant name>/Workloads/<project-id>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@main ./landing-zone/hierarchy/clients/<client name>/applications/<project-id>
       ```
 
     - DEV, UAT, PROD
       ```
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-sandbox@main ./landing-zone/hierarchy/Tenants/<tenant name>/Workloads/<data classification>/<project-id>
+      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@main ./landing-zone/hierarchy/clients/<client name>/applications/<data classification>/<project-id>
       ```
 
 1. To modify any of the files in this package (like setters.yaml) follow this generic guidance

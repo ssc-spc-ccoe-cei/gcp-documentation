@@ -74,7 +74,7 @@ It will need to be customized for each environment.  This is a manual process, a
     # for example, 'landing-zone/org-policies/setters.yaml'
     export FILE_TO_CUSTOMIZE=''
 
-    for env_subdir in sandbox dev uat prod; do
+    for env_subdir in experimentation dev uat prod; do
         # check if env. folder exists in source-customization
         if [ -d "../source-customization/${env_subdir}" ]; then
             # copy the file, with no overwrite, keeping full path
@@ -85,8 +85,8 @@ It will need to be customized for each environment.  This is a manual process, a
 1. Ensure all files copied under `source-customization` have been edited to reflect each environment.
     > ***Advanced customization tip.***<br>
     In some cases, certain resource YAML files may need to be edited for some environments, but not others.  This should be avoided as much as possible because it  complicates the update process.<br>
-    For example, to completely remove a specific org policy from sandbox:<br>
-        - Copy that org policy's YAML file in the sandbox customization folder, ***making sure to maintain the same directory structure***.<br> 
+    For example, to completely remove a specific org policy from experimentation:<br>
+        - Copy that org policy's YAML file in the experimentation customization folder, ***making sure to maintain the same directory structure***.<br> 
         - Put the entire file in a comment block.<br>
         - The hydration process will then ignore this commented resource definition, effectively removing it.
 1. Review all customizations with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
@@ -176,7 +176,7 @@ Follow these steps to remove a package:
     ```
 1. Remove the customization for each environment:
     ```bash
-    for env_subdir in sandbox dev uat prod; do
+    for env_subdir in experimentation dev uat prod; do
         # check if env. folder exists in source-customization
         if [ -d "${env_subdir}/${PKG_PATH}" ]; then
             rm --recursive "${env_subdir}/${PKG_PATH}"
