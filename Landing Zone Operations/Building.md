@@ -35,7 +35,7 @@ This section will implement the Infra repo
     - Experimentation
           
         repo name = `gcp-experimentation-tier1-infra`
-    - DEV, UAT, PROD
+    - DEV, PREPROD, PROD
 
         repo name = `gcp-tier1-infra`
 1. Clone locally the `gcp-repo-template` in order to build the new `tier1-infra` repo
@@ -44,7 +44,7 @@ This section will implement the Infra repo
       git clone https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git gcp-experimentation-tier1-infra
       ```
     
-    - DEV, UAT, PROD
+    - DEV, PREPROD, PROD
         ```bash
         git clone https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git gcp-tier1-infra
         ```
@@ -53,7 +53,7 @@ This section will implement the Infra repo
         ```bash
         cd gcp-experimentation-tier1-infra
         ```
-    - DEV, UAT, PROD
+    - DEV, PREPROD, PROD
         ```bash
         cd gcp-tier1-infra
         ```
@@ -178,7 +178,7 @@ Now let's deploy that first root-sync that will make the magic happen and get yo
       git:
         repo: <REPO_URL> # This is the url to your gcp-tier1-configsync repo
         branch: main
-        dir: deploy/<env> # env should be replaced by experimentation or dev or uat or prod depending on what landing zone you are building
+        dir: deploy/<env> # env should be replaced by experimentation or dev or preprod or prod depending on what landing zone you are building
         revision: HEAD
         auth: token
         secretRef:

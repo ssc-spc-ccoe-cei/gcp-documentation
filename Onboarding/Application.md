@@ -22,7 +22,7 @@
     **user or group has to exist in a Google Cloud Identity (any existing domain)**
 
 
-### DEV, UAT, PROD (UNDER CONSTRUCTION)
+### DEV, PREPROD, PROD (UNDER CONSTRUCTION)
 
 1. Host Project ID (with a Shared VPC) that exist to connect this workload/service project
 
@@ -46,7 +46,7 @@
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@main ./landing-zone/hierarchy/clients/<client name>/applications/<project-id>
       ```
 
-    - DEV, UAT, PROD
+    - DEV, PREPROD, PROD
       ```
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@main ./landing-zone/hierarchy/clients/<client name>/applications/<data classification>/<project-id>
       ```
