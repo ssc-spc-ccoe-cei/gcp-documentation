@@ -144,4 +144,24 @@ TODO: provide more details once network design is finalized
 
 ## Links
 
-1. [https://cloud.google.com/config-connector/docs/reference/overview](https://cloud.google.com/config-connector/docs/reference/overview)
+[Config Connector Overview](https://cloud.google.com/config-connector/docs/reference/overview)
+
+## Google Cloud Developer Resources
+
+High level overview of some of the Google Cloud resource types to accelerate the design and deployment of your workload
+
+### Public and private dns zone
+
+[Cloud DNS Overview](https://cloud.google.com/dns/docs/overview/)
+
+[Cloud Domains Overview](https://cloud.google.com/domains/docs/overview)
+
+
+
+### Cloud Armor
+
+
+### Vpc Service Controls
+
+
+### kpt
