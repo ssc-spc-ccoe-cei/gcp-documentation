@@ -24,7 +24,7 @@ These resolvers are *anycast addresses* with requests being routed to the neares
 
 [Cloud DNS Overview](https://cloud.google.com/dns/docs/overview/)
 
-[Cloud Domains Overview](https://cloud.google.com/domains/docs/overview)
+[Cloud Domains Overview](https://cloud.google.com/domains/docs/overview)  
 
 
 
