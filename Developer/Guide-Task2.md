@@ -71,7 +71,7 @@ https://cloud.google.com/dns/docs/zones/cross-project-binding
 
 #### [Cloud Armor Overview ](https://cloud.google.com/armor/docs/cloud-armor-overview)
 
-Cloud Armor is a security focused product the helps protect your *service*. Cloud Armor is tightly coupled with Cloud Load Balancer. Cloud Armor protects your network services, typically behind a load balancer from DOS and other web based attacks. Enforcement is managed at the edge Point of Presence (POP), as close to the source traffic as possible. Traffic can be filtered and defended against at layer 7 of the OSI model. 
+Google Cloud Armor is a DDoS and application defense service the helps protect your *service*. Cloud Armor is tightly coupled with the Global HTTPS(S) Cloud Load Balancer. Cloud Armor protects your network services, typically behind a load balancer from DOS and other web based attacks. Enforcement is managed at the edge Point of Presence (POP), as close to the source traffic as possible. Traffic can be filtered and defended against at layer 7 of the OSI model. 
 
 
 ##### Cloud Armour Encompasses:
@@ -80,6 +80,7 @@ Cloud Armor is a security focused product the helps protect your *service*. Clou
 * Whitelist / Blacklist IP's
 
 ##### Cloud Armor Policies & Ordering:
+
 - Rules (allow) [Priority 1]
 - Rules (Deny) [Priority 2]
 
@@ -101,12 +102,28 @@ Cloud Armor is a security focused product the helps protect your *service*. Clou
 ####  Cloud Armor Documentation of Interest
 
 [Use cases](https://cloud.google.com/armor/docs/common-use-cases)  
-[Security Policies](https://cloud.google.com/armor/docs/configure-security-policies#https-load-balancer)
+[Security Policies](https://cloud.google.com/armor/docs/configure-security-policies#https-load-balancer)  
+[Rules Language Reference](https://cloud.google.com/armor/docs/rules-language-reference)
+[Cloud Armor Standard VS Managed Protection Plus](https://cloud.google.com/armor/docs/managed-protection-overview#standard_versus_plus)  
 
 
-### Vpc Service Controls
 
-VPC service controls allow blocking or restriction of api services within a VPC. 
+
+### Vpc Service Controls  
+
+
+VPC service controls allow blocking or restriction of api services within a Project
+
+-Protects against data exfiltration  
+-Create A perimeter  
+  - Apply to a Project
+  - Add services to restrict such as the storage API
+- 
+
+
+
+
+
 
 ### kpt@
 
