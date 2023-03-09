@@ -78,4 +78,4 @@ VPC service controls allow blocking or restriction of api services within a VPC.
 
 ### kpt
 
-KPT is an open source project used to hydrate yaml, get packages, apply functions, search and replace in yaml manifests.  
+[KPT](https://kpt.dev/?id=overview) is an open source project used to hydrate yaml, get packages, apply functions, search and replace in yaml manifests.  
