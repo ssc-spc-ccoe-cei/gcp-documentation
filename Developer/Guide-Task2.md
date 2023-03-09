@@ -1,4 +1,6 @@
-## Google Cloud Developer Resources - DNS
+# Google Cloud Developer Resources 
+
+## DNS
 
 High level overview of some of the Google Cloud resource types to accelerate the design and deployment of your *workload*  
 
@@ -28,10 +30,19 @@ Google provides a very good [High level document](https://cloud.google.com/dns/d
 Internal DNS names are names that Google Cloud creates automatically. Available in a single VPC by default, resolved by the metadata server (169.254.169.254). Google Cloud automatically creates, updates, and removes these DNS records. Please see [Internal DNS zone documentation](https://cloud.google.com/compute/docs/internal-dns)
 
 #### Private Zones
-
+ 
 Managed custom domain names for virtual machines and other GCP resources without exposing the DNS data to the public internet. Please see [Private Zone Documentation]()
 
 Unless you have specified an alternative name server in an outbound server policy, Google Cloud first attempts to find a record in a private zone (or forwarding zone or peering zone) authorized for your VPC network before it looks for the record in a public zone.
+
+##### Options
+
+* [Forward Queries to another server](https://cloud.google.com/dns/docs/zones/forwarding-zones)
+* [DNS Peering](https://cloud.google.com/dns/docs/zones/peering-zones)
+* [Managed Reverse Lookup Zone](https://cloud.google.com/dns/docs/zones/managed-reverse-lookup-zones)
+
+
+
 
 #### Public, External DNS Zone
 
@@ -46,23 +57,25 @@ Create DNS records in public zones to publish your service on the internet. Plea
 These resolvers are *anycast addresses* with requests being routed to the nearest location advertising the address.
 
 
-### Cross Project Binding
+
+#### Cross Project Binding
+
+Cross project binding is used to manage private DNS zones that service another project in the same organization.
 
 https://cloud.google.com/dns/docs/zones/zones-overview#cross-project_binding
 
+https://cloud.google.com/dns/docs/zones/cross-project-binding
 
 
 
+## Google Cloud Developer Resources - Cloud Armor
 
-#### 
-
-
-
-
-### Cloud Armor
-
+Cloud Armor is tightly integrated with Cloud Load Balancer.
 
 ### Vpc Service Controls
 
+VPC service controls allow blocking or restriction of api services within a VPC. 
 
 ### kpt
+
+KPT is an open source project used to hydrate yaml, get packages, apply functions, search and replace in yaml manifests.  
