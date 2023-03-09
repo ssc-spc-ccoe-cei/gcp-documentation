@@ -67,15 +67,47 @@ https://cloud.google.com/dns/docs/zones/zones-overview#cross-project_binding
 https://cloud.google.com/dns/docs/zones/cross-project-binding
 
 
+### Cloud Armor
 
-## Google Cloud Developer Resources - Cloud Armor
+#### [Cloud Armor Overview ](https://cloud.google.com/armor/docs/cloud-armor-overview)
 
-Cloud Armor is tightly integrated with Cloud Load Balancer.
+Cloud Armor is a security focused product the helps protect your *service*. Cloud Armor is tightly coupled with Cloud Load Balancer. Cloud Armor protects your network services, typically behind a load balancer from DOS and other web based attacks. Enforcement is managed at the edge Point of Presence (POP), as close to the source traffic as possible. Traffic can be filtered and defended against at layer 7 of the OSI model. 
+
+
+##### Cloud Armour Encompasses:
+
+* Policies/Rules
+* Whitelist / Blacklist IP's
+
+##### Cloud Armor Policies & Ordering:
+- Rules (allow) [Priority 1]
+- Rules (Deny) [Priority 2]
+
+##### How it works:
+
+* Create a policy with +1 rules
+    * Supply IP range(s) to apply rule to
+    * On rule/IP match: Allow/Deny traffic
+      * Overlap rules with different priorities
+    * Apply policy to Targets
+      * Target = Load balanced backend services  
+
+##### Example Policy Scopes:  
+
+* Create multiple rules, overlapping to create finer grained rules.  
+* SQL Injection Prevention (CSS), Geo based access control.  
+* Allows edge traffic blocking.  
+
+####  Cloud Armor Documentation of Interest
+
+[Use cases](https://cloud.google.com/armor/docs/common-use-cases)  
+[Security Policies](https://cloud.google.com/armor/docs/configure-security-policies#https-load-balancer)
+
 
 ### Vpc Service Controls
 
 VPC service controls allow blocking or restriction of api services within a VPC. 
 
-### kpt
+### kpt@
 
 [KPT](https://kpt.dev/?id=overview) is an open source project used to hydrate yaml, get packages, apply functions, search and replace in yaml manifests.  
