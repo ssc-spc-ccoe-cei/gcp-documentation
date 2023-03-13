@@ -43,7 +43,6 @@ Example of policy use cases
 # Shared Services Canada - GCP Landing zone
 
 SSC has built 4 distinct GCP organizations to isolate each environment from each other. The environments are experimentation, DEV, PREPROD and PROD.
-TODO: update diagram to reflect experimentation
 
 ![organizations](img/organizations.png)
 
