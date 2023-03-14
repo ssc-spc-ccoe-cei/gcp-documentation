@@ -46,7 +46,7 @@
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/client-experimentation@main ./landing-zone/hierarchy/clients/<client name>
       ```
 
-    - DEV, UAT, PROD
+    - DEV, PREPROD, PROD
       ```
       kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/client-env@main ./landing-zone/hierarchy/clients/<client name>
       ```
@@ -64,7 +64,7 @@
     Refer to the `Publish` section of the [Changing.md](Changing.md)
 
 
-## Add client Tier2-ConfigSync (DEV, UAT, PROD only) (UNDER CONSTRUCTION)
+## Add client Tier2-ConfigSync (DEV, PREPROD, PROD only) (UNDER CONSTRUCTION)
 
 TODO: complete this steps
 

@@ -74,7 +74,7 @@ It will need to be customized for each environment.  This is a manual process, a
     # for example, 'landing-zone/org-policies/setters.yaml'
     export FILE_TO_CUSTOMIZE=''
 
-    for env_subdir in experimentation dev uat prod; do
+    for env_subdir in experimentation dev preprod prod; do
         # check if env. folder exists in source-customization
         if [ -d "../source-customization/${env_subdir}" ]; then
             # copy the file, with no overwrite, keeping full path
@@ -176,7 +176,7 @@ Follow these steps to remove a package:
     ```
 1. Remove the customization for each environment:
     ```bash
-    for env_subdir in experimentation dev uat prod; do
+    for env_subdir in experimentation dev preprod prod; do
         # check if env. folder exists in source-customization
         if [ -d "${env_subdir}/${PKG_PATH}" ]; then
             rm --recursive "${env_subdir}/${PKG_PATH}"
@@ -239,15 +239,15 @@ This example will focus on `gcp-tier1-infra` and `gcp-tier1-configsync`:
     - Hydrate the repo and create a PR.
     - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/dev`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
-    - Validate landing zone and workload functionalities for the `dev` environment in GCP.  Proceed to `uat` if successful, restart the process if not.
-1. `uat`:
-    - Set `version:` in `source-customization/uat/tier1-root-sync/setters-version.yaml` to the same value as `dev`.
+    - Validate landing zone and workload functionalities for the `dev` environment in GCP.  Proceed to `preprod` if successful, restart the process if not.
+1. `preprod`:
+    - Set `version:` in `source-customization/preprod/tier1-root-sync/setters-version.yaml` to the same value as `dev`.
     - Hydrate the repo and create a PR.
-    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/uat`.
+    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/preprod`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
-    - Validate landing zone and workload functionalities for the `uat` environment in GCP.  Proceed to `prod` if successful, restart the process if not.
+    - Validate landing zone and workload functionalities for the `preprod` environment in GCP.  Proceed to `prod` if successful, restart the process if not.
 1. `prod`:
-    - Set `version:` in `source-customization/prod/tier1-root-sync/setters-version.yaml` to the same value as `uat`.
+    - Set `version:` in `source-customization/prod/tier1-root-sync/setters-version.yaml` to the same value as `preprod`.
     - Hydrate the repo and create a PR.
     - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/prod`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.

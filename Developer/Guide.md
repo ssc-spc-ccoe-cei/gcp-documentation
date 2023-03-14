@@ -42,8 +42,7 @@ Example of policy use cases
 
 # Shared Services Canada - GCP Landing zone
 
-SSC has built 4 distinct GCP organizations to isolate each environment from each other. The environments are experimentation, DEV, UAT and PROD.
-TODO: update diagram to reflect experimentation
+SSC has built 4 distinct GCP organizations to isolate each environment from each other. The environments are experimentation, DEV, PREPROD and PROD.
 
 ![organizations](img/organizations.png)
 
@@ -82,11 +81,11 @@ TODO: update diagram to reflect experimentation
 
   ![experimentation networking](img/experimentation-networking.png)
 
-## DEV, UAT and PROD (UNDER CONSTRUCTION)
+## DEV, PREPROD and PROD (UNDER CONSTRUCTION)
 
-The DEV environment is where you will be developing your application. UAT and PROD should be used for code promotion with your choice of CD pipeline.
+The DEV environment is where you will be developing your application. PREPROD and PROD should be used for code promotion with your choice of CD pipeline.
 
-As you may expect, the number of security controls implemented for DEV, UAT and PROD is much larger than for the experimentation environment. The 12 `30 days guardrails` and numerous additional ITSG 33 controls are enforced within these environments so that you can streamline the ATO process of your applications by leveraging the ATO of the SSC GCP landing zone.
+As you may expect, the number of security controls implemented for DEV, PREPROD and PROD is much larger than for the experimentation environment. The 12 `30 days guardrails` and numerous additional ITSG 33 controls are enforced within these environments so that you can streamline the ATO process of your applications by leveraging the ATO of the SSC GCP landing zone.
 
 ### Cost
 
@@ -94,7 +93,7 @@ Your projects are linked to a GCP billing account owned by **"your organization"
 
 ### Permissions
 
-Your team (developers) gets granted `Viewer` role on the GCP project in the Dev organization only. To enforce separation of duties, it is the application operator that is granted that same role for the UAT and PROD organization.
+Your team (developers) gets granted `Viewer` role on the GCP project in the Dev organization only. To enforce separation of duties, it is the application operator that is granted that same role for the PREPROD and PROD organization.
 
 ### Working with GCP
 
@@ -114,7 +113,7 @@ So, when you want a change implemented on your tier 2 repo, you have two options
 
 Once that change is merged into the main branch, a new tag on the repo gets created. That tag is a version number following the [standard](https://semver.org/) major.minor.patch. TODO: update with tagging process requirements (changelog, etc.)
 
-ConfigSync is not configured to observe the main branch, instead, it is configured to watch a specific tag on the `Infra` repo. If you want to get your new version in effect for DEV, UAT or PROD, you need to change that tag inside the `ConfigSync` repo.
+ConfigSync is not configured to observe the main branch, instead, it is configured to watch a specific tag on the `Infra` repo. If you want to get your new version in effect for DEV, PREPROD or PROD, you need to change that tag inside the `ConfigSync` repo.
 
 That full process is illustrated in this diagram
 
