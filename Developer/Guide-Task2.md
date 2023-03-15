@@ -108,24 +108,37 @@ Google Cloud Armor is a DDoS and application defense service the helps protect y
 
 
 
-
 ### Vpc Service Controls  
 
 #### [VPC Service Controls Overview](https://cloud.google.com/vpc-service-controls/docs/overview)
 
+#### *Important* [Terminology](https://cloud.google.com/vpc-service-controls/docs/overview#terminology) 
 
+A service perimeter creates a security boundary around Google Cloud resources. You can configure a perimeter to control communications from virtual machines (VMs) to a Google Cloud service (API), and between Google Cloud services. A perimeter allows free communication within the perimeter but, by default, blocks communication to Google Cloud services across the perimeter. The perimeter does not block access to any third-party API or services in the internet. [Reference doc.](https://cloud.google.com/vpc-service-controls/docs/overview#isolate)  
+
+
+#### Quick Start
+
+[Learn](https://cloud.google.com/vpc-service-controls/docs/set-up-service-perimeter) how to set up a service perimeter using VPC Service Controls in the Google Cloud console.
+
+#### General information
 VPC service controls allow blocking or restriction of api services at the Project or VPC network level 
 
--Protects against data exfiltration  
--Create A perimeter  
+- Protects against data exfiltration  
+- Create a perimeter  
   - Apply to a Project
   - Add services to restrict such as the storage API
-- 
+
+#### Access Contexts 
+
+[Access Context Levels](https://cloud.google.com/vpc-service-controls/docs/use-access-levels)
 
 
 ### Config Sync
 
+Config Sync is a GitOps service offered as a part of Anthos. Config Sync is built on an open source core and lets cluster operators and platform administrators deploy configurations from a source of truth. The service has the flexibility to support one or many clusters and any number of repositories per cluster or namespace. The clusters can be in a hybrid or multi-cloud environment.
 
+[Config Sync](https://cloud.google.com/anthos-config-management/docs/config-sync-overview) overview
 
 
 
