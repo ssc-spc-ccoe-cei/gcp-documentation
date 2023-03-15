@@ -136,13 +136,29 @@ VPC service controls allow blocking or restriction of api services at the Projec
 
 ### Config Sync
 
-Config Sync is a GitOps service offered as a part of Anthos. Config Sync is built on an open source core and lets cluster operators and platform administrators deploy configurations from a source of truth. The service has the flexibility to support one or many clusters and any number of repositories per cluster or namespace. The clusters can be in a hybrid or multi-cloud environment.
+Config Sync is a GitOps service offered as a part of Anthos. Config Sync is built on an open source core and lets cluster operators and platform administrators deploy configurations from a source of truth. The service has the flexibility to support one or many clusters and any number of repositories per cluster or namespace. The clusters can be in a hybrid or multi-cloud environment.  
 
-[Config Sync](https://cloud.google.com/anthos-config-management/docs/config-sync-overview) overview
+Config Sync continuously reconciles the state of Config Controller with files stored in one or more Git repositories. This GitOps strategy lets you manage and deploy common configurations with a process that is auditable, transactional, reviewable, and version-controlled.  
+
+Config Sync [overview](https://cloud.google.com/anthos-config-management/docs/config-sync-overview)  
+
+Getting started with [Config Sync](https://cloud.google.com/anthos-config-management/docs/tutorials/config-sync-multi-repo)
+
+#### Tools and Utilities
+
+[Nomos](https://cloud.google.com/anthos-config-management/docs/how-to/nomos-command)  
+[Kubectl](https://cloud.google.com/anthos-config-management/docs/how-to/configure-config-sync-kubectl)  
 
 
+### kpt
 
+[KPT Readme.md](https://github.com/GoogleContainerTools/kpt/#readme) is an open source project used to hydrate yaml, get packages, apply functions, search and replace in yaml manifests. kpt is a package centric toolchain that enables a WYSIWYG configuration authoring and authoring enabling tool
 
-### kpt@
+[WYSIWYG Config as Data Demo Video](https://youtu.be/L_x7z4CXHDw)
 
-[KPT](https://kpt.dev/?id=overview) is an open source project used to hydrate yaml, get packages, apply functions, search and replace in yaml manifests.  
+kpt [installation...](https://kpt.dev/installation/)
+
+kpt [functions catalog](https://catalog.kpt.dev/?id=curated-functions-catalog)
+
+**Important:**  Please note that kpt is available through the gcloud components, however you may wish to use a specific version, or newer version than that is provided by the gcloud SDK.
+
