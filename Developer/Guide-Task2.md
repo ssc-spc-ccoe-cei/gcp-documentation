@@ -111,14 +111,19 @@ Google Cloud Armor is a DDoS and application defense service the helps protect y
 
 ### Vpc Service Controls  
 
+#### [VPC Service Controls Overview](https://cloud.google.com/vpc-service-controls/docs/overview)
 
-VPC service controls allow blocking or restriction of api services within a Project
+
+VPC service controls allow blocking or restriction of api services at the Project or VPC network level 
 
 -Protects against data exfiltration  
 -Create A perimeter  
   - Apply to a Project
   - Add services to restrict such as the storage API
 - 
+
+
+### Config Sync
 
 
 
