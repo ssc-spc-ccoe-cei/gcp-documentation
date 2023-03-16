@@ -1,6 +1,45 @@
 # Google Cloud Developer Resources 
 
-[The ultimate infographic on GCP products for Developers](https://googlecloudcheatsheet.withgoogle.com/)  
+### Table of Contents
+
+  - [Fun Links](#fun-links)
+  - [DNS](#dns)
+    - [General DNS knowledge](#general-dns-knowledge)
+    - [DNS overview](#dns-overview)
+    - [GCP DNS Key Terms](#gcp-dns-key-terms)
+    - [Google Cloud Specific Documentation](#google-cloud-specific-documentation)
+    - [DNS Zones](#dns-zones)
+    - [Internal DNS](#internal-dns)
+    - [Private Zones](#private-zones)
+      - [Options](#options)
+    - [Public, External DNS Zone](#public-external-dns-zone)
+      - [Anycast Resolution](#anycast-resolution)
+    - [Cross Project Binding](#cross-project-binding)
+  - [Cloud Armor](#cloud-armor)
+    - [Cloud Armor Overview ](#cloud-armor-overview-)
+      - [Cloud Armour Encompasses:](#cloud-armour-encompasses)
+      - [Cloud Armor Policies \& Ordering:](#cloud-armor-policies--ordering)
+      - [How it works:](#how-it-works)
+      - [Example Policy Scopes:](#example-policy-scopes)
+    - [Cloud Armor Documentation of Interest](#cloud-armor-documentation-of-interest)
+  - [Vpc Service Controls](#vpc-service-controls)
+    - [VPC Service Controls Overview](#vpc-service-controls-overview)
+    - [*Important* Terminology](#important-terminology)
+    - [Quick Start](#quick-start)
+    - [General information](#general-information)
+    - [Access Context Levels](#access-context-levels)
+  - [Config Sync](#config-sync)
+    - [Config Sync overview](#config-sync-overview)
+    - [Tools and Utilities](#tools-and-utilities)
+  - [kpt](#kpt)
+
+--------------------------------------
+
+### Fun Links
+
+Enjoy!
+
+The ultimate [infographic on GCP products](https://googlecloudcheatsheet.withgoogle.com/) for Developers 
 
 Check you regions latency using [GPCping](https://gcping.com/)
 
@@ -102,7 +141,7 @@ Google Cloud Armor is a DDoS and application defense service the helps protect y
 
 [Use cases](https://cloud.google.com/armor/docs/common-use-cases)  
 [Security Policies](https://cloud.google.com/armor/docs/configure-security-policies#https-load-balancer)  
-[Rules Language Reference](https://cloud.google.com/armor/docs/rules-language-reference)
+[Rules Language Reference](https://cloud.google.com/armor/docs/rules-language-reference)  
 [Cloud Armor Standard VS Managed Protection Plus](https://cloud.google.com/armor/docs/managed-protection-overview#standard_versus_plus)  
 
 ### Vpc Service Controls  
@@ -155,4 +194,3 @@ kpt [installation](https://kpt.dev/installation/)
 kpt [functions catalog](https://catalog.kpt.dev/?id=curated-functions-catalog)
 
 **Important:**  Please note that kpt is available through the gcloud components, however you may wish to use a specific version, or newer version than that is provided by the gcloud SDK.
-
