@@ -142,26 +142,6 @@ TODO: provide more details once network design is finalized
 - CCCS
     - Cloud Computing in the GC: The SA&A Process
 
-## Links
+## Landing Zone Resource Addendum
 
-[Config Connector Overview](https://cloud.google.com/config-connector/docs/reference/overview)
-
-## Google Cloud Developer Resources
-
-High level overview of some of the Google Cloud resource types to accelerate the design and deployment of your workload
-
-### Public and private dns zone
-
-[Cloud DNS Overview](https://cloud.google.com/dns/docs/overview/)
-
-[Cloud Domains Overview](https://cloud.google.com/domains/docs/overview)
-
-
-
-### Cloud Armor
-
-
-### Vpc Service Controls
-
-
-### kpt
+[Resources Addendum](../Architecture/Addendum.md)
