@@ -1,4 +1,4 @@
-# Google Cloud Developer Resources 
+# Google Cloud Resources Addendum 
 
 ### Table of Contents
 
