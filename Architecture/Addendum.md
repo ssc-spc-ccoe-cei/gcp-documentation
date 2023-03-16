@@ -46,11 +46,11 @@ Check you regions latency using [GPCping](https://gcping.com/)
 
 ### DNS
 
+#### [DNS Overview](https://cloud.google.com/dns/docs/dns-overview)
+
 High level overview of some of the Google Cloud resource types to accelerate the design and deployment of your *workload*  
 
 #### General DNS knowledge
-
-#### [DNS overview](https://cloud.google.com/dns/docs/dns-overview)
 
 - DNS server types *(Authoritative, Recursive)*
 - Zones *(Public, Private, Delegated, Split brain/horizon)*
@@ -65,7 +65,6 @@ High level overview of some of the Google Cloud resource types to accelerate the
 [Cloud DNS Overview](https://cloud.google.com/dns/docs/overview/)
 
 [Cloud Domains Overview](https://cloud.google.com/domains/docs/overview)  
-
 
 #### DNS Zones
 
@@ -89,7 +88,6 @@ Unless you have specified an alternative name server in an outbound server polic
 
 Create DNS records in public zones to publish your service on the internet. Please see [Public Zone Documentation](https://cloud.google.com/dns/docs/dns-overview#public_zone). 
 
-
 ##### Anycast Resolution
 >> Google DNS has some fame associated to it for it's resiliency and global availability properties, with publicly available resolvers such as:  
 >>>  8.8.8.8  
@@ -104,13 +102,11 @@ Cross project binding is used to manage private DNS zones that service another p
 [Cross project binding Overview](https://cloud.google.com/dns/docs/zones/zones-overview#cross-project_binding)  
 [Creating a Zone with cross project binding](https://cloud.google.com/dns/docs/zones/cross-project-binding)
 
-
 ### Cloud Armor
 
 #### [Cloud Armor Overview ](https://cloud.google.com/armor/docs/cloud-armor-overview)
 
 Google Cloud Armor is a DDoS and application defense service the helps protect your *service*. Cloud Armor is tightly coupled with the Global HTTPS(S) Cloud Load Balancer. Cloud Armor protects your network services, typically behind a load balancer from DOS and other web based attacks. Enforcement is managed at the edge Point of Presence (POP), as close to the source traffic as possible. Traffic can be filtered and defended against at layer 7 of the OSI model. 
-
 
 ##### Cloud Armour Encompasses:
 
@@ -152,7 +148,6 @@ Google Cloud Armor is a DDoS and application defense service the helps protect y
 
 A service perimeter creates a security boundary around Google Cloud resources. You can configure a perimeter to control communications from virtual machines (VMs) to a Google Cloud service (API), and between Google Cloud services. A perimeter allows free communication within the perimeter but, by default, blocks communication to Google Cloud services across the perimeter. The perimeter does not block access to any third-party API or services in the internet. [Reference doc.](https://cloud.google.com/vpc-service-controls/docs/overview#isolate)  
 
-
 #### Quick Start
 
 [Learn](https://cloud.google.com/vpc-service-controls/docs/set-up-service-perimeter) how to set up a service perimeter using VPC Service Controls in the Google Cloud console.
@@ -169,7 +164,7 @@ VPC service controls allow blocking or restriction of api services at the Projec
 
 ### Config Sync
 
-#### Config Sync [overview](https://cloud.google.com/anthos-config-management/docs/config-sync-overview)  
+#### [Config Sync Overview](https://cloud.google.com/anthos-config-management/docs/config-sync-overview)  
 
 Config Sync is a GitOps service offered as a part of Anthos. Config Sync is built on an open source core and lets cluster operators and platform administrators deploy configurations from a source of truth. The service has the flexibility to support one or many clusters and any number of repositories per cluster or namespace. The clusters can be in a hybrid or multi-cloud environment.  
 
@@ -182,12 +177,9 @@ Getting started with [Config Sync](https://cloud.google.com/anthos-config-manage
 [Nomos](https://cloud.google.com/anthos-config-management/docs/how-to/nomos-command)  
 [Kubectl](https://cloud.google.com/anthos-config-management/docs/how-to/configure-config-sync-kubectl)  
 
-
 ### kpt
 
 [KPT Readme.md](https://github.com/GoogleContainerTools/kpt/#readme) is an open source project used to hydrate yaml, get packages, apply functions, search and replace in yaml manifests. kpt is a package centric toolchain that enables a WYSIWYG configuration authoring and authoring enabling tool
-
-[WYSIWYG Config as Data Demo Video](https://youtu.be/L_x7z4CXHDw)
 
 kpt [installation](https://kpt.dev/installation/)
 
