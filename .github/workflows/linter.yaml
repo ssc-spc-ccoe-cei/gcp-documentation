@@ -4,13 +4,10 @@
 ## https://github.com/github/super-linter
 #################################
 
-name: Lint Code Base
+name: linter
 
 # only run during PRs or manually
 on:
-  # push:
-  #   branches-ignore: [master, main]
-    # Remove the line above to run when pushing to master
   pull_request:
     branches: [main]
   
