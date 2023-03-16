@@ -1,13 +1,18 @@
 # Google Cloud Developer Resources 
 
-## DNS
+[The ultimate infographic on GCP products for Developers](https://googlecloudcheatsheet.withgoogle.com/)  
+
+Check you regions latency using [GPCping](https://gcping.com/)
+
+
+### DNS
 
 High level overview of some of the Google Cloud resource types to accelerate the design and deployment of your *workload*  
 
+#### General DNS knowledge
 
-### General DNS knowledge
+#### [DNS overview](https://cloud.google.com/dns/docs/dns-overview)
 
-Google provides a very good [High level document](https://cloud.google.com/dns/docs/dns-overview) on these subjects:
 - DNS server types *(Authoritative, Recursive)*
 - Zones *(Public, Private, Delegated, Split brain/horizon)*
 - Records *(A, AAAA, Cname, Mx, NS, PTR, SOA)*
@@ -41,9 +46,6 @@ Unless you have specified an alternative name server in an outbound server polic
 * [DNS Peering](https://cloud.google.com/dns/docs/zones/peering-zones)
 * [Managed Reverse Lookup Zone](https://cloud.google.com/dns/docs/zones/managed-reverse-lookup-zones)
 
-
-
-
 #### Public, External DNS Zone
 
 Create DNS records in public zones to publish your service on the internet. Please see [Public Zone Documentation](https://cloud.google.com/dns/docs/dns-overview#public_zone). 
@@ -56,15 +58,12 @@ Create DNS records in public zones to publish your service on the internet. Plea
 
 These resolvers are *anycast addresses* with requests being routed to the nearest location advertising the address.
 
-
-
 #### Cross Project Binding
 
 Cross project binding is used to manage private DNS zones that service another project in the same organization.
 
-https://cloud.google.com/dns/docs/zones/zones-overview#cross-project_binding
-
-https://cloud.google.com/dns/docs/zones/cross-project-binding
+[Cross project binding Overview](https://cloud.google.com/dns/docs/zones/zones-overview#cross-project_binding)  
+[Creating a Zone with cross project binding](https://cloud.google.com/dns/docs/zones/cross-project-binding)
 
 
 ### Cloud Armor
@@ -106,8 +105,6 @@ Google Cloud Armor is a DDoS and application defense service the helps protect y
 [Rules Language Reference](https://cloud.google.com/armor/docs/rules-language-reference)
 [Cloud Armor Standard VS Managed Protection Plus](https://cloud.google.com/armor/docs/managed-protection-overview#standard_versus_plus)  
 
-
-
 ### Vpc Service Controls  
 
 #### [VPC Service Controls Overview](https://cloud.google.com/vpc-service-controls/docs/overview)
@@ -129,18 +126,15 @@ VPC service controls allow blocking or restriction of api services at the Projec
   - Apply to a Project
   - Add services to restrict such as the storage API
 
-#### Access Contexts 
-
-[Access Context Levels](https://cloud.google.com/vpc-service-controls/docs/use-access-levels)
-
+#### [Access Context Levels](https://cloud.google.com/vpc-service-controls/docs/use-access-levels)
 
 ### Config Sync
+
+#### Config Sync [overview](https://cloud.google.com/anthos-config-management/docs/config-sync-overview)  
 
 Config Sync is a GitOps service offered as a part of Anthos. Config Sync is built on an open source core and lets cluster operators and platform administrators deploy configurations from a source of truth. The service has the flexibility to support one or many clusters and any number of repositories per cluster or namespace. The clusters can be in a hybrid or multi-cloud environment.  
 
 Config Sync continuously reconciles the state of Config Controller with files stored in one or more Git repositories. This GitOps strategy lets you manage and deploy common configurations with a process that is auditable, transactional, reviewable, and version-controlled.  
-
-Config Sync [overview](https://cloud.google.com/anthos-config-management/docs/config-sync-overview)  
 
 Getting started with [Config Sync](https://cloud.google.com/anthos-config-management/docs/tutorials/config-sync-multi-repo)
 
@@ -156,7 +150,7 @@ Getting started with [Config Sync](https://cloud.google.com/anthos-config-manage
 
 [WYSIWYG Config as Data Demo Video](https://youtu.be/L_x7z4CXHDw)
 
-kpt [installation...](https://kpt.dev/installation/)
+kpt [installation](https://kpt.dev/installation/)
 
 kpt [functions catalog](https://catalog.kpt.dev/?id=curated-functions-catalog)
 
