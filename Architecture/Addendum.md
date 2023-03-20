@@ -41,14 +41,14 @@ Enjoy!
 
 The ultimate [infographic on GCP products](https://googlecloudcheatsheet.withgoogle.com/) for Developers 
 
-Check you regions latency using [GPCping](https://gcping.com/)
+Check your regions latency using [GPCping](https://gcping.com/)
 
 
 ### DNS
 
 #### [DNS Overview](https://cloud.google.com/dns/docs/dns-overview)
 
-High level overview of some of the Google Cloud resource types to accelerate the design and deployment of your *workload*  
+High level overview of some of the Google Cloud resource types to accelerate the design and deployment of your *workload*.  
 
 #### General DNS knowledge
 
@@ -70,11 +70,11 @@ High level overview of some of the Google Cloud resource types to accelerate the
 
 #### Internal DNS
 
-Internal DNS names are names that Google Cloud creates automatically. Available in a single VPC by default, resolved by the metadata server (169.254.169.254). Google Cloud automatically creates, updates, and removes these DNS records. Please see [Internal DNS zone documentation](https://cloud.google.com/compute/docs/internal-dns)
+Internal DNS names are names that Google Cloud creates automatically. Available in a single VPC by default, resolved by the metadata server (169.254.169.254). Google Cloud automatically creates, updates, and removes these DNS records. Please see [Internal DNS zone documentation](https://cloud.google.com/compute/docs/internal-dns).
 
 #### Private Zones
  
-Managed custom domain names for virtual machines and other GCP resources without exposing the DNS data to the public internet. Please see [Private Zone Documentation]()
+Managed custom domain names for virtual machines and other GCP resources without exposing the DNS data to the public internet. Please see [Private Zone Documentation](https://cloud.google.com/dns/docs/zones#create-private-zone).
 
 Unless you have specified an alternative name server in an outbound server policy, Google Cloud first attempts to find a record in a private zone (or forwarding zone or peering zone) authorized for your VPC network before it looks for the record in a public zone.
 
@@ -111,7 +111,7 @@ Google Cloud Armor is a DDoS and application defense service the helps protect y
 ##### Cloud Armour Encompasses:
 
 * Policies/Rules
-* Whitelist / Blacklist IP's
+* Allowlist / Denylist IP's
 
 ##### Cloud Armor Policies & Ordering:
 
@@ -140,7 +140,7 @@ Google Cloud Armor is a DDoS and application defense service the helps protect y
 [Rules Language Reference](https://cloud.google.com/armor/docs/rules-language-reference)  
 [Cloud Armor Standard VS Managed Protection Plus](https://cloud.google.com/armor/docs/managed-protection-overview#standard_versus_plus)  
 
-### Vpc Service Controls  
+### VPC Service Controls  
 
 #### [VPC Service Controls Overview](https://cloud.google.com/vpc-service-controls/docs/overview)
 
@@ -179,7 +179,7 @@ Getting started with [Config Sync](https://cloud.google.com/anthos-config-manage
 
 ### kpt
 
-[KPT Readme.md](https://github.com/GoogleContainerTools/kpt/#readme) is an open source project used to hydrate yaml, get packages, apply functions, search and replace in yaml manifests. kpt is a package centric toolchain that enables a WYSIWYG configuration authoring and authoring enabling tool
+[KPT Readme.md](https://github.com/GoogleContainerTools/kpt/#readme) is an open source project used to hydrate yaml, get packages, apply functions, search and replace in yaml manifests. kpt is a package centric toolchain that enables a WYSIWYG configuration authoring and authoring enabling tool.
 
 kpt [installation](https://kpt.dev/installation/)
 
