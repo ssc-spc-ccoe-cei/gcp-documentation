@@ -141,6 +141,6 @@ TODO: provide more details once network design is finalized
 - CCCS
     - Cloud Computing in the GC: The SA&A Process
 
-## Links
+## GCP Landing Zone Resource Addendum
 
-1. [https://cloud.google.com/config-connector/docs/reference/overview](https://cloud.google.com/config-connector/docs/reference/overview)
+[Resources Addendum](../Architecture/Addendum.md)
