@@ -118,7 +118,7 @@ A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/o
 ### 4. Add Pipelines
 The repo is now created and the main branch is protected.  [Pipelines](./Pipelines.md) can be created.
 
-- All deployment repos should have the "configs-validation" pipeline.  TODO: update doc when it exists
+- **All deployment repos should have the `validate-yaml` pipeline.**
 
 - To use semantic versioning during deployment operations, the `Infra` repos can be setup with a git tagging pipeline, such as [version-tagging](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging).
 
@@ -137,7 +137,7 @@ TODO: test and add steps
 ### Update `tools` Submodule
 The tools submodule can easily be updated to a new version.
 
-Follow these steps to 
+Follow these steps to
 1. Clone the deployment repo and checkout a new branch.
 1. Edit `modversions.yaml` to pin the `tools` submodule to a new [release tag](https://github.com/ssc-spc-ccoe-cei/gcp-tools/releases) or commit SHA.
 1. Run the following to get the proper version of the tools submodule:

@@ -5,19 +5,19 @@ The diagram below shows all the infrastructure repository **types** and the **ro
 # Gitops
 The current solution is using [Config Sync](https://cloud.google.com/anthos-config-management/docs/config-sync-overview) with git repos to pull configurations for deploying GCP infrastructure.
 
-The diagram below describes the Gitops process that involves 2 repositories. 
+The diagram below describes the Gitops process that involves 2 repositories.
 - Infra
 - ConfigSync
 
 The process to implement a code change goes like this:
 
 1. The Infrastructure Admin will make code changes on the Infra repo and open a pull request. Then the CI process validates the change while reviewers can approve or deny it. Once the pull request is completed, the branch is merged into the main branch and a new git tag specifying a new version is created.
-2. The Infrastructure Admin will modify the tag value in the ConfigSync repo by setting it to the new version that got created on the Infra repo. By doing so, The ConfigSync operator running in Config Controller will start observing that new version of the Infra Repo. 
+2. The Infrastructure Admin will modify the tag value in the ConfigSync repo by setting it to the new version that got created on the Infra repo. By doing so, The ConfigSync operator running in Config Controller will start observing that new version of the Infra Repo.
  &nbsp;
 
 ![img](img/gitops.png)
 
-# Git 
+# Git
 
 The git repos are organized in different categories:
 - `gcp-documentation` (this repo) contains documentation for the landing zone.
@@ -31,7 +31,7 @@ The git repos are organized in different categories:
 TODO: tier2 and tier3 repos
 
 ## Deployment Repos
-These repos have a common directory structure with slight variations. 
+These repos have a common directory structure with slight variations.
 
 Below is a brief explanation of key repo components.  Some directories include sub-directories for each environment it configures (experimentation, dev, preprod, prod).  For simplicity, they will be expressed below as `<env_subdirs>`.
 
@@ -41,9 +41,9 @@ Below is a brief explanation of key repo components.  Some directories include s
         - `<env_subdirs>`: contains `.env` file needed to create the management project which includes the Config Controller GKE cluster.
     - `deploy`: ("WET" folder) its content is automatically generated and must not be edited manually.
         - `<env_subdirs>`: contains the hydrated YAML files to be deployed.  **This is the directory used by Config Sync.**
-    - `source-base`: ("DRY" folder) contains a collection of *unedited* packages that will be deployed to all environments.  
+    - `source-base`: ("DRY" folder) contains a collection of *unedited* packages that will be deployed to all environments.
     - `source-customization`:
-        - `<env_subdirs>`: contains the customization files that will overwrite the base for the environment.  Directory and file names must be replicated.  For example, to customize `source-base/landing-zone/setters.yaml`, it should be copied, then edited, in `source-customization/<env_subdir>/landing-zone/setters.yaml`. 
+        - `<env_subdirs>`: contains the customization files that will overwrite the base for the environment.  Directory and file names must be replicated.  For example, to customize `source-base/landing-zone/setters.yaml`, it should be copied, then edited, in `source-customization/<env_subdir>/landing-zone/setters.yaml`.
     - `tools`: git submodule from [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools)
     - `temp-workspace`: used temporarily during hydration, included in `.gitignore`.
     - `pre-commit-config.yaml`: the pre-commit will trigger `tools/scripts/kpt/hydrate.sh` to ensure all changes to source-base and/or source-customization were hydrated.
@@ -59,7 +59,7 @@ To overcome this limitation and checkout a specific tag or commit SHA, run `modu
 
 ### Hydration Process
 
-The tools submodule contains a `hydrate.sh` script to hydrate the configs with `kpt`.  The script must be executed when any changes to `source-base` and/or `source-customization` are made.  It is configured to run as a pre-commit hook for local validation and also in a validation pipeline during PR creation (TODO: create pipeline).
+The tools submodule contains a `hydrate.sh` script to hydrate the configs with `kpt`.  The script must be executed when any changes to `source-base` and/or `source-customization` are made.  It is configured to run as a pre-commit hook for local validation and also in a validation pipeline during PR creation.
 
 At a high level, the script will:
 1. For each environment (experimentation, dev, preprod, prod), check if `source-customization/` contains that sub directory.  If so:
