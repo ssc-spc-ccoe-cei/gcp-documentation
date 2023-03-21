@@ -32,6 +32,14 @@
     - [Config Sync overview](#config-sync-overview)
     - [Tools and Utilities](#tools-and-utilities)
   - [kpt](#kpt)
+  - [Set up Config Controller](#set-up-config-controller)
+    - [Config Controller overview](#config-controller-overview)
+  - [Firewall Rules Creation](#firewall-rules-creation)
+    - [VPC firewall rules overview](vpc-firewall-rules-overview)
+  - [IAP access into a VM ](#iap-access-into-a-vm)
+    - [IAP TCP forwarding overview](#iap-tcp-forwarding-overview)
+  - [Cloud Load Balancing](#cloud-load-balancing)
+    - [Cloud Load Balancing overview](#cloud-load-balancing-overview)
 
 --------------------------------------
 
@@ -186,3 +194,51 @@ kpt [installation](https://kpt.dev/installation/)
 kpt [functions catalog](https://catalog.kpt.dev/?id=curated-functions-catalog)
 
 **Important:**  Please note that kpt is available through the gcloud components, however you may wish to use a specific version, or newer version than that is provided by the gcloud SDK.
+
+### Set up Config Controller 
+
+#### [Config Controller overview](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview)
+
+Config Controller provides a managed control plane, based on Kubernetes. In addition, Config Controller instances come pre-installed with Policy Controller, Config Sync, and Config Connector. By using these components, you can leverage the tools and workflows of Kubernetes to manage Google Cloud resources and achieve consistency by using a GitOps workflow. 
+To learn more, see the Config Controller overview.
+
+### Policy controller
+
+#### [Policy controller overview](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller)
+
+Policy Controller enables the enforcement of fully programmable policies for your clusters. These policies act as "guardrails" and prevent any changes to the configuration of the Kubernetes API from violating security, operational, or compliance controls.
+You can set policies to actively block non-compliant API requests, or simply to audit the configuration of your clusters and report violations. Policy Controller is based on the open source Open Policy Agent Gatekeeper - [OPA ](https://open-policy-agent.github.io/gatekeeper/website/docs/operations/) project and comes with a full library of pre-built policies for common security and compliance controls.
+In addition to actively controlling your Kubernetes environment, you can optionally use Policy Controller as a way to analyze configuration for compliance before deployment. This helps provide valuable feedback during the process of configuration changes and ensures any non-compliant changes are caught early before they might be rejected during application.
+
+### Firewall Rules Creation 
+
+#### [VPC firewall rules overview](https://cloud.google.com/vpc/docs/firewalls)
+Virtual Private Cloud (VPC) firewall rules apply to a given project and network. If you want to apply firewall rules to multiple VPC networks in an organization.
+VPC firewall rules let you allow or deny connections to or from virtual machine (VM) instances in your VPC network. Enabled VPC firewall rules are always enforced, protecting your instances regardless of their configuration and operating system, even if they have not started up.
+
+### IAP access into a VM 
+
+IAP Desktop is a Windows application that lets you manage multiple Remote Desktop connections to Windows VM instances. IAP Desktop connects to VM instances by using Identity-Aware Proxy TCP forwarding and does not require VM instances to have a public IP address.
+Before you connect by using IAP Desktop, make sure that the following prerequisites are met:
+- You've configured your VPC to allow IAP traffic to your VM instance.
+- You've downloaded and installed IAP Desktop on your local computer.
+
+#### [IAP TCP forwarding overview](https://cloud.google.com/compute/docs/instances/connecting-to-windows#remote-desktop-connection-app)
+
+IAP's TCP forwarding feature lets you control who can access administrative services like SSH and RDP on your backends from the public internet. The TCP forwarding feature prevents these services from being openly exposed to the internet. Instead, requests to your services must pass authentication and authorization checks before they get to their target resource.
+
+### Cloud Load Balancing 
+
+#### [Cloud Load Balancing overview](https://cloud.google.com/load-balancing/docs/load-balancing-overview)
+
+A load balancer distributes user traffic across multiple instances of your applications. By spreading the load, load balancing reduces the risk that your applications experience performance issues.
+Cloud Load Balancing is a fully distributed, software-defined managed service. It isn't hardware-based, so you don't need to manage a physical load-balancing infrastructure.
+
+Google Cloud offers the following load-balancing features:
+- Single anycast IP address
+- Software-defined load balancing
+- Seamless autoscaling
+- Layer 4 and Layer 7 load balancing
+- External and internal load balancing
+- Global and regional load balancing
+- Advanced feature support
