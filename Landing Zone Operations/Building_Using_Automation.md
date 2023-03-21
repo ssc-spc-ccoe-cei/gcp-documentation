@@ -19,7 +19,7 @@ As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops)
 The steps assume these repos have already been created by following the "Create New Deployment Repo" section in [Repositories.md](./Repositories.md):
 - One of the two infra repos:
     - `gcp-experimentation-tier1-infra`: if building a experimentation landing-zone.
-    - `gcp-tier1-infra`: if building a dev, uat or prod landing-zone.
+    - `gcp-tier1-infra`: if building a dev, preprod or prod landing-zone.
 - `gcp-tier1-configsync`: to identify which git revision of `tier1-infra` the Config Sync operator should observe.
 
 # Setup
@@ -34,7 +34,7 @@ The script requires a `.env` file to deploy the environment.
     - Experimentation
 
         repo name = `gcp-experimentation-tier1-infra`
-    - DEV, UAT, PROD
+    - DEV, PREPROD, PROD
 
         repo name = `gcp-tier1-infra`
 1. Your terminal should now be at the root of your `tier1-infra` repo, on a new branch and with the tools submodule populated.
@@ -95,7 +95,7 @@ Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of th
         # for experimentation
         export PKG_PATH='solutions/hierarchy/core-experimentation'
         # OR
-        # for dev, uat, prod
+        # for dev, preprod, prod
         export PKG_PATH='solutions/hierarchy/core-env'
 
         # the version to get, located in the package's CHANGELOG.md, use 'main' if not available

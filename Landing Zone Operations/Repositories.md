@@ -62,13 +62,13 @@ The git credentials will need to be appropriately set for your AzDO org.
 1. For **`Infra`** repos, remove the environment sub-directories which are not required. **Never delete '.gitkeep' files in folders that remain.**
     - If the repo is for experimentation. For example, `gcp-experimentation-tier1-infra`:
         ```bash
-        # remove the 'dev', 'uat' and 'prod' sub-directories
-        for env_subdir in dev uat prod; do
+        # remove the 'dev', 'preprod' and 'prod' sub-directories
+        for env_subdir in dev preprod prod; do
             rm --recursive "deploy/${env_subdir}/"
             rm --recursive "source-customization/${env_subdir}/"
         done
         ```
-    - If the repo is for dev, uat and prod. For example, `gcp-tier1-infra`:
+    - If the repo is for dev, preprod and prod. For example, `gcp-tier1-infra`:
         ```bash
         # remove the 'experimentation' sub-directory
         for env_subdir in experimentation; do
