@@ -197,14 +197,14 @@ kpt [functions catalog](https://catalog.kpt.dev/?id=curated-functions-catalog)
 
 ### Set up Config Controller 
 
-#### [Config Controller overview](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview)
+#### [Config Controller Overview](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview)
 
 Config Controller provides a managed control plane, based on Kubernetes. In addition, Config Controller instances come pre-installed with Policy Controller, Config Sync, and Config Connector. By using these components, you can leverage the tools and workflows of Kubernetes to manage Google Cloud resources and achieve consistency by using a GitOps workflow. 
 To learn more, see the Config Controller overview.
 
-### Policy controller
+### Policy Controller
 
-#### [Policy controller overview](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller)
+#### [Policy Controller Overview](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller)
 
 Policy Controller enables the enforcement of fully programmable policies for your clusters. These policies act as "guardrails" and prevent any changes to the configuration of the Kubernetes API from violating security, operational, or compliance controls.
 You can set policies to actively block non-compliant API requests, or simply to audit the configuration of your clusters and report violations. Policy Controller is based on the open source Open Policy Agent Gatekeeper - [OPA ](https://open-policy-agent.github.io/gatekeeper/website/docs/operations/) project and comes with a full library of pre-built policies for common security and compliance controls.
@@ -212,7 +212,7 @@ In addition to actively controlling your Kubernetes environment, you can optiona
 
 ### Firewall Rules Creation 
 
-#### [VPC firewall rules overview](https://cloud.google.com/vpc/docs/firewalls)
+#### [VPC Firewall Rules Overview](https://cloud.google.com/vpc/docs/firewalls)
 Virtual Private Cloud (VPC) firewall rules apply to a given project and network. If you want to apply firewall rules to multiple VPC networks in an organization.
 VPC firewall rules let you allow or deny connections to or from virtual machine (VM) instances in your VPC network. Enabled VPC firewall rules are always enforced, protecting your instances regardless of their configuration and operating system, even if they have not started up.
 
