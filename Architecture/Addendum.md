@@ -32,7 +32,7 @@
     - [Config Sync overview](#config-sync-overview)
     - [Tools and Utilities](#tools-and-utilities)
   - [kpt](#kpt)
-  - [Set up Config Controller](#set-up-config-controller)
+  - [Config Controller](#set-up-config-controller)
     - [Config Controller overview](#config-controller-overview)
   - [Firewall Rules Creation](#firewall-rules-creation)
     - [VPC firewall rules overview](vpc-firewall-rules-overview)
@@ -195,7 +195,7 @@ kpt [functions catalog](https://catalog.kpt.dev/?id=curated-functions-catalog)
 
 **Important:**  Please note that kpt is available through the gcloud components, however you may wish to use a specific version, or newer version than that is provided by the gcloud SDK.
 
-### Set up Config Controller 
+### Config Controller 
 
 #### [Config Controller Overview](https://cloud.google.com/anthos-config-management/docs/concepts/config-controller-overview)
 
@@ -213,17 +213,18 @@ In addition to actively controlling your Kubernetes environment, you can optiona
 ### Firewall Rules Creation 
 
 #### [VPC Firewall Rules Overview](https://cloud.google.com/vpc/docs/firewalls)
-Virtual Private Cloud (VPC) firewall rules apply to a given project and network. If you want to apply firewall rules to multiple VPC networks in an organization.
+
+Virtual Private Cloud (VPC) firewall rules apply to a given project and network. If you want to apply firewall rules to multiple VPC networks in an organization, see [Firewall policies](https://cloud.google.com/vpc/docs/firewall-policies-overview)
 VPC firewall rules let you allow or deny connections to or from virtual machine (VM) instances in your VPC network. Enabled VPC firewall rules are always enforced, protecting your instances regardless of their configuration and operating system, even if they have not started up.
 
-### IAP access into a VM 
+### IAP access into a windows VM
 
 IAP Desktop is a Windows application that lets you manage multiple Remote Desktop connections to Windows VM instances. IAP Desktop connects to VM instances by using Identity-Aware Proxy TCP forwarding and does not require VM instances to have a public IP address.
 Before you connect by using IAP Desktop, make sure that the following prerequisites are met:
 - You've configured your VPC to allow IAP traffic to your VM instance.
 - You've downloaded and installed IAP Desktop on your local computer.
 
-#### [IAP TCP Forwarding Overview](https://cloud.google.com/compute/docs/instances/connecting-to-windows#remote-desktop-connection-app)
+#### [IAP TCP Forwarding Overview](https://cloud.google.com/iap/docs/tcp-forwarding-overview)
 
 IAP's TCP forwarding feature lets you control who can access administrative services like SSH and RDP on your backends from the public internet. The TCP forwarding feature prevents these services from being openly exposed to the internet. Instead, requests to your services must pass authentication and authorization checks before they get to their target resource.
 
