@@ -1,0 +1,46 @@
+---
+#################################
+## Super Linter GitHub Actions
+## https://github.com/github/super-linter
+#################################
+
+name: linter
+
+# only run during PRs or manually
+on:
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Lint Code Base
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          # Full git history is needed to get a proper
+          # list of changed files within `super-linter`
+          fetch-depth: 0
+
+      ################################
+      # Run Linter against code base
+      # each step will run even if one fails
+      # this is accomplished with the 'if: ${{ success() || failure() }}'
+      ################################
+      # TODO: once all markdown errors have been fixed:
+      #   1. set 'VALIDATE_ALL_CODEBASE: false'
+      #   2. remove 'DISABLE_ERRORS: true'
+      - name: Lint Markdown
+        if: ${{ success() || failure() }}
+        uses: github/super-linter/slim@v4
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: main
+          LINTER_RULES_PATH: .github/linter-rules
+          VALIDATE_MARKDOWN: true
+          MARKDOWN_CONFIG_FILE: .markdown-lint-config.yaml
+          DISABLE_ERRORS: true

@@ -14,7 +14,7 @@ Shared Services Canada uses the "[Multiple GCP organizations](https://github.com
 Review the requirements listed [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#requirements).
 
 SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
-As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo. 
+As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo.
 
 The steps assume these repos have already been created by following the "Create New Deployment Repo" section in [Repositories.md](./Repositories.md):
 - One of the two infra repos:
@@ -103,7 +103,10 @@ Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of th
 
         export LOCAL_DEST_DIRECTORY='landing-zone/hierarchy'
         ```
-    - Customization: none required, the `landing-zone/setters.yaml` contains the values.  They will be applied at that level.
+    - Customization:
+        ```bash
+        export FILE_TO_CUSTOMIZE='landing-zone/hierarchy/setters.yaml'
+        ```
 
 1. The Gatekeeper policies package:
     - Package details:
@@ -139,9 +142,9 @@ Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of th
         export FILE_TO_CUSTOMIZE='landing-zone/org-policies/setters.yaml'
         ```
         For experimentation, you may also want to remove some org policies.
-    
+
 1. The logging package:
-    
+
     TODO: TBD
 
 ### Complete the Infra Repo
@@ -168,7 +171,7 @@ Your landing zone is now built and published in the `tier1-infra` repo, but Conf
 
         export LOCAL_DEST_DIRECTORY='tier1-root-sync'
         ```
-    - Customization: you will need to customize 2 files.   
+    - Customization: you will need to customize 2 files.
         > **!!! IMPORTANT !!!** Only customize for the environment your are bootstrapping.
 
         - `tier1-root-sync/setters.yaml`: general settings to create the new Root Sync.  Some values to customize are:
