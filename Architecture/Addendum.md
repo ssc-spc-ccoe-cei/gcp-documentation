@@ -214,7 +214,7 @@ In addition to actively controlling your Kubernetes environment, you can optiona
 
 #### [VPC Firewall Rules Overview](https://cloud.google.com/vpc/docs/firewalls)
 
-Virtual Private Cloud (VPC) firewall rules apply to a given project and network. If you want to apply firewall rules to multiple VPC networks in an organization, see [Firewall policies](https://cloud.google.com/vpc/docs/firewall-policies-overview).
+Virtual Private Cloud (VPC) firewall rules apply to a given project and network.
 VPC firewall rules let you allow or deny connections to or from virtual machine (VM) instances in your VPC network. Enabled VPC firewall rules are always enforced, protecting your instances regardless of their configuration and operating system, even if they have not started up.
 
 ### IAP access into a windows VM
