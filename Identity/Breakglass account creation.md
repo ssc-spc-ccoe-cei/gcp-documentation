@@ -1,1 +1,3 @@
-This document is not made available publicly
+# Breakglass Account Creation
+
+This document is not made available publicly.

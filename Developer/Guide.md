@@ -12,7 +12,7 @@ This guide will provide the necessary information that any Application Developer
 
 SSC chose [Anthos Config Management](https://cloud.google.com/anthos/config-management) to manage the Infrastructure-as-code. ACM uses Kubernetes config connector manifest to control resources deployed in GCP. Most developers have some level of experience with Kubernetes manifest file format and should not feel lost when looking, for the first time, at a Kubernetes [config connector](https://cloud.google.com/config-connector/docs/reference/overview) resource definition.
 
-### The Anthos Config Management components are:
+### The Anthos Config Management components are
 
 ![ACM Components](img/acm-components.png)
 
@@ -40,44 +40,44 @@ Example of policy use cases
 
 ![config controller](img/config-controller.png)
 
-# Shared Services Canada - GCP Landing zone
+## Shared Services Canada - GCP Landing zone
 
 SSC has built 4 distinct GCP organizations to isolate each environment from each other. The environments are experimentation, DEV, PREPROD and PROD.
 
 ![organizations](img/organizations.png)
-
 
 ## Experimentation / Sandbox
 
   This environment provides a great level of flexibility and autonomy to application developers. The objective is really to allow you to experiment any GCP services without requiring the implication of the platform administrator.
 
   It meets [TBS Cloud Usage Profile 1](https://canada-ca.github.io/cloud-guardrails/EN/00_Applicable-Scope.html) requirements and only allows **Unclassified** workloads.
-  
-  ### Cost
+
+### Cost
 
   This project is linked to a GCP billing account owned by **"your organization"**.
-  
-  ### Permissions
+
+### Permissions
 
   Your team gets granted `Editor` role on the GCP project.
-  
-  ### Working with GCP
+
+### Working with GCP
 
   Interaction with GCP is possible through the [cloud console](https://console.cloud.google.com/) or using [Gcloud SDK](https://cloud.google.com/sdk/docs/) from [Cloud Shell](https://cloud.google.com/shell/docs/) or any other Linux or windows computer, you can also interact with the GCP API directly. To do so, you authenticate with your Google Cloud Identity `user` account.
 
-  ### Networking
+### Networking
 
   You project comes with an existing networking configuration. This configuration meets the 30 days [Guardrails](https://github.com/canada-ca/cloud-guardrails-gcp) requirements for experimentation (Guardrails 1,2,4,8,12). The `Editor` role grants you permissions to create, for example, firewall rule.
 
   Below is the list of networking resources that have been deployed in your experimentation project:
-  - VPC (flow logs enabled)
-  - Subnets (Montreal and Toronto regions)
-      - PAZ
-      - APPRZ
-      - DATARZ
-  - Route to the internet (resources requires a `network tag`)
-  - Cloud NAT
-  - DNS logging policy
+
+- VPC (flow logs enabled)
+- Subnets (Montreal and Toronto regions)
+  - PAZ
+  - APPRZ
+  - DATARZ
+- Route to the internet (resources requires a `network tag`)
+- Cloud NAT
+- DNS logging policy
 
   ![experimentation networking](img/experimentation-networking.png)
 
@@ -108,6 +108,7 @@ The landing zone uses 3 different tiers of git repositories to manage GCP resour
 As you saw in that diagram, the resources for your application are include in two tiers called "tier 2" and "tier 3". Tier 2 is where this landing zone differs from other traditional services by trying to simplify as much as possible the management of the application security while maintaining a very strong and secure control on the environment. You get one tier 2 repository for each tier 3 repository (one-to-one relationship). As an app developer/operator, you do have full control (contributor + reviewer) over your tier 3 repository, but you also have contributor role on the tier 2 repo thus implementing that simplified change management process. It is the Platform Admin and the Security Admin that will be reviewing and approving the PR.
 
 So, when you want a change implemented on your tier 2 repo, you have two options:
+
 1. create a branch on the tier 2 repo, make and commit your changes and then, open a pull request
 2. reach out to platform admin and determine a solution
 
@@ -134,12 +135,13 @@ TODO: provide more details once network design is finalized
 ![hld](img/networking-hld-env.png)
 
 ## Training
+
 - GCP
-    - Google Cloud Platform Fundamentals
-    - Developing Applications with Google Cloud
+  - Google Cloud Platform Fundamentals
+  - Developing Applications with Google Cloud
 
 - CCCS
-    - Cloud Computing in the GC: The SA&A Process
+  - Cloud Computing in the GC: The SA&A Process
 
 ## GCP Landing Zone Resource Addendum
 
