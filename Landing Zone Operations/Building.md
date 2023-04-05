@@ -2,7 +2,7 @@
 
 > TODO: deprecate this documentation in favor of automation
 
-Building the landing zone for Shared Services Canada is very similar to the process described for the [landing-zone-v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/solutions/landing-zone-v2/README.md#Organization) solution in the Google's Pubsec Toolkit repo.
+Building the landing zone for Shared Services Canada is very similar to the process described for the [landing-zone-v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md) solution in the Google's Pubsec Toolkit repo.
 
 This document will highlight the discrepancies instead of repeating the full process.
 
