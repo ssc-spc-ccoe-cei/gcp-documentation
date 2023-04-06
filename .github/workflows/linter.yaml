@@ -26,6 +26,11 @@ jobs:
           # list of changed files within `super-linter`
           fetch-depth: 0
 
+      ################################
+      # Run Linter against code base
+      # each step will run even if one fails
+      # this is accomplished with the 'if: ${{ success() || failure() }}'
+      ################################
       # Super-Linter markdown validation
       - name: Lint Markdown
         if: ${{ success() || failure() }}
