@@ -31,16 +31,13 @@ jobs:
       # each step will run even if one fails
       # this is accomplished with the 'if: ${{ success() || failure() }}'
       ################################
-      # TODO: once all markdown errors have been fixed:
-      #   1. set 'VALIDATE_ALL_CODEBASE: false'
-      #   2. remove 'DISABLE_ERRORS: true'
+      # Super-Linter markdown validation
       - name: Lint Markdown
         if: ${{ success() || failure() }}
         uses: github/super-linter/slim@v4
         env:
-          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
           LINTER_RULES_PATH: .github/linter-rules
           VALIDATE_MARKDOWN: true
           MARKDOWN_CONFIG_FILE: .markdown-lint-config.yaml
-          DISABLE_ERRORS: true
