@@ -71,7 +71,7 @@ At a high level, the script will:
 
 1. Find properly stuctured 'deploy', 'source-base' and 'source-customization' directories, then for each environment (experimentation, dev, preprod, prod), check if `source-customization/` contains that sub directory.  If so:
     - Create a `temp-workspace/<env>` directory to copy the `source-base/` and then copy `source-customization/<env>/`, this adds customization specific to that environment.
-    - Validate that setters file are customized.
+    - Validate that setters file(s) are customized.
     - Run `kpt fn render` and remove local configs in `temp-workspace/<env>`.
     - Check if newly hydrated files in `temp-workspace/<env>` are different than `deploy/<env>`.  If so, copy them to `deploy/<env>`.
     - Validate rendered files in `deploy/<env>` with `kubeval` and `nomos vet`.
