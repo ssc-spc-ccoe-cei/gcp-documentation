@@ -81,6 +81,43 @@ SSC has built 4 distinct GCP organizations to isolate each environment from each
 
   ![experimentation networking](img/experimentation-networking.png)
 
+### AutoPilot Cluster Creation
+
+In the event a client wants to create an AutoPilot cluster for the experimentation landing-zone, the following configurations should be followed. Log into [https://console.cloud.google.com/](https://console.cloud.google.com/).
+
+1. Create your own subnet
+
+- Select project and go to "VPC Network"
+- Click on "global-vpc1-vpc"
+- Click "ADD SUBNET"
+  - Name: **{user defined}**
+  - Region: **northamerica-northeast1**
+  - IPv4 range: **10.10.0.0/24**
+  - Private Google Access: **On**
+  - Flow Logs: **On**
+- Click "ADD"
+
+2. Create the cluster with the following settings
+
+- Go to "Kubernetes Engine".
+- Enable "Kubernetes Engine API" (if not already enabled)
+- Click "Create"
+  - Cluster Basics
+    - Name: **{user defined}**
+    - Region:  **northamerica-northeast1**
+  - Click "Next: Networking"
+  - Networking
+    - Networking
+      - Network: **global-vpc1-vpc**
+      - Node subnet: **{new subnet from step 1 above}**
+    - Click **Private Cluster**
+      - Control Plane IP range: **172.16.0.0/28**
+      - Cluster default Pod address range: **/17**
+      - Service address range: **/22**
+    - Auto-provisioning network tags
+      - **internet-egress-route**
+  - Click "CREATE"
+
 ## DEV, PREPROD and PROD (UNDER CONSTRUCTION)
 
 The DEV environment is where you will be developing your application. PREPROD and PROD should be used for code promotion with your choice of CD pipeline.
