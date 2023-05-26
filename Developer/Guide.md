@@ -90,7 +90,7 @@ In the event a client wants to create an AutoPilot cluster for the experimentati
 - Select project and go to "VPC Network"
 - Click on "global-vpc1-vpc"
 - Click "ADD SUBNET"
-  - Name: **{user defined}**
+  - Name: **{user defined}-snet**
   - Region: **northamerica-northeast1**
   - IPv4 range: **10.10.0.0/24**
   - Private Google Access: **On**
