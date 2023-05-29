@@ -83,7 +83,9 @@ SSC has built 4 distinct GCP organizations to isolate each environment from each
 
 ### AutoPilot Cluster Creation
 
-In the event a client wants to create an AutoPilot cluster for the experimentation landing-zone, the following configurations should be followed. *Note: that this is only for standard GKE clusters.*
+In the event a client wants to create an AutoPilot cluster for the experimentation landing-zone, the following configurations should be followed.
+
+*Note: These instructions don't apply to a config controller clusters deployed using `gcloud anthos config controller`*
 
 Log into [https://console.cloud.google.com/](https://console.cloud.google.com/).
 
@@ -119,6 +121,19 @@ Log into [https://console.cloud.google.com/](https://console.cloud.google.com/).
     - Auto-provisioning network tags
       - **internet-egress-route**
   - Click "CREATE"
+
+### Standard Cluster Creation
+
+To deploy a Standard cluster create the same subnet as in Step 1 above.  Create the standard GKE cluster from the Kubernetes Engine menu. Select all of the configurations you require.
+
+Ensure you set the following:
+
+- Cluster Basics
+  - Location Type:  **Regional**
+  - Region: **northamerica-northeast1**
+- Networking
+  - Use the same configuration values as above in Step 2.
+- Click "CREATE" when done.
 
 ## DEV, PREPROD and PROD (UNDER CONSTRUCTION)
 
