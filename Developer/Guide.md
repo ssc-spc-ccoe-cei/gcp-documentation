@@ -83,7 +83,9 @@ SSC has built 4 distinct GCP organizations to isolate each environment from each
 
 ### AutoPilot Cluster Creation
 
-In the event a client wants to create an AutoPilot cluster for the experimentation landing-zone, the following configurations should be followed. Log into [https://console.cloud.google.com/](https://console.cloud.google.com/).
+In the event a client wants to create an AutoPilot cluster for the experimentation landing-zone, the following configurations should be followed. *Note: that this is only for standard GKE clusters.*
+
+Log into [https://console.cloud.google.com/](https://console.cloud.google.com/).
 
 1. Create your own subnet
 
