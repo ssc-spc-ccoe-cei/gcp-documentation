@@ -25,8 +25,6 @@ Client Environment
 
 - [GCP Logging tip/tricks](#check-the-logs-by-using-the-gui)
 
->Note: There will be a project in the near future related to logging specifically. This document should be updated accordingly once the project is available.
-
 ---
 
 ## Infrastructure
@@ -164,7 +162,7 @@ Dev, Pre-prod and Prod Organizations
 - Log bucket for the security logs (Cloud Audit, Access Transparency logs, and Data Access Logs)
 - Log bucket for platform and component logs for resources under the services and services-infrastructure folders
 - Log bucket for client platform and component logs for resources under the clientN/applications-infrastructure folder
-- Log bucket for client platform and component logs for resources under the clientN/auto and clientN/applications (TBD - Requires Review)
+- Log bucket for client platform and component logs for resources under the clientN/auto and clientN/applications
 
 ---
 

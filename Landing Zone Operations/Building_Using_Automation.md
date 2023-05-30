@@ -12,7 +12,7 @@ This document will describe how the automated scripts can be used for building a
 
 Shared Services Canada uses the "[Multiple GCP organizations](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#multiple-gcp-organizations)" architecture.
 
-Review the requirements listed [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#requirements).
+Review the requirements listed [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md).
 
 SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
 As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo.
@@ -78,51 +78,7 @@ We will build the landing zone by adding a collection of packages to the `tier1-
 
 Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of these packages:
 
-1. The landing zone package:
-    - Package details:
-
-        ```shell
-        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
-
-        export PKG_PATH='solutions/landing-zone-v2'
-
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
-        export VERSION=''
-
-        export LOCAL_DEST_DIRECTORY='landing-zone'
-        ```
-
-    - Customization:
-
-        ```shell
-        export FILE_TO_CUSTOMIZE='landing-zone/setters.yaml'
-        ```
-
-1. The hierarchy package:
-    - Package details:
-
-        ```shell
-        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
-
-        # for experimentation
-        export PKG_PATH='solutions/hierarchy/core-experimentation'
-        # OR
-        # for dev, preprod, prod
-        export PKG_PATH='solutions/hierarchy/core-env'
-
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
-        export VERSION=''
-
-        export LOCAL_DEST_DIRECTORY='landing-zone/hierarchy'
-        ```
-
-    - Customization:
-
-        ```shell
-        export FILE_TO_CUSTOMIZE='landing-zone/hierarchy/setters.yaml'
-        ```
-
-1. The Gatekeeper policies package:
+1. The gatekeeper-policies package:
     - Package details:
 
         ```shell
@@ -130,7 +86,7 @@ Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of th
 
         export PKG_PATH='solutions/gatekeeper-policies'
 
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
+        # the version to get, located in the package's CHANGELOG.md
         export VERSION=''
 
         export LOCAL_DEST_DIRECTORY='landing-zone/gatekeeper-policies'
@@ -142,31 +98,25 @@ Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of th
         export FILE_TO_CUSTOMIZE='landing-zone/gatekeeper-policies/naming-rules/project/setters.yaml'
         ```
 
-1. The organization policies package:
+1. The core-landing-zone package:
     - Package details:
 
         ```shell
         export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
 
-        export PKG_PATH='solutions/org-policies'
+        export PKG_PATH='solutions/core-landing-zone'
 
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
+        # the version to get, located in the package's CHANGELOG.md
         export VERSION=''
 
-        export LOCAL_DEST_DIRECTORY='landing-zone/org-policies'
+        export LOCAL_DEST_DIRECTORY='landing-zone'
         ```
 
     - Customization:
 
         ```shell
-        export FILE_TO_CUSTOMIZE='landing-zone/org-policies/setters.yaml'
+        export FILE_TO_CUSTOMIZE='landing-zone/setters.yaml'
         ```
-
-        For experimentation, you may also want to remove some org policies.
-
-1. The logging package:
-
-    TODO: TBD
 
 ### Complete the Infra Repo
 
@@ -190,7 +140,7 @@ Your landing zone is now built and published in the `tier1-infra` repo, but Conf
 
         export PKG_PATH='TODO: publish package'
 
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
+        # the version to get, located in the package's CHANGELOG.md
         export VERSION=''
 
         export LOCAL_DEST_DIRECTORY='tier1-root-sync'
@@ -210,7 +160,7 @@ Your landing zone is now built and published in the `tier1-infra` repo, but Conf
 
 ## 4. Validate the landing zone deployment
 
-Perform step 4 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment).
+Perform step 4 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment).
 
 You should now see two Root Syncs:
 
@@ -219,7 +169,7 @@ You should now see two Root Syncs:
 
 ## 5. Perform the post-deployment steps
 
-Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#5-perform-the-post-deployment-steps).
+Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#5-perform-the-post-deployment-steps).
 
 ## THE END
 
