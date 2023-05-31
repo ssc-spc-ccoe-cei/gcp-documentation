@@ -85,7 +85,7 @@ SSC has built 4 distinct GCP organizations to isolate each environment from each
 
 In the event a client wants to create an AutoPilot cluster for the experimentation landing-zone, the following configurations should be followed.
 
-*Note: These instructions don't apply to a config controller clusters deployed using `gcloud anthos config controller`*
+*Note: These instructions don't apply to deploying a Config Controller cluster using `gcloud anthos config controller`*
 
 Log into [https://console.cloud.google.com/](https://console.cloud.google.com/).
 
