@@ -1,29 +1,32 @@
-# Git Repositories
 
-Documentation to setup and manage git repositories used with Config Sync to deploy GCP resources.
+# Git Repositories
 
 SSC is using Azure Devops Repositories (AzDO Repos) and Pipelines as its git solution.
 
-SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
-As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo.
 
-## Create New Deployment Repo
+## Create a Deployment Repo
 
-Deployment repos are initially created the same way, from cloning [gcp-repo-template](https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git).  These steps will need to be repeated for each repo name.  For example, `gcp-experimentation-tier1-infra`, `gcp-tier1-configsync`, etc.
+Deployment repos are initially created the same way.  Templates are cloned from github.com and updated to reflect the current need before being deployed.
 
-The git credentials will need to be appropriately set for your AzDO org.
+There are three repository templates that are available:
+
+[Tier 1 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template)
+[Tier 2 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier2-template)
+[Tier 3/4 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier34-template)
+
+Git credentials will need to be set appropriately for your AzDO org.
 
 ### 1. Build the Repo
 
-> If your AzDO org has project-wide branch policies set on repositories, you may need to work with branches / Pull Requests or temporarily give yourself permission to "Bypass policies when pushing" on the repo.
+> XXX I'm not familiar with what this blurb means, so I don't know if it stays/goes - If your AzDO org has project-wide branch policies set on repositories, you may need to work with branches / Pull Requests or temporarily give yourself permission to "Bypass policies when pushing" on the repo.
 
-1. Create a new **empty** repository (no README.md) to hold the configs in [Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops).  Once created, copy the HTTPS URL.  It will be required for the next step.
+1. In [Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops), create a new **empty** repository (i.e. uncheck the option to include README.md).  Once the repo has been created, copy its URL, as it will be required for the next step.
 
 1. Update and export the variables below:
 
     ```shell
-    export NEW_REPO_NAME='<your new repo name>'
-    export NEW_REPO_URL='<your new repo URL>'
+    export NEW_REPO_NAME='<new repo name>'
+    export NEW_REPO_URL='<new repo URL>'
     ```
 
 1. Clone the [gcp-repo-template](https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git) in a folder named like your new repo:
