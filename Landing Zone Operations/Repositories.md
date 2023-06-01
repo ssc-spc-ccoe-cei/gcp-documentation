@@ -18,7 +18,7 @@ Git credentials will need to be set appropriately for your AzDO org.
 
 ### 1. Build the Repo
 
-> XXX I'm not familiar with what this blurb means, so I don't know if it stays/goes - If your AzDO org has project-wide branch policies set on repositories, you may need to work with branches / Pull Requests or temporarily give yourself permission to "Bypass policies when pushing" on the repo.
+> **XXX** I'm not familiar with what this blurb means, so I don't know if it stays/goes - If your AzDO org has project-wide branch policies set on repositories, you may need to work with branches / Pull Requests or temporarily give yourself permission to "Bypass policies when pushing" on the repo.
 
 1. In [Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops), create a new **empty** repository (i.e. uncheck the option to include README.md).  Once the repo has been created, copy its URL, as it will be required for the next step.
 
@@ -29,11 +29,11 @@ Git credentials will need to be set appropriately for your AzDO org.
     export NEW_REPO_URL='<new repo URL>'
     ```
 1. Copy the URL of the template that you'd like to copy:
-    [Tier 1 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template)
-    [Tier 2 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier2-template)
-    [Tier 3/4 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier34-template)
+    Tier 1 Template - https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template
+    Tier 2 Template - https://github.com/ssc-spc-ccoe-cei/gcp-tier2-template
+    Tier 3/4 Template - https://github.com/ssc-spc-ccoe-cei/gcp-tier34-template
     
-1. In VSCode, enter the following command, but ensure you add the appropriate URL first:
+1. Enter the following command, but ensure you add the appropriate URL first:
 
     ```shell
     git clone https://<the URL of the appropriate template> ${NEW_REPO_NAME}
@@ -61,14 +61,15 @@ Git credentials will need to be set appropriately for your AzDO org.
     git remote --verbose
     ```
 
-1. XXX Talk to Stéphane about this one.  Edit `modversions.yaml` to pin the `tools` submodule to a specific [release tag](https://github.com/ssc-spc-ccoe-cei/gcp-tools/releases) or commit SHA.
+1. Edit `modversions.yaml` so that the `tools` submodule will be the appropriate version.
+
 1. Run the following to get the proper version of the tools submodule:
 
     ```shell
     bash modupdate.sh
     ```
 
-1. XXX Is this necessary? Remove pipelines directories which are not required:
+1. The template allows for either AzDo or GitHub pipelines.  Remove the pipelines directories that are not required:
     - If the repo is hosted in Azure DevOps:
 
         ```shell
@@ -82,8 +83,8 @@ Git credentials will need to be set appropriately for your AzDO org.
         # remove the '.azure-pipelines' pipelines directory
         rm --recursive '.azure-pipelines'
         ```
-1. XXX Register the pipeline.  Pull this info from Sean's doc.
-1. XXX I don't think these removals are still necessary.  For **`Infra`** repos, remove the environment sub-directories which are not required. **Never delete '.gitkeep' files in folders that remain.**
+
+1. **XXX** I don't think these removals are still necessary.  I think that we are keeping each of the environment folders in the repos.  **Remove the environment sub-directories which are not required.** **Never delete '.gitkeep' files in folders that remain.**
     - If the repo is for experimentation. For example, `gcp-experimentation-tier1-infra`:
 
         ```shell
@@ -136,33 +137,33 @@ Enable the following policies:
 - **Check for comment resolution**: *Required*
 - **Limit merge types**: only allow *Squash merge*
 
-XXX I don't think this section is necessary. > TODO: Extra policy for tier2 "configsync" repos only. "Automatically included reviewers" with path filter on setters-version.yaml
+**XXX**I don't understand this section.  Is it valid?  Ask Stéphane  > TODO: Extra policy for tier2 "configsync" repos only. "Automatically included reviewers" with path filter on setters-version.yaml
 
 ### 3. Verify Service Account Permissions
 
-XXX I don't think this part is valid anymore.  An AzDO service account should be used for authenticating Config Sync.  It requires read access to the repo.
+An AzDO service account is used for authenticating Config Sync.  It requires read access to the repo.
 
-XXX Add the info about updating settings so that the Pipeline will work
-
-Depending on your organization, this could be set at different levels and with groups.  These steps will assume the service account has already been configured.
+Depending on your organization, this could be set at different levels and with groups.  **Note: These steps will assume the service account has already been configured.**
 
 To confirm:
 
 1. Navigate to **Project Settings > Repos/Repositories > {repo} > Security**.
-1. Find and click on the appropriate service account user or group.
+1. Find and click on the appropriate service account user or group. **XXX** Do we need to give more information for this step?
 1. Confirm the **Read** permission is set to **Allow**.  All other permissions should be "Not set" or "Deny".
 
-A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with scope of **Code (Read)** will also need to be created for the service account.  This should only need to be done once per service account.  **Note the expiration date, it will need to be periodically re-generated.**
+A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with scope of **Code (Read)** will also need to be created for the service account.  This should only need to be done once per service account.  **Note the expiration date, it will need to be periodically re-generated.** **XXX**Do we need to explain how to create the PAT?
 
 ### 4. Add Pipelines
 
-The repo is now created and the main branch is protected.  Pipelines can now be created.
+The repo is now created and has been pushed to AzDo/GitHub.  Additionally, the main branch is protected.  Pipelines can now be created.
 
-**All deployment repos should have the `validate-yaml` and `version-tagging.yaml` pipelines.** XXXDo we need the validate.yaml pipeline?  I don't see the file in Tier1 template.  If it is not needed, I'll delete these 2 lines.
+**All deployment repos should have the `validate-yaml` and `version-tagging.yaml` pipelines.** **XXX**The  validate.yaml pipeline is not in the Template.  Must ask Stéphane if that is an oversight.  
 
 The purpose of the version-tagging.yaml pipeline is to use versioning during deployment operations.  
 
 Open the [Pipelines.md](https://github.com/ssc-spc-ccoe-cei/gcp-documentation/blob/main/Landing%20Zone%20Operations/Pipelines.md) document and perform the instructions in **Add Pipeline** to implement the `version-tagging.yaml` pipeline.  Pipeline.
+
+***XXX*** The following section on 'fixing' the Pipeline should be in the Pipelines.md document.
 
 The default settings in AzDo will produce an error (the screen output is 'You need the Git 'GenericContribute' permission to perform this action") when trying to run the pipeline, so changes must be made:
 
@@ -191,7 +192,7 @@ The templates remain fairly static, but on occasion, important changes may be pe
 
 Follow these steps to update your deployment repo with changes from the templates:
 
-XXX Don't know what these steps are.  Are the instructions on a on a case-by-case basis?
+**XXX**Don't know what these steps are.  Are the instructions on a on a case-by-case basis?  Talk to Stéphane.
 
 ### Update `tools` Submodule
 
@@ -200,12 +201,12 @@ The tools submodule can easily be updated to a new version.
 Follow these steps to
 
 1. Clone the deployment repo and checkout a new branch.
-1. XXX See my earlier note.  I'm not sure how this works or if it is valid.  Edit `modversions.yaml` to pin the `tools` submodule to a new [release tag](https://github.com/ssc-spc-ccoe-cei/gcp-tools/releases) or commit SHA.
+1. Edit `modversions.yaml` so that the `tools` submodule will be the appropriate version.
 1. Run the following to get the proper version of the tools submodule:
 
     ```shell
     bash modupdate.sh
     ```
 
-1. XXX This one is new to me.  If your repo contains pipelines that were created from `tools/pipeline-samples`, compare the YAML files to see if changes are required.
+1. **XXX**This one is new to me.  Ask Stéphane if still valid.  If your repo contains pipelines that were created from `tools/pipeline-samples`, compare the YAML files to see if changes are required.
 1. Stage, commit and push your branch to create a PR.
