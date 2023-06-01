@@ -10,15 +10,15 @@ Deployment repos are initially created the same way.  Templates are cloned from 
 
 There are three repository templates that are available:
 
-[Tier 1 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template)
-[Tier 2 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier2-template)
-[Tier 3/4 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier34-template)
+- [Tier 1 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template)
+- [Tier 2 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier2-template)
+- [Tier 3/4 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier34-template)
 
 Git credentials will need to be set appropriately for your AzDO org.
 
 ### 1. Build the Repo
 
-> **XXX** I'm not familiar with what this blurb means, so I don't know if it stays/goes - If your AzDO org has project-wide branch policies set on repositories, you may need to work with branches / Pull Requests or temporarily give yourself permission to "Bypass policies when pushing" on the repo.
+> If your AzDO org has project-wide branch policies set on repositories, you may need to work with branches / Pull Requests or temporarily give yourself permission to "Bypass policies when pushing" on the repo.
 
 1. In [Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops), create a new **empty** repository (i.e. uncheck the option to include README.md).  Once the repo has been created, copy its URL, as it will be required for the next step.
 
@@ -29,9 +29,9 @@ Git credentials will need to be set appropriately for your AzDO org.
     export NEW_REPO_URL='<new repo URL>'
     ```
 1. Copy the URL of the template that you'd like to copy:
-    Tier 1 Template - https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template
-    Tier 2 Template - https://github.com/ssc-spc-ccoe-cei/gcp-tier2-template
-    Tier 3/4 Template - https://github.com/ssc-spc-ccoe-cei/gcp-tier34-template
+    - Tier 1 Template - https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template
+    - Tier 2 Template - https://github.com/ssc-spc-ccoe-cei/gcp-tier2-template
+    - Tier 3/4 Template - https://github.com/ssc-spc-ccoe-cei/gcp-tier34-template
     
 1. Enter the following command, but ensure you add the appropriate URL first:
 
