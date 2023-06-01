@@ -28,12 +28,17 @@ Git credentials will need to be set appropriately for your AzDO org.
     export NEW_REPO_NAME='<new repo name>'
     export NEW_REPO_URL='<new repo URL>'
     ```
-
-1. Clone the [gcp-repo-template](https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git) in a folder named like your new repo:
+1. Copy the URL of the template that you'd like to copy:
+    [Tier 1 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template)
+    [Tier 2 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier2-template)
+    [Tier 3/4 Template](https://github.com/ssc-spc-ccoe-cei/gcp-tier34-template)
+    
+1. In VSCode, enter the following command, but ensure you add the appropriate URL first:
 
     ```shell
-    git clone https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git ${NEW_REPO_NAME}
+    git clone https://<the URL of the appropriate template> ${NEW_REPO_NAME}
     ```
+    It will copy the template repository into your newly-created repository.
 
 1. Move into the new folder corresponding to the new repo:
 
@@ -56,14 +61,14 @@ Git credentials will need to be set appropriately for your AzDO org.
     git remote --verbose
     ```
 
-1. Edit `modversions.yaml` to pin the `tools` submodule to a specific [release tag](https://github.com/ssc-spc-ccoe-cei/gcp-tools/releases) or commit SHA.
+1. XXX Talk to Stéphane about this one.  Edit `modversions.yaml` to pin the `tools` submodule to a specific [release tag](https://github.com/ssc-spc-ccoe-cei/gcp-tools/releases) or commit SHA.
 1. Run the following to get the proper version of the tools submodule:
 
     ```shell
     bash modupdate.sh
     ```
 
-1. Remove pipelines directories which are not required:
+1. XXX Is this necessary? Remove pipelines directories which are not required:
     - If the repo is hosted in Azure DevOps:
 
         ```shell
@@ -77,8 +82,8 @@ Git credentials will need to be set appropriately for your AzDO org.
         # remove the '.azure-pipelines' pipelines directory
         rm --recursive '.azure-pipelines'
         ```
-
-1. For **`Infra`** repos, remove the environment sub-directories which are not required. **Never delete '.gitkeep' files in folders that remain.**
+1. XXX Register the pipeline.  Pull this info from Sean's doc.
+1. XXX I don't think these removals are still necessary.  For **`Infra`** repos, remove the environment sub-directories which are not required. **Never delete '.gitkeep' files in folders that remain.**
     - If the repo is for experimentation. For example, `gcp-experimentation-tier1-infra`:
 
         ```shell
@@ -99,10 +104,10 @@ Git credentials will need to be set appropriately for your AzDO org.
         done
         ```
 
-1. Review your local changes then stage, commit and push them to your new repo.  **You will need to push to main.**
+1. Review your local changes then stage, commit and push them to your new repo.  **As this is a new repo, you will need to push to main.**
 
     ```shell
-    git add .
+    git add --a
     git commit -m 'initializing repo from template'
     git push --set-upstream origin main
     ```
@@ -113,27 +118,31 @@ Git credentials will need to be set appropriately for your AzDO org.
 
 It's recommended to protect the `main` branch and use pull requests for any changes to the repos.
 
-These settings could also be set at the AzDO Project level.
+**Note:**  These settings are set at the AzDO Project level.
 
-At the very least, the [Require a minimum number of reviewers](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#require_reviewers) branch policy should be enabled on the `main` branch. By doing so, the branch cannot be deleted and changes must be made via pull request.
+The branch policy should [require a minimum number of reviewers](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#require_reviewers).  This is enabled on the `main` branch. 
 
-To enable the policy:
+By doing so, the branch cannot be deleted and all changes must be made via pull request, thereby ensuring peer-review of any changes before deployment.
+
+To enable this policy:
 
 1. Navigate to **Project Settings > Repos/Repositories > {repo} > Policies > Branch Policies > main**
-1. Toggle on **Require a minimum number of reviewers**, the *Minimum number of reviewers* will default to 2.
-    - You can also enable *When new changes are pushed:* > *Reset all approval votes*
+1. Toggle on **Require a minimum number of reviewers**.  Unless instructed otherwise, leave *Minimum number of reviewers* at its default of 2.
+    - Enable *When new changes are pushed:* > *Reset all approval votes*
 
-These other policies can also be enabled as needed:
+Enable the following policies:
 
 - **Check for linked work items**: *Required*
 - **Check for comment resolution**: *Required*
 - **Limit merge types**: only allow *Squash merge*
 
-> TODO: Extra policy for tier2 "configsync" repos only. "Automatically included reviewers" with path filter on setters-version.yaml
+XXX I don't think this section is necessary. > TODO: Extra policy for tier2 "configsync" repos only. "Automatically included reviewers" with path filter on setters-version.yaml
 
 ### 3. Verify Service Account Permissions
 
-An AzDO service account should be used for authenticating Config Sync.  It requires read access to the repo.
+XXX I don't think this part is valid anymore.  An AzDO service account should be used for authenticating Config Sync.  It requires read access to the repo.
+
+XXX Add the info about updating settings so that the Pipeline will work
 
 Depending on your organization, this could be set at different levels and with groups.  These steps will assume the service account has already been configured.
 
@@ -147,11 +156,28 @@ A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/o
 
 ### 4. Add Pipelines
 
-The repo is now created and the main branch is protected.  [Pipelines](./Pipelines.md) can be created.
+The repo is now created and the main branch is protected.  Pipelines can now be created.
 
-- **All deployment repos should have the `validate-yaml` pipeline.**
+**All deployment repos should have the `validate-yaml` and `version-tagging.yaml` pipelines.** XXXDo we need the validate.yaml pipeline?  I don't see the file in Tier1 template.  If it is not needed, I'll delete these 2 lines.
 
-- To use semantic versioning during deployment operations, the `Infra` repos can be setup with a git tagging pipeline, such as [version-tagging](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging).
+The purpose of the version-tagging.yaml pipeline is to use versioning during deployment operations.  
+
+Open the [Pipelines.md](https://github.com/ssc-spc-ccoe-cei/gcp-documentation/blob/main/Landing%20Zone%20Operations/Pipelines.md) document and perform the instructions in **Add Pipeline** to implement the `version-tagging.yaml` pipeline.  Pipeline.
+
+The default settings in AzDo will produce an error (the screen output is 'You need the Git 'GenericContribute' permission to perform this action") when trying to run the pipeline, so changes must be made:
+
+- In AzDo click the gear icon at the bottom left
+
+- On the left, click on "Repositories" under the Repos title
+
+- Select YOUR repo
+
+- Click the 'Security' link under YOUR repo name
+
+- Find 'iac-gcp-dev Build Service (gc-cpa)' under Users (not Groups)
+
+- Change the 'Contribute' permission to 'Allow'
+
 
 ## Update Deployment Repo
 
@@ -161,11 +187,11 @@ As with any other change, they should be done through a PR process.
 
 ### Update from Template
 
-The [gcp-repo-template](https://github.com/ssc-spc-ccoe-cei/gcp-repo-template.git) remains fairly static, but it can sometimes contain important changes.
+The templates remain fairly static, but on occasion, important changes may be performed to them.
 
-Follow these steps to update your deployment repo with changes from `gcp-repo-template`:
+Follow these steps to update your deployment repo with changes from the templates:
 
-TODO: test and add steps
+XXX Don't know what these steps are.  Are the instructions on a on a case-by-case basis?
 
 ### Update `tools` Submodule
 
@@ -174,12 +200,12 @@ The tools submodule can easily be updated to a new version.
 Follow these steps to
 
 1. Clone the deployment repo and checkout a new branch.
-1. Edit `modversions.yaml` to pin the `tools` submodule to a new [release tag](https://github.com/ssc-spc-ccoe-cei/gcp-tools/releases) or commit SHA.
+1. XXX See my earlier note.  I'm not sure how this works or if it is valid.  Edit `modversions.yaml` to pin the `tools` submodule to a new [release tag](https://github.com/ssc-spc-ccoe-cei/gcp-tools/releases) or commit SHA.
 1. Run the following to get the proper version of the tools submodule:
 
     ```shell
     bash modupdate.sh
     ```
 
-1. If your repo contains pipelines that were created from `tools/pipeline-samples`, compare the YAML files to see if changes are required.
+1. XXX This one is new to me.  If your repo contains pipelines that were created from `tools/pipeline-samples`, compare the YAML files to see if changes are required.
 1. Stage, commit and push your branch to create a PR.
