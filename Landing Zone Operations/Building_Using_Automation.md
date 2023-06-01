@@ -17,12 +17,11 @@ Review the requirements listed [here](https://github.com/GoogleCloudPlatform/pub
 SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
 As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo.
 
-The steps assume these repos have already been created by following the "Create New Deployment Repo" section in [Repositories.md](./Repositories.md):
+The steps assume this repo has already been created by following the "Create New Deployment Repo" section in [Repositories.md](./Repositories.md):
 
 - One of the two infra repos:
-  - `gcp-experimentation-tier1-infra`: if building a experimentation landing-zone.
-  - `gcp-tier1-infra`: if building a dev, preprod or prod landing-zone.
-- `gcp-tier1-configsync`: to identify which git revision of `tier1-infra` the Config Sync operator should observe.
+  - `gcp-experimentation-tier1`: if building a experimentation landing-zone.
+  - `gcp-env-tier1`: if building a dev, preprod or prod landing-zone.
 
 ## Setup
 
@@ -32,14 +31,14 @@ The automated script creates a project, the FW settings, a Cloud router, a Cloud
 
 The script requires a `.env` file to deploy the environment.
 
-1. Start a new change for your `tier1-infra` repo, follow the "Step 1 - Setup" section of [Changing.md](./Changing.md).
+1. Start a new change for your `gcp-env-tier1` repo, follow the "Step 1 - Setup" section of [Changing.md](./Changing.md).
     - Experimentation
 
-        repo name = `gcp-experimentation-tier1-infra`
+        repo name = `gcp-experimentation-tier1`
     - DEV, PREPROD, PROD
 
-        repo name = `gcp-tier1-infra`
-1. Your terminal should now be at the root of your `tier1-infra` repo, on a new branch and with the tools submodule populated.
+        repo name = `gcp-env-tier1`
+1. Your terminal should now be at the root of your `tier1` repo, on a new branch and with the tools submodule populated.
 1. If it doesn't exist, create a `bootstrap/<env>` directory.  It will be used to backup files generated during bootstrapping.
 1. Copy the example.env file from the `tools/scripts/bootstrap` folder.
 
@@ -120,7 +119,7 @@ Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of th
 
 ### Complete the Infra Repo
 
-The packages are now added and customized in the `tier1-infra` repo, it's time to hydrate and publish them.
+The packages are now added and customized in the `tier1` repo, it's time to hydrate and publish them.
 
 1. Generate hydrated files, follow step 3 "Hydrate" of [Changing.md](./Changing.md).
 
@@ -130,7 +129,7 @@ The packages are now added and customized in the `tier1-infra` repo, it's time t
 
 ## 3. Synchronize the Landing Zone
 
-Your landing zone is now built and published in the `tier1-infra` repo, but Config Sync is not aware yet.  This is where the `gcp-tier1-configsync` repo comes in to fill the gap by creating a new Root Sync.
+Your landing zone is now built and published in the `tier1` repo, but Config Sync is not aware yet.  This is where the `gcp-tier1-configsync` repo comes in to fill the gap by creating a new Root Sync.
 
 1. Follow step 1-4 of [Changing.md](./Changing.md) to **add** the tier1 Root Sync package (step 2A).  If the package already exists from bootstrapping other environments, **modify** it for the new environment (step 2B).
     - Package details:
@@ -149,23 +148,23 @@ Your landing zone is now built and published in the `tier1-infra` repo, but Conf
     - Customization: you will need to customize 2 files.
         > **!!! IMPORTANT !!!** Only customize for the environment your are bootstrapping.
 
-        - `tier1-root-sync/setters.yaml`: general settings to create the new Root Sync.  Some values to customize are:
+        - `root-sync-git/setters.yaml`: general settings to create the new Root Sync.  Some values to customize are:
             - `env`: the environment you are bootstrapping.
             - `repo-url`: the URL of your `tier1-infra` repo.
             - `repo-dir`: the `deploy/<env>` folder to observe.
-        - `tier1-root-sync/setters-version.yaml`: setting to control the version of `tier1-infra` to observe.
+        - `root-sync-git/setters-version.yaml`: setting to control the version of `tier1` to observe.
             - `version`: the new tag or commit SHA noted earlier.
 
-1. Once your PR is merged, Config Sync will pick up the new Root Sync to create.  This new Root Sync will in turn pick up all the resources you have built and hydrated earlier in the `tier1-infra/deploy/<env>` directory.
+1. Once your PR is merged, Config Sync will pick up the new Root Sync to create.  This new Root Sync will in turn pick up all the resources you have built and hydrated earlier in the `tier1/deploy/<env>` directory.
 
 ## 4. Validate the landing zone deployment
 
 Perform step 4 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment).
 
-You should now see two Root Syncs:
+You should now see two RootSyncs:
 
-- `root-sync`: to your `...gcp-tier1-configsync/deploy/<env>@main` repo containing 1 rootsync resource which defines...
-- the root sync to your `...tier1-infra/deploy/<env>@<version>` repo containing the landing zone resources.
+- `root-sync`: to your `...csync/deploy/<env>@main` RootSync object containing 1 rootsync resource which defines...
+- the RootSync to your `...tier1/deploy/<env>@<version>` repo containing the landing zone resources.
 
 ## 5. Perform the post-deployment steps
 

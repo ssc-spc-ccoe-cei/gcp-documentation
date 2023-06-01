@@ -147,7 +147,7 @@ Follow these steps to update a package:
 
     ```shell
     # the folder of the pkg to be updated
-    # for example, 'landing-zone/hierarchy'
+    # for example, 'core-landing-zone'
     export PKG_PATH=''
 
     # the version to update to
@@ -180,7 +180,7 @@ Follow these steps to update a package:
     This strategy can also remove or modify `cnrm.cloud.google.com/blueprint:` annotations in many YAML files.  These changes will unfortunately create a large git diff but can be accepted.
     1. If the changes are as expected, proceed to the next step.
 1. For each file under `source-customization/<env>`, verify if it changed in `source-base`.
-For example, if the landing-zone package is updated, compare `source-customization/dev/landing-zone/setters.yaml` with `source-base/landing-zone/setters.yaml`.
+For example, if the landing-zone package is updated, compare `source-customization/dev/core-landing-zone/setters.yaml` with `source-base/core-landing-zone/setters.yaml`.
     - If a change is detected, manually update the file in `source-customization/<env>`.
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
@@ -202,7 +202,7 @@ Follow these steps to remove a package:
 
     ```shell
     # the folder of the pkg to be removed
-    # for example, 'landing-zone/logging'
+    # for example, 'core-landing-zone'
     export PKG_PATH=''
     ```
 
@@ -286,28 +286,28 @@ Follow these steps to publish the changes:
 
 This section contains additional information on how changes can be promoted between environments.
 
-Changes to `infra` repos will only be applied to GCP when the `configsync` repo is updated.  The concept is similar for all repos
+Changes to `tierN` repos will only be applied to GCP when its `csync` RootSync object is updated.  The concept is similar for all repos
 
-This example will focus on `gcp-tier1-infra` and `gcp-tier1-configsync`:
+This example will focus on `gcp-env-tier1`:
 
-1. A change is made on `gcp-tier1-infra`.
+1. A change is made on `gcp-env-tier1`.
     > **!!! It's important to add the `source-customization` for each environment.  This will ensure all environments are rendered, validated and tagged at the same time. !!!**
 1. Once the PR is merged, note the new tag version or commit SHA.
 1. At this point the changes have not been deployed to GCP. Changes of type "Modify a Package" are required in `gcp-tier1-configsync` to do so for each environment.
 1. `dev`:
-    - Set `version:` in `source-customization/dev/tier1-root-sync/setters-version.yaml` to the new tag or commit SHA noted earlier.
+    - Set `version:` in `csync/source-customization/dev/root-sync-git/setters-version.yaml` to the new tag or commit SHA noted earlier.
     - Hydrate the repo and create a PR.
     - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/dev`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
     - Validate landing zone and workload functionalities for the `dev` environment in GCP.  Proceed to `preprod` if successful, restart the process if not.
 1. `preprod`:
-    - Set `version:` in `source-customization/preprod/tier1-root-sync/setters-version.yaml` to the same value as `dev`.
+    - Set `version:` in `source-customization/preprod/root-sync-git/setters-version.yaml` to the same value as `dev`.
     - Hydrate the repo and create a PR.
     - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/preprod`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
     - Validate landing zone and workload functionalities for the `preprod` environment in GCP.  Proceed to `prod` if successful, restart the process if not.
 1. `prod`:
-    - Set `version:` in `source-customization/prod/tier1-root-sync/setters-version.yaml` to the same value as `preprod`.
+    - Set `version:` in `source-customization/prod/root-sync-git/setters-version.yaml` to the same value as `preprod`.
     - Hydrate the repo and create a PR.
     - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/prod`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
