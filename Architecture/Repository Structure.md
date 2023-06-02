@@ -1,38 +1,55 @@
 # Repos Structure and Roles
 
-The diagram below shows all the infrastructure repository **types** and the **roles** that are granted to each team.
-![img](img/tiers.png)
+SSC adopted the [monorepo](https://monorepo.tools/) structure for repositories. Monorepos are great for managing multiple solutions inside a single repository.
+
+The diagrams below show all the repositories **types** and the **roles** that are granted to each team.
+
+### Tier1
+
+![img](img/tier1.png)
+
+### Tier2
+
+![img](img/tier2.png)
+
+### Tier34
+
+![img](img/tier34.png)
 
 ## Gitops
 
 The current solution is using [Config Sync](https://cloud.google.com/anthos-config-management/docs/config-sync-overview) with git repos to pull configurations for deploying GCP infrastructure.
 
-The diagram below describes the Gitops process that involves 2 repositories.
+The diagram below describes the Gitops process.
 
-- Infra
-- ConfigSync
+![img](img/gitops.png)
 
 The process to implement a code change goes like this:
 
-1. The Infrastructure Admin will make code changes on the Infra repo and open a pull request. Then the CI process validates the change while reviewers can approve or deny it. Once the pull request is completed, the branch is merged into the main branch and a new git tag specifying a new version is created.
-2. The Infrastructure Admin will modify the tag value in the ConfigSync repo by setting it to the new version that got created on the Infra repo. By doing so, The ConfigSync operator running in Config Controller will start observing that new version of the Infra Repo.
+1. The contributor will create a branch and make code changes in a tierX folder of the monorepo and open a pull request.
+2. The CI process validates the change.
+3. The reviewers can approve or deny the PR.
+4. Once the pull request is completed, the branch is merged into the main branch and a new git tag specifying a new version is created for affected tierX folder.
+5. The contributor will create a branch and modify the tag value in the folder csync/source-customization/`env`/tierX by setting it to the new version that got created in step 4.
+6. The CI process validates the change.
+7. The reviewers can approve or deny the PR.
+8. The branch is merged into the main branch. No new tag is created.
+9. The ConfigSync operator running in Config Controller which is already observing `HEAD` for the csync folder will pickup the new commit.
+10. It will start observing that new version of the tierX folder
+11. It deploys resources accordingly in GCP.
  &nbsp;
-
-![img](img/gitops.png)
 
 ## Git
 
 The git repos are organized in different categories:
-
+TODO: continue working here
 - `gcp-documentation` (this repo) contains documentation for the landing zone.
-- Deployment repos: two types exists, one to manage Config Sync repos, the other to store infrastructure configurations.
+- Deployment repos:
   - `gcp-tier1-configsync` is where the initial `root-sync` object is pointing and is used to manage the root sync objects and versioning of the tier1 infrastructure in experimentation, dev, preprod and prod.
   - `gcp-tier1-infra` contains the landing zone configs for dev, preprod and prod.
   - `gcp-experimentation-tier1-infra` contains the landing zone configs for experimentation.
 - `gcp-tools` contains common scripts and pipeline templates used by repos above as a git submodule.
 - `gcp-blueprints-catalog` **private repo** contains SSC specific packages that are used to build a landing zone.
-
-TODO: tier2 and tier3 repos
 
 ## Deployment Repos
 
@@ -55,7 +72,11 @@ Below is a brief explanation of key repo components.  Some directories include s
   - `modupdate.sh`: script to checkout the git submodules, i.e. tools.
   - `modversions.yaml`: file used by modupdate.sh to specify which versions of git sub modules to checkout.
 
-**A repo template is available [here](https://github.com/ssc-spc-ccoe-cei/gcp-repo-template).**
+Here are the links to the repositories templates for each deployment repos:
+
+- [gcp-tier1-template](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template)
+- [gcp-tier2-template](https://github.com/ssc-spc-ccoe-cei/gcp-tier2-template)
+- [gcp-tier34-template](https://github.com/ssc-spc-ccoe-cei/gcp-tier34-template)
 
 ### Git Submodule: `tools`
 
