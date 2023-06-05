@@ -2,7 +2,7 @@
 
 SSC adopted the [monorepo](https://monorepo.tools/) structure for repositories. Monorepos are great for managing multiple solutions inside a single repository.
 
-The diagrams below show all the repositories **types** and the **roles** that are granted to each team.
+The diagrams below show all the repositories **types** and the **roles** that are granted to teams for each one of them.
 
 ### Tier1
 
@@ -29,48 +29,61 @@ The process to implement a code change goes like this:
 1. The contributor will create a branch and make code changes in a tierX folder of the monorepo and open a pull request.
 2. The CI process validates the change.
 3. The reviewers can approve or deny the PR.
-4. Once the pull request is completed, the branch is merged into the main branch and a new git tag specifying a new version is created for affected tierX folder.
+4. Once the pull request is completed, the branch is merged into the main branch and a new git tag specifying a new version is created for the affected tierX folder.
 5. The contributor will create a branch and modify the tag value in the folder csync/source-customization/`env`/tierX by setting it to the new version that got created in step 4.
 6. The CI process validates the change.
 7. The reviewers can approve or deny the PR.
 8. The branch is merged into the main branch. No new tag is created.
 9. The ConfigSync operator running in Config Controller which is already observing `HEAD` for the csync folder will pickup the new commit.
-10. It will start observing that new version of the tierX folder
+10. It will start observing that new version of the tierX folder.
 11. It deploys resources accordingly in GCP.
  &nbsp;
 
 ## Git
 
 The git repos are organized in different categories:
-TODO: continue working here
-- `gcp-documentation` (this repo) contains documentation for the landing zone.
-- Deployment repos:
-  - `gcp-tier1-configsync` is where the initial `root-sync` object is pointing and is used to manage the root sync objects and versioning of the tier1 infrastructure in experimentation, dev, preprod and prod.
-  - `gcp-tier1-infra` contains the landing zone configs for dev, preprod and prod.
-  - `gcp-experimentation-tier1-infra` contains the landing zone configs for experimentation.
-- `gcp-tools` contains common scripts and pipeline templates used by repos above as a git submodule.
+
 - `gcp-blueprints-catalog` **private repo** contains SSC specific packages that are used to build a landing zone.
+- `gcp-documentation` (this repo) contains documentation for the landing zone.
+- `gcp-tools` contains common scripts and pipeline templates used as a git submodule by deployment repos below.
+
+- Deployment monorepos:
+  - `gcp-experimentation-tier1` contains all the experimentation resources.
+  - `gcp-env-tier1` contains the core level resources for dev, preprod and prod.
+  - `gcp-<client-name>-tier2` contains the client level resources for dev, preprod and prod.
+  - `gcp-<project-id>-tier34` contains the security and application resources for dev, preprod and prod.
 
 ## Deployment Repos
 
-These repos have a common directory structure with slight variations.
+These monorepos have a common directory structure with slight variations.
 
 Below is a brief explanation of key repo components.  Some directories include sub-directories for each environment it configures (experimentation, dev, preprod, prod).  For simplicity, they will be expressed below as `<env_subdirs>`.
 
-- `repo root`:
-  - `.azure-pipelines` or `.github`: pipelines YAML files.
-  - `bootstrap`: (only in the "infra" repos)
-    - `<env_subdirs>`: contains `.env` file needed to create the management project which includes the Config Controller GKE cluster.
-  - `deploy`: ("WET" folder) its content is automatically generated and must not be edited manually.
-    - `<env_subdirs>`: contains the hydrated YAML files to be deployed.  **This is the directory used by Config Sync.**
-  - `source-base`: ("DRY" folder) contains a collection of *unedited* packages that will be deployed to all environments.
-  - `source-customization`:
-    - `<env_subdirs>`: contains the customization files that will overwrite the base for the environment.  Directory and file names must be replicated.  For example, to customize `source-base/landing-zone/setters.yaml`, it should be copied, then edited, in `source-customization/<env_subdir>/landing-zone/setters.yaml`.
-  - `tools`: git submodule from [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools)
-  - `temp-workspace`: used temporarily during hydration, included in `.gitignore`.
-  - `pre-commit-config.yaml`: the pre-commit will trigger `tools/scripts/kpt/hydrate.sh` to ensure all changes to source-base and/or source-customization were hydrated.
-  - `modupdate.sh`: script to checkout the git submodules, i.e. tools.
-  - `modversions.yaml`: file used by modupdate.sh to specify which versions of git sub modules to checkout.
+```
+repo-root/
+├── .azure-pipelines or .github : pipelines YAML files.
+├── bootstrap/: (only in the "tier1" repos)
+│   ├── <env_subdirs>/: contains `.env` file needed to create the management project which includes the Config Controller GKE cluster.
+├── csync/
+│   ├── deploy/: ("WET" folder) its content is automatically generated and must not be edited manually.
+│   │   ├── <env_subdirs>/: contains the hydrated YAML files to be deployed.  **This is the directory observed by Config Sync.**
+│   ├── source-base/: ("DRY" folder) contains a root-sync package that will be deployed to all environments.
+│   ├── source-customization/
+│   │   ├── <env_subdirs>/: contains the customization files that will overwrite the base for the environment.  Directory and file names must be replicated.
+│                          To customize `source-base/root-sync-git/setters.yaml`, it should be copied, then edited, in `source-customization/<env_subdir>/root-sync-git/setters.yaml`.
+├── tierX/
+│   ├── deploy/: ("WET" folder) its content is automatically generated and must not be edited manually.
+│   │   ├── <env_subdirs>/: contains the hydrated YAML files to be deployed.  **This is the directory observed by Config Sync.**
+│   ├── source-base/: ("DRY" folder) contains a collection of *unedited* packages that will be deployed to all environments.
+│   ├── source-customization/
+│   │   ├── <env_subdirs>/: contains the customization files that will overwrite the base for the environment.  Directory and file names must be replicated.
+│                          For example, to customize `source-base/core-landing-zone/setters.yaml`, it should be copied,
+│                          then edited, in `source-customization/<env_subdir>/core-landing-zone/setters.yaml`.
+├── tools/: git submodule from [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools)
+├── modupdate.sh: script to checkout the git submodules, i.e. tools.
+├── modversions.yaml: file used by modupdate.sh to specify which versions of git sub modules to checkout.
+├── version-tagging-config.json
+```
 
 Here are the links to the repositories templates for each deployment repos:
 

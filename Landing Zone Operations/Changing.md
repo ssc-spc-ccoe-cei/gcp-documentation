@@ -1,5 +1,22 @@
 # Implementing a change on the landing zone
 
+<!-- vscode-markdown-toc -->
+* [Step 1 - Setup](#Step1-Setup)
+* [Step 2 - Change](#Step2-Change)
+	* [A) Add a Package](#AAddaPackage)
+	* [B) Modify a Package](#BModifyaPackage)
+	* [C) Update a Package](#CUpdateaPackage)
+	* [D) Remove a Package](#DRemoveaPackage)
+* [Step 3 - Hydrate](#Step3-Hydrate)
+* [Step 4 - Publish](#Step4-Publish)
+* [Step 5 - Synchronize / Promote Configs](#Step5-SynchronizePromoteConfigs)
+
+<!-- vscode-markdown-toc-config
+	numbering=false
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
 There can be different types of changes on the landing zone but they all start and end the same way.  This document will go through the different steps.
 
 Before proceeding, you should familiarize yourself with the concepts in "[Repository Structure.md](../Architecture/Repository%20Structure.md)".
@@ -11,7 +28,7 @@ As a high level overview, a package will usually include files that are used spe
 - `setters.yaml`: used to set customizable data.
 - `Kptfile`: used to keep track of package versions and [declaratively set which functions](https://kpt.dev/book/04-using-functions/01-declarative-function-execution) should run during rendering. For example, [apply-setters](https://catalog.kpt.dev/apply-setters/v0.2/).
 
-## Step 1 - Setup
+## <a name='Step1-Setup'></a>Step 1 - Setup
 
 For any type of change, you should start with a new branch and a clean git working tree (all files are staged and committed).  This will make it easier to visualize changes in [VSCode's Git Source Control](https://code.visualstudio.com/docs/sourcecontrol/overview) (or `git diff`) and revert if needed.
 You can confirm that a working tree is clean by running `git status`.
@@ -42,22 +59,22 @@ From your local environment:
     bash modupdate.sh
     ```
 
-## Step 2 - Change
+## <a name='Step2-Change'></a>Step 2 - Change
 
 There are different types of changes.  Follow the appropriate section for instructions.
 
-### A) Add a Package
+### <a name='AAddaPackage'></a>A) Add a Package
 
 This is accomplished with the [`kpt pkg get`](https://kpt.dev/reference/cli/pkg/get/) command.
 
-As a rule, packages should only be added in a deployment repo's `source-base` folder and **never** manually edited from there.  All customizations are to be made from the `source-customization/<env>` folders.
+As a rule, packages should only be added in a deployment repo's `tierX/source-base` folder and **never** manually edited from there.  All customizations are to be made from the `tierX/source-customization/<env>` folders.
 
 Follow these steps to add a package:
 
 1. Move into the `source-base` folder:
 
     ```shell
-    cd source-base
+    cd <tierX>/source-base
     ```
 
 1. You can update and set these variables to make it easier to run subsequent commands:
@@ -68,7 +85,7 @@ Follow these steps to add a package:
     export REPO_URI=''
 
     # subdirectory of the package, relative to root of repo
-    # for example, 'solutions/hierarchy/core-env'
+    # for example, 'solutions/hierarchy/core-landing-zone'
     export PKG_PATH=''
 
     # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
@@ -76,7 +93,7 @@ Follow these steps to add a package:
     export VERSION=''
 
     # the local destination directory to save the package, relative to 'source-base'
-    # for example, 'landing-zone/hierarchy'
+    # for example, 'core-landing-zone'
     export LOCAL_DEST_DIRECTORY=''
     ```
 
@@ -113,18 +130,18 @@ It will need to be customized for each environment.  This is a manual process, a
         - The hydration process will then ignore this commented resource definition, effectively removing it.
 1. Review all customizations with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-### B) Modify a Package
+### <a name='BModifyaPackage'></a>B) Modify a Package
 
-By design, this is accomplished by modifying configs in the `source-customization/<env>`.  Files in other directories should never be modified manually.
+By design, this is accomplished by modifying configs in the `tierX/source-customization/<env>`.  Files in other directories should never be modified manually.
 
 ***Standard customization should only involve the `setters.yaml` file.***
 
 Follow these steps to modify a package:
 
-1. Modify the configs for each applicable environment in `source-customization/<env>`
+1. Modify the configs for each applicable environment in `tierX/source-customization/<env>`
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-### C) Update a Package
+### <a name='CUpdateaPackage'></a>C) Update a Package
 
 This is accomplished with the [`kpt pkg update`](https://kpt.dev/reference/cli/pkg/update/) command.
 
@@ -140,14 +157,14 @@ Follow these steps to update a package:
 1. Move into the `source-base` folder:
 
     ```shell
-    cd source-base
+    cd <tierX>/source-base
     ```
 
 1. You can update and set these variables to make it easier to run subsequent commands:
 
     ```shell
     # the folder of the pkg to be updated
-    # for example, 'landing-zone/hierarchy'
+    # for example, 'core-landing-zone'
     export PKG_PATH=''
 
     # the version to update to
@@ -180,13 +197,13 @@ Follow these steps to update a package:
     This strategy can also remove or modify `cnrm.cloud.google.com/blueprint:` annotations in many YAML files.  These changes will unfortunately create a large git diff but can be accepted.
     1. If the changes are as expected, proceed to the next step.
 1. For each file under `source-customization/<env>`, verify if it changed in `source-base`.
-For example, if the landing-zone package is updated, compare `source-customization/dev/landing-zone/setters.yaml` with `source-base/landing-zone/setters.yaml`.
+For example, if the landing-zone package is updated, compare `tier1/source-customization/dev/core-landing-zone/setters.yaml` with `tier1/source-base/core-landing-zone/setters.yaml`.
     - If a change is detected, manually update the file in `source-customization/<env>`.
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-### D) Remove a Package
+### <a name='DRemoveaPackage'></a>D) Remove a Package
 
-This is accomplished by simply deleting the package files in `source-base` and its customizations in `source-customization/<env>`.
+This is accomplished by simply deleting the package files in `tierX/source-base` and its customizations in `tierX/source-customization/<env>`.
 
 > **!!! IMPORTANT !!!** Before deleting a package, confirm that it does not have subpackages that are still needed.
 
@@ -195,14 +212,14 @@ Follow these steps to remove a package:
 1. Move into the `source-base` folder:
 
     ```shell
-    cd source-base
+    cd <tierX>/source-base
     ```
 
 1. You can update and set these variables to make it easier to run subsequent commands:
 
     ```shell
     # the folder of the pkg to be removed
-    # for example, 'landing-zone/logging'
+    # for example, 'core-landing-zone'
     export PKG_PATH=''
     ```
 
@@ -231,7 +248,7 @@ Follow these steps to remove a package:
 
 1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-## Step 3 - Hydrate
+## <a name='Step3-Hydrate'></a>Step 3 - Hydrate
 
 This is accomplished with the `hydrate.sh` script located in the tools submodule.  In part, it uses the [`kpt fn render`](https://kpt.dev/reference/cli/fn/render/) command.
 
@@ -253,7 +270,7 @@ Follow these steps to hydrate your change:
 1. Address errors, if any.
 1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`, specifically the hydrated files in the `deploy/<env>` folders.  If satisfied, it's time for publishing.
 
-## Step 4 - Publish
+## <a name='Step4-Publish'></a>Step 4 - Publish
 
 At this point, the changes only exist locally. They are now ready to be published for peer review and approval.
 
@@ -280,35 +297,34 @@ Follow these steps to publish the changes:
 1. Create a new [pull requests (PR)](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops&tabs=browser) on the repo to merge this `<branch name>` into `main`.
 1. Confirm all required checks are successful (approvals, tests, etc.).  If checks are failing, address them in your local branch then stage, commit and push them to origin.
 1. Complete the pull request once all required checks are successful.
-1. That's it!
 
-## Synchronize / Promote Configs
+## <a name='Step5-SynchronizePromoteConfigs'></a>Step 5 - Synchronize / Promote Configs
 
-This section contains additional information on how changes can be promoted between environments.
+This section contains information on how changes can be promoted between environments.
 
-Changes to `infra` repos will only be applied to GCP when the `configsync` repo is updated.  The concept is similar for all repos
+Changes to deployment repos will only be applied to GCP when the `csync/deploy/<env>` folder is updated.
 
-This example will focus on `gcp-tier1-infra` and `gcp-tier1-configsync`:
+This example will focus on `gcp-env-tier1` monorepo:
 
-1. A change is made on `gcp-tier1-infra`.
+1. A change is made in folder `tier1`.
     > **!!! It's important to add the `source-customization` for each environment.  This will ensure all environments are rendered, validated and tagged at the same time. !!!**
 1. Once the PR is merged, note the new tag version or commit SHA.
-1. At this point the changes have not been deployed to GCP. Changes of type "Modify a Package" are required in `gcp-tier1-configsync` to do so for each environment.
+1. At this point the changes have not been deployed to GCP. Changes of type "Modify a Package" are required in folder `csync/deploy/<env>` for each environment.
 1. `dev`:
-    - Set `version:` in `source-customization/dev/tier1-root-sync/setters-version.yaml` to the new tag or commit SHA noted earlier.
+    - Set `version:` in `csync/source-customization/dev/root-sync-git/setters-version.yaml` to the new tag or commit SHA noted earlier.
     - Hydrate the repo and create a PR.
-    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/dev`.
+    - Once the PR is merged the config sync operator will pick up the updated configs in `csync/deploy/dev`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
     - Validate landing zone and workload functionalities for the `dev` environment in GCP.  Proceed to `preprod` if successful, restart the process if not.
 1. `preprod`:
-    - Set `version:` in `source-customization/preprod/tier1-root-sync/setters-version.yaml` to the same value as `dev`.
+    - Set `version:` in `csync/source-customization/preprod/root-sync-git/setters-version.yaml` to the same value as `dev`.
     - Hydrate the repo and create a PR.
-    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/preprod`.
+    - Once the PR is merged the config sync operator will pick up the updated configs in `csync/deploy/preprod`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
     - Validate landing zone and workload functionalities for the `preprod` environment in GCP.  Proceed to `prod` if successful, restart the process if not.
 1. `prod`:
-    - Set `version:` in `source-customization/prod/tier1-root-sync/setters-version.yaml` to the same value as `preprod`.
+    - Set `version:` in `csync/source-customization/prod/root-sync-git/setters-version.yaml` to the same value as `preprod`.
     - Hydrate the repo and create a PR.
-    - Once the PR is merged the config sync operator will pick up the updated configs in `gcp-tier1-infra/deploy/prod`.
+    - Once the PR is merged the config sync operator will pick up the updated configs in `csync/deploy/prod`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
     - Validate landing zone and workload functionalities for the `prod` environment in GCP.  Restart the process if not successful.

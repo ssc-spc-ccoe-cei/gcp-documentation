@@ -1,5 +1,20 @@
 # Landing zone building
 
+<!-- vscode-markdown-toc -->
+* [Requirements](#Requirements)
+* [1. Create `tier1` monorepo](#Createtier1monorepo)
+* [2. Bootstrap the Config Controller Project](#BootstraptheConfigControllerProject)
+* [3. Build the Core Landing Zone](#BuildtheCoreLandingZone)
+	* [Add package](#Addpackage)
+* [4. Perform the post-deployment steps](#Performthepost-deploymentsteps)
+* [THE END](#THEEND)
+
+<!-- vscode-markdown-toc-config
+	numbering=false
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
 Shared Services Canada has automated a portion of the deployment process for the [landing-zone-v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#Organization) solution in the Google's Pubsec Toolkit repo.
 
 This document will describe how the automated scripts can be used for building a landing zone.
@@ -8,38 +23,37 @@ This document will describe how the automated scripts can be used for building a
 
 **Important** SSC is using Azure Devops Repositories and Pipelines as its git solution.
 
-## Requirements
+## <a name='Requirements'></a>Requirements
 
 Shared Services Canada uses the "[Multiple GCP organizations](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#multiple-gcp-organizations)" architecture.
 
 Review the requirements listed [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#requirements).
 
+## <a name='Createtier1monorepo'></a>1. Create `tier1` monorepo
+
 SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
-As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator requires an Infra repo and a ConfigSync repo.
+As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator is observing our deployment monorepos.
 
-The steps assume these repos have already been created by following the "Create New Deployment Repo" section in [Repositories.md](./Repositories.md):
+Follow the "Create New Deployment Repo" section in [Repositories.md](./Repositories.md) to create one of the two `tier1` repos:
 
-- One of the two infra repos:
-  - `gcp-experimentation-tier1-infra`: if building a experimentation landing-zone.
-  - `gcp-tier1-infra`: if building a dev, preprod or prod landing-zone.
-- `gcp-tier1-configsync`: to identify which git revision of `tier1-infra` the Config Sync operator should observe.
+- `gcp-experimentation-tier1`: if building an experimentation landing-zone.
+- `gcp-env-tier1`: if building a dev, preprod or prod landing-zone.
 
-## Setup
 
-## 1. Bootstrap the Config Controller Project
+## <a name='BootstraptheConfigControllerProject'></a>2. Bootstrap the Config Controller Project
 
 The automated script creates a project, the FW settings, a Cloud router, a Cloud NAT, a private service connect endpoint and the Anthos Config Controller cluster. It also creates a root-sync.yaml file.
 
 The script requires a `.env` file to deploy the environment.
 
-1. Start a new change for your `tier1-infra` repo, follow the "Step 1 - Setup" section of [Changing.md](./Changing.md).
+1. Start a new change for your `tier1` repo, follow the "Step 1 - Setup" section of [Changing.md](./Changing.md).
     - Experimentation
 
-        repo name = `gcp-experimentation-tier1-infra`
+        repo name = `gcp-experimentation-tier1`
     - DEV, PREPROD, PROD
 
-        repo name = `gcp-tier1-infra`
-1. Your terminal should now be at the root of your `tier1-infra` repo, on a new branch and with the tools submodule populated.
+        repo name = `gcp-env-tier1`
+1. Your terminal should now be at the root of your `tier1` repo, on a new branch and with the tools submodule populated.
 1. If it doesn't exist, create a `bootstrap/<env>` directory.  It will be used to backup files generated during bootstrapping.
 1. Copy the example.env file from the `tools/scripts/bootstrap` folder.
 
@@ -49,7 +63,7 @@ The script requires a `.env` file to deploy the environment.
 
 2. **Important** Customize the new file with the appropriate values for the landing zone you are building.
 
-3. Export a `TOKEN` variable.  Set its value to the PAT which has read access to the repo.
+3. Export a `TOKEN` variable.  Set its value to the PAT which has read access to the `tier1` repo.
 
     ```shell
     export TOKEN='xxxxxxxxxxxxxxx'
@@ -61,68 +75,35 @@ The script requires a `.env` file to deploy the environment.
     bash tools/scripts/bootstrap/setup-kcc.sh <PATH TO .ENV FILE>
     ```
 
-1. Once the script has completed, you need to move the `root-sync.yaml` file into the `bootstrap/<env>` folder of the `tier1-infra` repo.
+1. Once the script has completed, you need to move the `root-sync.yaml` file into the `bootstrap/<env>` folder of the `tier1` repo.
 
     ```shell
     mv root-sync.yaml bootstrap/<ENV>
     ```
 
-1. Validate the Config Controller deployment.  You should see a synchronized `root-sync` to your `...gcp-tier1-configsync/deploy/<env>@main` repo containing no resource.
+1. Validate the Config Controller deployment.  You should see a synchronized `root-sync` to your `...<tier1 monorepo>/csync/deploy/<env>@main` repo containing no resource.
 Perform step 4 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment).
 
-## 2. Build the Landing Zone Packages
+## <a name='BuildtheCoreLandingZone'></a>3. Build the Core Landing Zone
 
-We will build the landing zone by adding a collection of packages to the `tier1-infra` repo.
+We will build the core landing zone by adding a collection of packages to the `tier1` monorepo.
+At a high level, the process below needs to be completed for each package :
 
-### Add Packages
+1. Setup your change, follow step 1 of [Changing.md](./Changing.md#step-1---setup)
+1. Add a Package, follow step 2A of [Changing.md](./Changing.md#a-add-a-package)
+1. Generate hydrated files, follow step 3 of [Changing.md](./Changing.md#step-3---hydrate).
+1. Publish changes to repository, follow step 4 of [Changing.md](./Changing.md#step-4---publish).
+1. Once the PR is merged, note the new tag version or commit SHA.  It will be required in the next section.
+1. Synchronize and promote configuration, follow step 5 of [Changing.md](./Changing.md#step-5---synchronize--promote-configs).
 
-Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of these packages:
+### <a name='Addpackage'></a>Add package
 
-1. The landing zone package:
-    - Package details:
+You will add the 2 packages below to your `tier1` monorepo.
+> **!!! It's important that all of the steps listed above are completed for each package before proceeding with the next package. !!!**
 
-        ```shell
-        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
+The details below are required when performing step 2A "Add a Package" of [Changing.md](./Changing.md)
 
-        export PKG_PATH='solutions/landing-zone-v2'
-
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
-        export VERSION=''
-
-        export LOCAL_DEST_DIRECTORY='landing-zone'
-        ```
-
-    - Customization:
-
-        ```shell
-        export FILE_TO_CUSTOMIZE='landing-zone/setters.yaml'
-        ```
-
-1. The hierarchy package:
-    - Package details:
-
-        ```shell
-        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
-
-        # for experimentation
-        export PKG_PATH='solutions/hierarchy/core-experimentation'
-        # OR
-        # for dev, preprod, prod
-        export PKG_PATH='solutions/hierarchy/core-env'
-
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
-        export VERSION=''
-
-        export LOCAL_DEST_DIRECTORY='landing-zone/hierarchy'
-        ```
-
-    - Customization:
-
-        ```shell
-        export FILE_TO_CUSTOMIZE='landing-zone/hierarchy/setters.yaml'
-        ```
-
-1. The Gatekeeper policies package:
+1. The gatekeeper-policies package:
     - Package details:
 
         ```shell
@@ -133,94 +114,43 @@ Follow step 2A "Add a Package" of [Changing.md](./Changing.md) to add each of th
         # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
-        export LOCAL_DEST_DIRECTORY='landing-zone/gatekeeper-policies'
+        export LOCAL_DEST_DIRECTORY=''
         ```
 
     - Customization:
 
         ```shell
-        export FILE_TO_CUSTOMIZE='landing-zone/gatekeeper-policies/naming-rules/project/setters.yaml'
+        export FILE_TO_CUSTOMIZE='gatekeeper-policies/naming-rules/project/setters.yaml'
         ```
 
-1. The organization policies package:
+1. The core landing zone package:
     - Package details:
 
-        ```shell
-        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
+      ```shell
+      export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
 
-        export PKG_PATH='solutions/org-policies'
+      # for experimentation
+      export PKG_PATH='solutions/experimentation/core-landing-zone'
+      # OR
+      # for dev, preprod, prod
+      export PKG_PATH='solutions/core-landing-zone'
 
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
-        export VERSION=''
+      # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
+      export VERSION=''
 
-        export LOCAL_DEST_DIRECTORY='landing-zone/org-policies'
-        ```
+      export LOCAL_DEST_DIRECTORY=''
+      ```
 
     - Customization:
 
         ```shell
-        export FILE_TO_CUSTOMIZE='landing-zone/org-policies/setters.yaml'
+        export FILE_TO_CUSTOMIZE='core-landing-zone/setters.yaml'
         ```
 
-        For experimentation, you may also want to remove some org policies.
-
-1. The logging package:
-
-    TODO: TBD
-
-### Complete the Infra Repo
-
-The packages are now added and customized in the `tier1-infra` repo, it's time to hydrate and publish them.
-
-1. Generate hydrated files, follow step 3 "Hydrate" of [Changing.md](./Changing.md).
-
-1. Publish changes to repository, follow step 4 "Publish" of [Changing.md](./Changing.md).
-
-1. Once the PR is merged, note the new tag version or commit SHA.  It will be required in the next section.
-
-## 3. Synchronize the Landing Zone
-
-Your landing zone is now built and published in the `tier1-infra` repo, but Config Sync is not aware yet.  This is where the `gcp-tier1-configsync` repo comes in to fill the gap by creating a new Root Sync.
-
-1. Follow step 1-4 of [Changing.md](./Changing.md) to **add** the tier1 Root Sync package (step 2A).  If the package already exists from bootstrapping other environments, **modify** it for the new environment (step 2B).
-    - Package details:
-
-        ```shell
-        export REPO_URI='TODO: publish package'
-
-        export PKG_PATH='TODO: publish package'
-
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
-        export VERSION=''
-
-        export LOCAL_DEST_DIRECTORY='tier1-root-sync'
-        ```
-
-    - Customization: you will need to customize 2 files.
-        > **!!! IMPORTANT !!!** Only customize for the environment your are bootstrapping.
-
-        - `tier1-root-sync/setters.yaml`: general settings to create the new Root Sync.  Some values to customize are:
-            - `env`: the environment you are bootstrapping.
-            - `repo-url`: the URL of your `tier1-infra` repo.
-            - `repo-dir`: the `deploy/<env>` folder to observe.
-        - `tier1-root-sync/setters-version.yaml`: setting to control the version of `tier1-infra` to observe.
-            - `version`: the new tag or commit SHA noted earlier.
-
-1. Once your PR is merged, Config Sync will pick up the new Root Sync to create.  This new Root Sync will in turn pick up all the resources you have built and hydrated earlier in the `tier1-infra/deploy/<env>` directory.
-
-## 4. Validate the landing zone deployment
-
-Perform step 4 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#4-validate-the-landing-zone-deployment).
-
-You should now see two Root Syncs:
-
-- `root-sync`: to your `...gcp-tier1-configsync/deploy/<env>@main` repo containing 1 rootsync resource which defines...
-- the root sync to your `...tier1-infra/deploy/<env>@<version>` repo containing the landing zone resources.
-
-## 5. Perform the post-deployment steps
+## <a name='Performthepost-deploymentsteps'></a>4. Perform the post-deployment steps
 
 Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#5-perform-the-post-deployment-steps).
 
-## THE END
+## <a name='THEEND'></a>THE END
 
 Congratulations! You have completed the deployment of your landing zone as per SSC implementation.
