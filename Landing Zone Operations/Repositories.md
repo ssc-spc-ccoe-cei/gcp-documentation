@@ -16,33 +16,33 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
-Documentation to setup and manage git repositories used with Config Sync to deploy GCP resources.
+Documentation to setup and manage git monorepos used with Config Sync to deploy GCP resources.
 
 SSC is using Azure Devops Repositories (AzDO Repos) and Pipelines as its git solution.
 
 SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
-As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator observe several folders from our monorepos.
+As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator observes several folders from our [monorepos](https://monorepo.tools/).
 
 ## <a name='CreateNewDeploymentMonorepo'></a>Create New Deployment Monorepo
 
-Deployment monorepos are initially created the same way, from cloning a template repo.  These steps will need to be repeated for each repo name.  For example, `gcp-env-tier1`, `gcp-<client-name>-tier2`, etc.
+Deployment monorepos are initially created the same way, from cloning a template monorepo.  These steps will need to be repeated for each monorepo name.  For example, `gcp-env-tier1`, `gcp-<client-name>-tier2`, etc.
 
 The git credentials will need to be appropriately set for your AzDO org.
 
 ### <a name='BuildtheMonorepo'></a>1. Build the Monorepo
 
-> If your AzDO org has project-wide branch policies set on repositories, you may need to work with branches / Pull Requests or temporarily give yourself permission to "Bypass policies when pushing" on the repo.
+> If your AzDO org has project-wide branch policies set on repositories, you may need to work with branches / Pull Requests or temporarily give yourself permission to "Bypass policies when pushing" on the monorepo.
 
 1. Create a new **empty** repository (no README.md) to hold the configs in [Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops).  Once created, copy the HTTPS URL.  It will be required for the next step.
 
 1. Update and export the variables below:
 
     ```shell
-    export NEW_REPO_NAME='<your new repo name>'
-    export NEW_REPO_URL='<your new repo URL>'
+    export NEW_REPO_NAME='<your new monorepo name>'
+    export NEW_REPO_URL='<your new monorepo URL>'
     ```
 
-1. Clone the template in a folder named like your new repo:
+1. Clone the template in a folder named like your new monorepo:
 
     - tier1
 
@@ -62,7 +62,7 @@ The git credentials will need to be appropriately set for your AzDO org.
         git clone https://github.com/ssc-spc-ccoe-cei/gcp-tier34-template.git ${NEW_REPO_NAME}
         ```
 
-1. Move into the new folder corresponding to the new repo:
+1. Move into the new folder corresponding to the new monorepo:
 
     ```shell
     cd ${NEW_REPO_NAME}
@@ -71,13 +71,13 @@ The git credentials will need to be appropriately set for your AzDO org.
 1. Change the monorepo's remote:
 
     ```shell
-    # Remove the origin pointing to the template repo
+    # Remove the origin pointing to the template monorepo
     git remote remove origin
-    # Add the new origin with your repo url
+    # Add the new origin with your monorepo url
     git remote add origin ${NEW_REPO_URL}
     ```
 
-1. Confirm the new remote configuration, it should only list your new repo URL for fetch and push:
+1. Confirm the new remote configuration, it should only list your new monorepo URL for fetch and push:
 
     ```shell
     git remote --verbose
@@ -130,23 +130,23 @@ The git credentials will need to be appropriately set for your AzDO org.
         done
         ```
 
-1. Customize the `csync/source-customization/<env>/**/<root/repo>-sync-git/setters.yaml` for all environments.
+1. Customize the file `csync/source-customization/<env>/**/<root/repo>-sync-git/setters.yaml` for all environments.
 
 1. Generate hydrated files, follow step 3 of [Changing.md](./Changing.md#step-3---hydrate).
 
-1. Review your local changes then stage, commit and push them to your new repo.  **You will need to push to main.**
+1. Review your local changes then stage, commit and push them to your new monorepo.  **You will need to push to main.**
 
     ```shell
     git add .
-    git commit -m 'initializing repo from template'
+    git commit -m 'initializing monorepo from template'
     git push --set-upstream origin main
     ```
 
-1. The repo is created! It's now time to protect the main branch.
+1. The monorepo is created! It's now time to protect the main branch.
 
 ### <a name='AddBranchProtection'></a>2. Add Branch Protection
 
-It's recommended to protect the `main` branch and use pull requests for any changes to the repos.
+It's recommended to protect the `main` branch and use pull requests for any changes to the monorepos.
 
 These settings could also be set at the AzDO Project level.
 
@@ -164,11 +164,11 @@ These other policies can also be enabled as needed:
 - **Check for comment resolution**: *Required*
 - **Limit merge types**: only allow *Squash merge*
 
-> TODO: Extra policy for tier2 "configsync" repos only. "Automatically included reviewers" with path filter on setters-version.yaml
+> TODO: Extra policy for "Automatically included reviewers" with path filters.
 
 ### <a name='VerifyServiceAccountPermissions'></a>3. Verify Service Account Permissions
 
-An AzDO service account should be used for authenticating Config Sync.  It requires read access to the repo.
+An AzDO service account should be used for authenticating Config Sync.  It requires read access to the monorepo.
 
 Depending on your organization, this could be set at different levels and with groups.  These steps will assume the service account has already been configured.
 
@@ -182,15 +182,15 @@ A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/o
 
 ### <a name='AddPipelines'></a>4. Add Pipelines
 
-The repo is now created and the main branch is protected.  [Pipelines](./Pipelines.md) can be created.
+The monorepo is now created and the main branch is protected.  [Pipelines](./Pipelines.md) can be created.
 
-- **All deployment repos should have the `validate-yaml` pipeline.**
+- **All deployment monorepos should have the `validate-yaml` pipeline.**
 
-- To use semantic versioning during deployment operations, the `Infra` repos can be setup with a git tagging pipeline, such as [version-tagging](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging).
+- To use semantic versioning during deployment operations, the monorepos can be setup with a git tagging pipeline, such as [version-tagging](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging).
 
 ## <a name='UpdateDeploymentRepo'></a>Update Deployment Repo
 
-This section is for updating the deployment repo itself, not the YAML configs.
+This section is for updating the deployment monorepo itself, not the YAML configs.
 
 As with any other change, they should be done through a PR process.
 
@@ -198,7 +198,7 @@ As with any other change, they should be done through a PR process.
 
 The templates remain fairly static, but they can sometimes contain important changes.
 
-Follow these steps to update your deployment repo with changes from the templates:
+Follow these steps to update your deployment monorepo with changes from the templates:
 
 - [gcp-tier1-template](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template)
 - [gcp-tier2-template](https://github.com/ssc-spc-ccoe-cei/gcp-tier2-template)
@@ -212,7 +212,7 @@ The tools submodule can easily be updated to a new version.
 
 Follow these steps to
 
-1. Clone the deployment repo and checkout a new branch.
+1. Clone the deployment monorepo and checkout a new branch.
 1. Edit `modversions.yaml` to pin the `tools` submodule to a new [release tag](https://github.com/ssc-spc-ccoe-cei/gcp-tools/releases) or commit SHA.
 1. Run the following to get the proper version of the tools submodule:
 
@@ -220,5 +220,5 @@ Follow these steps to
     bash modupdate.sh
     ```
 
-1. If your repo contains pipelines that were created from `tools/pipeline-samples`, compare the YAML files to see if changes are required.
+1. If your monorepo contains pipelines that were created from `tools/pipeline-samples`, compare the YAML files to see if changes are required.
 1. Stage, commit and push your branch to create a PR.

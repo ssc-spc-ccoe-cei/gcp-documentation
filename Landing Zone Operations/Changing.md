@@ -67,7 +67,7 @@ There are different types of changes.  Follow the appropriate section for instru
 
 This is accomplished with the [`kpt pkg get`](https://kpt.dev/reference/cli/pkg/get/) command.
 
-As a rule, packages should only be added in a deployment repo's `tierX/source-base` folder and **never** manually edited from there.  All customizations are to be made from the `tierX/source-customization/<env>` folders.
+As a rule, packages should only be added in a deployment monorepo's `tierX/source-base` folder and **never** manually edited from there.  All customizations are to be made from the `tierX/source-customization/<env>` folders.
 
 Follow these steps to add a package:
 
@@ -148,7 +148,7 @@ This is accomplished with the [`kpt pkg update`](https://kpt.dev/reference/cli/p
 The default `resource-merge` strategy is usually appropriate but can sometimes omit certain file structure changes (blank line between comments, etc.).
 In these cases, if the structural change is required as part of the update, it may be necessary to *carefully* use the `force-delete-replace` strategy.
 
-A deployment repo's `source-base` folder should always contain unedited packages.  This is where they are also updated.
+A deployment monorepo's `source-base` folder should always contain unedited packages.  This is where they are also updated.
 
 > **!!! IMPORTANT !!!** Once a package is updated, it's important to verify if there are changes for files that have been customized.  For example, `setters.yaml` files.
 
@@ -288,13 +288,13 @@ Follow these steps to publish the changes:
     git commit -m '<MEANINGFUL MESSAGE GOES HERE>'
     ```
 
-1. Push your changes to the repo's origin:
+1. Push your changes to the monorepo's origin:
 
     ```bash
     git push --set-upstream origin <branch name>
     ```
 
-1. Create a new [pull requests (PR)](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops&tabs=browser) on the repo to merge this `<branch name>` into `main`.
+1. Create a new [pull requests (PR)](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops&tabs=browser) on the monorepo to merge this `<branch name>` into `main`.
 1. Confirm all required checks are successful (approvals, tests, etc.).  If checks are failing, address them in your local branch then stage, commit and push them to origin.
 1. Complete the pull request once all required checks are successful.
 
@@ -302,7 +302,7 @@ Follow these steps to publish the changes:
 
 This section contains information on how changes can be promoted between environments.
 
-Changes to deployment repos will only be applied to GCP when the `csync/deploy/<env>` folder is updated.
+Changes to deployment monorepos will only be applied to GCP when the `csync/deploy/<env>` folder is updated.
 
 This example will focus on `gcp-env-tier1` monorepo:
 
@@ -312,19 +312,19 @@ This example will focus on `gcp-env-tier1` monorepo:
 1. At this point the changes have not been deployed to GCP. Changes of type "Modify a Package" are required in folder `csync/deploy/<env>` for each environment.
 1. `dev`:
     - Set `version:` in `csync/source-customization/dev/root-sync-git/setters-version.yaml` to the new tag or commit SHA noted earlier.
-    - Hydrate the repo and create a PR.
+    - Hydrate the monorepo and create a PR.
     - Once the PR is merged the config sync operator will pick up the updated configs in `csync/deploy/dev`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
     - Validate landing zone and workload functionalities for the `dev` environment in GCP.  Proceed to `preprod` if successful, restart the process if not.
 1. `preprod`:
     - Set `version:` in `csync/source-customization/preprod/root-sync-git/setters-version.yaml` to the same value as `dev`.
-    - Hydrate the repo and create a PR.
+    - Hydrate the monorepo and create a PR.
     - Once the PR is merged the config sync operator will pick up the updated configs in `csync/deploy/preprod`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
     - Validate landing zone and workload functionalities for the `preprod` environment in GCP.  Proceed to `prod` if successful, restart the process if not.
 1. `prod`:
     - Set `version:` in `csync/source-customization/prod/root-sync-git/setters-version.yaml` to the same value as `preprod`.
-    - Hydrate the repo and create a PR.
+    - Hydrate the monorepo and create a PR.
     - Once the PR is merged the config sync operator will pick up the updated configs in `csync/deploy/prod`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
     - Validate landing zone and workload functionalities for the `prod` environment in GCP.  Restart the process if not successful.
