@@ -110,6 +110,8 @@ The details below are required when performing step 2A "Add a Package" of [Chang
     - Package details:
 
         ```shell
+        export TIER='tier1'
+
         export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
 
         export PKG_PATH='solutions/gatekeeper-policies'
@@ -117,7 +119,7 @@ The details below are required when performing step 2A "Add a Package" of [Chang
         # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
-        export LOCAL_DEST_DIRECTORY=''
+        export LOCAL_DEST_DIRECTORY='gatekeeper-policies'
         ```
 
     - Customization:
@@ -130,6 +132,8 @@ The details below are required when performing step 2A "Add a Package" of [Chang
     - Package details:
 
       ```shell
+      export TIER='tier1'
+
       export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
 
       # for experimentation
@@ -141,7 +145,7 @@ The details below are required when performing step 2A "Add a Package" of [Chang
       # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
       export VERSION=''
 
-      export LOCAL_DEST_DIRECTORY=''
+      export LOCAL_DEST_DIRECTORY='core-landing-zone'
       ```
 
     - Customization:

@@ -71,15 +71,12 @@ As a rule, packages should only be added in a deployment monorepo's `tierX/sourc
 
 Follow these steps to add a package:
 
-1. Move into the `source-base` folder:
-
-    ```shell
-    cd <tierX>/source-base
-    ```
-
 1. You can update and set these variables to make it easier to run subsequent commands:
 
     ```shell
+    # tierX value
+    export TIER=''
+
     # URI of the git repo containing the package
     # for example, 'https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
     export REPO_URI=''
@@ -92,9 +89,16 @@ Follow these steps to add a package:
     # for example, '0.0.1'
     export VERSION=''
 
-    # the local destination directory to save the package, relative to 'source-base'
-    # for example, 'core-landing-zone'
+    # the local destination directory to save the package, relative to root of the repository
+    # for example, 'tier1/source-base/core-landing-zone'
     export LOCAL_DEST_DIRECTORY=''
+    ```
+
+1. Create the local destination directory
+
+    ```shell
+    cd ${TIER}/source-base
+    mkdir -p ${LOCAL_DEST_DIRECTORY}
     ```
 
 1. Add the package with the following command:
@@ -109,9 +113,11 @@ It will need to be customized for each environment.  This is a manual process, a
 
     ```shell
     # the file path to customize, relative to 'source-base'
-    # for example, 'landing-zone/org-policies/setters.yaml'
+    # for example, 'core-landing-zone/setters.yaml'
     export FILE_TO_CUSTOMIZE=''
+    ```
 
+    ```shell
     for env_subdir in experimentation dev preprod prod; do
         # check if env. folder exists in source-customization
         if [ -d "../source-customization/${env_subdir}" ]; then
@@ -154,17 +160,11 @@ A deployment monorepo's `source-base` folder should always contain unedited pack
 
 Follow these steps to update a package:
 
-1. Move into the `source-base` folder:
-
-    ```shell
-    cd <tierX>/source-base
-    ```
-
 1. You can update and set these variables to make it easier to run subsequent commands:
 
     ```shell
     # the folder of the pkg to be updated
-    # for example, 'core-landing-zone'
+    # for example, 'tier1/source-base/core-landing-zone'
     export PKG_PATH=''
 
     # the version to update to
