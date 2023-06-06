@@ -16,6 +16,8 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
+--------------------------------------
+
 ## <a name='RequiredInformation'></a>Required Information
 
 ### <a name='Common'></a>Common
@@ -34,7 +36,7 @@
 
 ### <a name='Experimentation'></a>Experimentation
 
-1. user, group or serviceAccount with editor role at project level
+1. user, group or serviceAccount email with editor role at project level
 
     **user or group has to exist in a Google Cloud Identity (any existing domain)**
 
@@ -44,7 +46,7 @@
 
 ## <a name='Createtier34Monorepo'></a>1. Create `tier34` Monorepo
 
-- For Experimentation, we do not require this step as all packages are deploy in a single monorepo `gcp-experimentation-tier1`.
+- For Experimentation, you do not require this step as all packages are deploy in a single monorepo `gcp-experimentation-tier1`.
 
 - For Dev, PreProd and Prod, follow the "Create New Deployment Monorepo" section in [Repositories.md](./Repositories.md) to create one `gcp-<x-project-id>-tier34` monorepos.
 
@@ -52,7 +54,7 @@
 
 ## <a name='BuildtheApplicationsProject'></a>2. Build the Application's Project
 
-We will build the application's project by adding packages to the `tier2` monorepo.
+You will build the application's project by adding packages to the `tier2` monorepo.
 
 At a high level, the process below needs to be completed for each package :
 
@@ -68,9 +70,9 @@ At a high level, the process below needs to be completed for each package :
 > **!!! It's important that all of the steps listed above are completed for each package before proceeding with the next package. !!!**
 
 1. The client project setup package
-    - For Experimentation, we do not require this package.
+    - For Experimentation, you do not require this package.
 
-    - For Dev, PreProd and Prod, we deploy this package inside the `gcp-<client-name>-tier2` repo.
+    - For Dev, PreProd and Prod, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/client-project-setup) inside the `gcp-<client-name>-tier2` repo.
 
       - Package details:
 
@@ -97,7 +99,7 @@ At a high level, the process below needs to be completed for each package :
 
 1. The client project package:
 
-    - For Experimentation, we deploy this package inside the `gcp-experimentation-tier1` repo.
+    - For Experimentation, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/experimentation/client-project) inside the `gcp-experimentation-tier1` repo.
 
       - Package details:
 
@@ -120,7 +122,7 @@ At a high level, the process below needs to be completed for each package :
           export FILE_TO_CUSTOMIZE='projects/<project-id>/client-project/setters.yaml'
           ```
 
-    - For Dev, PreProd and Prod,  we do not require this package.
+    - For Dev, PreProd and Prod,  you do not require this package.
 
 ## <a name='THEEND'></a>THE END
 

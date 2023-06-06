@@ -15,6 +15,8 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
+--------------------------------------
+
 ## <a name='RequiredInformation'></a>Required Information
 
 1. Client's Name
@@ -44,13 +46,13 @@
 
 ## <a name='Createtier2monorepo'></a>1. Create `tier2` monorepo
 
-- For Experimentation, we do not require this step as all packages are deploy in a single monorepo `gcp-experimentation-tier1`.
+- For Experimentation, you do not require this step as all packages are deploy in a single monorepo `gcp-experimentation-tier1`.
 
 - For Dev, PreProd and Prod, follow the "Create New Deployment Monorepo" section in [Repositories.md](./Repositories.md) to create one `gcp-<client-name>-tier2` monorepos.
 
 ## <a name='BuildtheClientLandingZone'></a>2. Build the Client Landing Zone
 
-We will build the client landing zone by adding packages to the `tier1` and `tier2` monorepos.
+You will build the client landing zone by adding packages to the `tier1` and `tier2` monorepos.
 
 At a high level, the process below needs to be completed for each package :
 
@@ -66,9 +68,9 @@ At a high level, the process below needs to be completed for each package :
 > **!!! It's important that all of the steps listed above are completed for each package before proceeding with the next package. !!!**
 
 1. The client-setup package
-    - For Experimentation, we do not require this package.
+    - For Experimentation, you do not require this package.
 
-    - For Dev, PreProd and Prod, we deploy this package inside the `gcp-env-tier1` repo.
+    - For Dev, PreProd and Prod, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/client-setup) inside the `gcp-env-tier1` repo.
 
       - Package details:
 
@@ -95,7 +97,7 @@ At a high level, the process below needs to be completed for each package :
 
 1. The client landing zone package:
 
-    - For Experimentation, we deploy this package inside the `gcp-experimentation-tier1` repo.
+    - For Experimentation, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/experimentation/client-landing-zone) inside the `gcp-experimentation-tier1` repo.
 
       - Package details:
 
@@ -118,7 +120,7 @@ At a high level, the process below needs to be completed for each package :
           export FILE_TO_CUSTOMIZE='clients/<client-name>/client-landing-zone/setters.yaml'
           ```
 
-    - For Dev, PreProd and Prod, we deploy this package inside the `gcp-<client-name>-tier2` repo.
+    - For Dev, PreProd and Prod, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/client-landing-zone) inside the `gcp-<client-name>-tier2` repo.
 
       - Package details:
 
@@ -145,7 +147,7 @@ At a high level, the process below needs to be completed for each package :
 
 Some resources from the `client-setup` package won't be able to deploy until the new `<client-name>-projects-sa` is granted `billing.user` role.
 
-Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#5-perform-the-post-deployment-steps) to fix this.
+Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#5-perform-the-post-deployment-steps) to fix this.
 
 ## <a name='THEEND'></a>THE END
 

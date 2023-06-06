@@ -17,6 +17,8 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
+--------------------------------------
+
 There can be different types of changes on the landing zone but they all start and end the same way.  This document will go through the different steps.
 
 Before proceeding, you should familiarize yourself with the concepts in "[Repository Structure.md](../Architecture/Repository%20Structure.md)".

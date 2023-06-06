@@ -15,7 +15,9 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
-Shared Services Canada has automated a portion of the deployment process for the [landing-zone-v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#Organization) solution in the Google's Pubsec Toolkit repo.
+--------------------------------------
+
+Shared Services Canada has automated a portion of the deployment process for the [landing-zone-v2](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#Organization) solution in the Google's Pubsec Toolkit repo.
 
 This document will describe how the automated scripts can be used for building a landing zone.
 
@@ -25,13 +27,13 @@ This document will describe how the automated scripts can be used for building a
 
 ## <a name='Requirements'></a>Requirements
 
-Shared Services Canada uses the "[Multiple GCP organizations](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#multiple-gcp-organizations)" architecture.
+Shared Services Canada uses the "[Multiple GCP organizations](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#multiple-gcp-organizations)" architecture.
 
-Review the requirements listed [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#requirements).
+Review the requirements listed [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#requirements).
 
 ## <a name='Createtier1monorepo'></a>1. Create `tier1` monorepo
 
-SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
+SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/docs/landing-zone-v2/README.md#gitops---git) deployment.
 As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator is observing our deployment monorepos.
 
 Follow the "Create New Deployment Monorepo" section in [Repositories.md](./Repositories.md) to create one of the two `tier1` monorepos:
@@ -89,7 +91,7 @@ The script requires a `.env` file to deploy the environment.
 
 ## <a name='BuildtheCoreLandingZone'></a>3. Build the Core Landing Zone
 
-We will build the core landing zone by adding a collection of packages to the `tier1` monorepo.
+You will build the core landing zone by adding a collection of packages to the `tier1` monorepo.
 At a high level, the process below needs to be completed for each package :
 
 1. Setup your change, follow step 1 of [Changing.md](./Changing.md#step-1---setup)
@@ -108,9 +110,9 @@ The details below are required when performing step 2A "Add a Package" of [Chang
 
 1. The gatekeeper-policies package:
 
-    - For Experimentation, we deploy this package inside the `gcp-experimentation-tier1` repo.
-    - For Dev, PreProd and Prod, we deploy this package inside the `gcp-env-tier1` repo.
-    - Package details:
+    - For Experimentation, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/gatekeeper-policies) inside the `gcp-experimentation-tier1` repo.
+    - For Dev, PreProd and Prod, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/gatekeeper-policies) inside the `gcp-env-tier1` repo.
+    - Package details (same for all environments):
 
         ```shell
         export TIER='tier1'
@@ -125,14 +127,14 @@ The details below are required when performing step 2A "Add a Package" of [Chang
         export LOCAL_DEST_DIRECTORY='gatekeeper-policies'
         ```
 
-    - Customization:
+    - Customization (same for all environments):
 
         ```shell
         export FILE_TO_CUSTOMIZE='gatekeeper-policies/naming-rules/project/setters.yaml'
         ```
 
 1. The core landing zone package:
-    - For Experimentation, we deploy this package inside the `gcp-experimentation-tier1` repo.
+    - For Experimentation, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/experimentation/core-landing-zone) inside the `gcp-experimentation-tier1` repo.
       - Package details:
 
         ```shell
@@ -154,7 +156,7 @@ The details below are required when performing step 2A "Add a Package" of [Chang
           export FILE_TO_CUSTOMIZE='core-landing-zone/setters.yaml'
           ```
 
-    - For Dev, PreProd and Prod, we deploy this package inside the `gcp-env-tier1` repo.
+    - For Dev, PreProd and Prod, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/core-landing-zone) inside the `gcp-env-tier1` repo.
 
       - Package details:
 
@@ -181,7 +183,7 @@ The details below are required when performing step 2A "Add a Package" of [Chang
 
 Some resources from the `core-landing-zone` package won't be able to deploy until the new `projects-sa` is granted `billing.user` role.
 
-Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/solutions/landing-zone-v2/README.md#5-perform-the-post-deployment-steps) to fix this.
+Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#5-perform-the-post-deployment-steps) to fix this.
 
 ## <a name='THEEND'></a>THE END
 

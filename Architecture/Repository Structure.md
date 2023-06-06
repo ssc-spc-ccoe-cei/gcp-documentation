@@ -1,4 +1,4 @@
-# Repositiry Structure
+# Repository Structure
 
 <!-- vscode-markdown-toc -->
 * [Repos Definitions and Roles](#ReposDefinitionsandRoles)

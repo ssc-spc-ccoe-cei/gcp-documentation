@@ -12,6 +12,8 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
+--------------------------------------
+
 ## <a name='RequiredInformation'></a>Required Information
 
 1. The admin name
@@ -22,7 +24,7 @@
 
 This package creates a folder in GCP and grant admin privileges on that folder to a user. This user can use this folder to experiment solutions in GCP.
 
-We will build this admin folder by adding a package to the `gcp-experimentation-tier1` monorepo.
+You will build this admin folder by adding a package to the `gcp-experimentation-tier1` monorepo.
 
 At a high level, the process below needs to be completed for each package :
 
@@ -38,7 +40,7 @@ At a high level, the process below needs to be completed for each package :
 > **!!! It's important that all of the steps listed above are completed for each package before proceeding with the next package. !!!**
 
 1. The client project setup package
-    - For Experimentation, we deploy this package inside the `gcp-experimentation-tier1` repo.
+    - For Experimentation, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/experimentation/admin-folder) inside the `gcp-experimentation-tier1` repo.
 
       - Package details:
 
@@ -63,7 +65,7 @@ At a high level, the process below needs to be completed for each package :
           export FILE_TO_CUSTOMIZE='admins/<admin-name>/admin-folder/setters.yaml'
           ```
 
-    - For Dev, PreProd and Prod,  we do not deploy this package.
+    - For Dev, PreProd and Prod,  you do not deploy this package.
 
 ## <a name='THEEND'></a>THE END
 

@@ -16,6 +16,8 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
+--------------------------------------
+
 Documentation to setup and manage git monorepos used with Config Sync to deploy GCP resources.
 
 SSC is using Azure Devops Repositories (AzDO Repos) and Pipelines as its git solution.
