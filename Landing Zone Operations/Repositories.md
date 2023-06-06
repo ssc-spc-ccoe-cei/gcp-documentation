@@ -25,7 +25,7 @@ As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops)
 
 ## <a name='CreateNewDeploymentMonorepo'></a>Create New Deployment Monorepo
 
-Deployment monorepos are initially created the same way, from cloning a template monorepo.  These steps will need to be repeated for each monorepo name.  For example, `gcp-env-tier1`, `gcp-<client-name>-tier2`, etc.
+Deployment monorepos are initially created the same way, from cloning a template monorepo.  These steps will need to be repeated for each monorepo name.  For example, `gcp-env-tier1`, `gcp-<client-name>-tier2` or `gcp-<x-project-id>-tier34`.
 
 The git credentials will need to be appropriately set for your AzDO org.
 

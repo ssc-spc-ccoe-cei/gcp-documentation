@@ -44,9 +44,9 @@
 
 ## <a name='Createtier2monorepo'></a>1. Create `tier2` monorepo
 
-Follow the "Create New Deployment Monorepo" section in [Repositories.md](./Repositories.md) to create one `tier2` monorepos.
+- For Experimentation, we do not require this step as all packages are deploy in a single monorepo `gcp-experimentation-tier1`.
 
-The name of the repo has to follow this convention: `gcp-<client-name>-tier2`
+- For Dev, PreProd and Prod, follow the "Create New Deployment Monorepo" section in [Repositories.md](./Repositories.md) to create one `gcp-<client-name>-tier2` monorepos.
 
 ## <a name='BuildtheClientLandingZone'></a>2. Build the Client Landing Zone
 
@@ -65,55 +65,81 @@ At a high level, the process below needs to be completed for each package :
 
 > **!!! It's important that all of the steps listed above are completed for each package before proceeding with the next package. !!!**
 
-1. The client-setup package:
-    - Repository: `gcp-env-tier1`
+1. The client-setup package
+    - For Experimentation, we do not require this package.
 
-      Package details:
+    - For Dev, PreProd and Prod, we deploy this package inside the `gcp-env-tier1` repo.
+
+      - Package details:
+
+          ```shell
+          export TIER='tier1'
+
+          export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
+
+          export PKG_PATH='solutions/client-setup'
+
+          # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
+          export VERSION=''
+
+          # replace <client-name> value
+          export LOCAL_DEST_DIRECTORY='clients/<client-name>/client-setup'
+          ```
+
+      - Customization:
+
+          ```shell
+          # replace <client-name> with the client-name value
+          export FILE_TO_CUSTOMIZE='clients/<client-name>/client-setup/setters.yaml'
+          ```
+
+1. The client landing zone package:
+
+    - For Experimentation, we deploy this package inside the `gcp-experimentation-tier1` repo.
+
+      - Package details:
 
         ```shell
         export TIER='tier1'
 
         export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
 
-        export PKG_PATH='solutions/client-setup'
+        export PKG_PATH='solutions/experimentation/client-landing-zone'
 
         # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
         export VERSION=''
 
-        # replace <client-name> value
-        export LOCAL_DEST_DIRECTORY='clients/<client-name>/client-setup'
+        export LOCAL_DEST_DIRECTORY='clients/<client-name>/client-landing-zone'
         ```
 
-    - Customization:
+      - Customization:
+
+          ```shell
+          export FILE_TO_CUSTOMIZE='clients/<client-name>/client-landing-zone/setters.yaml'
+          ```
+
+    - For Dev, PreProd and Prod, we deploy this package inside the `gcp-<client-name>-tier2` repo.
+
+      - Package details:
 
         ```shell
-        # replace <client-name> with the client-name value
-        export FILE_TO_CUSTOMIZE='clients/<client-name>/client-setup/setters.yaml'
+        export TIER='tier2'
+
+        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
+
+        export PKG_PATH='solutions/client-landing-zone'
+
+        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
+        export VERSION=''
+
+        export LOCAL_DEST_DIRECTORY='client-landing-zone'
         ```
 
-1. The client landing zone package:
-    - Repository: `gcp-<client-name>-tier2`
+      - Customization:
 
-      Package details:
-
-      ```shell
-      export TIER='tier2'
-
-      export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
-
-      export PKG_PATH='solutions/client-landing-zone'
-
-      # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
-      export VERSION=''
-
-      export LOCAL_DEST_DIRECTORY='client-landing-zone'
-      ```
-
-    - Customization:
-
-        ```shell
-        export FILE_TO_CUSTOMIZE='client-landing-zone/setters.yaml'
-        ```
+          ```shell
+          export FILE_TO_CUSTOMIZE='client-landing-zone/setters.yaml'
+          ```
 
 ## <a name='Performthepost-deploymentsteps'></a>3. Perform the post-deployment steps
 

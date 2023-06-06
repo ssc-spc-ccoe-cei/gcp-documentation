@@ -107,6 +107,9 @@ You will add the 2 packages below to your `tier1` monorepo.
 The details below are required when performing step 2A "Add a Package" of [Changing.md](./Changing.md)
 
 1. The gatekeeper-policies package:
+
+    - For Experimentation, we deploy this package inside the `gcp-experimentation-tier1` repo.
+    - For Dev, PreProd and Prod, we deploy this package inside the `gcp-env-tier1` repo.
     - Package details:
 
         ```shell
@@ -116,7 +119,7 @@ The details below are required when performing step 2A "Add a Package" of [Chang
 
         export PKG_PATH='solutions/gatekeeper-policies'
 
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
+        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
         export VERSION=''
 
         export LOCAL_DEST_DIRECTORY='gatekeeper-policies'
@@ -129,30 +132,50 @@ The details below are required when performing step 2A "Add a Package" of [Chang
         ```
 
 1. The core landing zone package:
-    - Package details:
-
-      ```shell
-      export TIER='tier1'
-
-      export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
-
-      # for experimentation
-      export PKG_PATH='solutions/experimentation/core-landing-zone'
-      # OR
-      # for dev, preprod, prod
-      export PKG_PATH='solutions/core-landing-zone'
-
-      # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
-      export VERSION=''
-
-      export LOCAL_DEST_DIRECTORY='core-landing-zone'
-      ```
-
-    - Customization:
+    - For Experimentation, we deploy this package inside the `gcp-experimentation-tier1` repo.
+      - Package details:
 
         ```shell
-        export FILE_TO_CUSTOMIZE='core-landing-zone/setters.yaml'
+        export TIER='tier1'
+
+        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
+
+        export PKG_PATH='solutions/experimentation/core-landing-zone'
+
+        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
+        export VERSION=''
+
+        export LOCAL_DEST_DIRECTORY='core-landing-zone'
         ```
+
+      - Customization:
+
+          ```shell
+          export FILE_TO_CUSTOMIZE='core-landing-zone/setters.yaml'
+          ```
+
+    - For Dev, PreProd and Prod, we deploy this package inside the `gcp-env-tier1` repo.
+
+      - Package details:
+
+        ```shell
+        export TIER='tier1'
+
+        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
+
+        export PKG_PATH='solutions/core-landing-zone'
+
+        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
+        export VERSION=''
+
+        export LOCAL_DEST_DIRECTORY='core-landing-zone'
+        ```
+
+      - Customization:
+
+          ```shell
+          export FILE_TO_CUSTOMIZE='core-landing-zone/setters.yaml'
+          ```
 
 ## <a name='Performthepost-deploymentsteps'></a>4. Perform the post-deployment steps
 

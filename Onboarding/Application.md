@@ -1,8 +1,24 @@
 # Application Onboarding
 
-## Required Information
+<!-- vscode-markdown-toc -->
+* [Required Information](#RequiredInformation)
+	* [Common](#Common)
+	* [Experimentation](#Experimentation)
+	* [Dev, PreProd, Prod](#DevPreProdProd)
+* [1. Create `tier34` Monorepo](#Createtier34Monorepo)
+* [2. Build the Application's Project](#BuildtheApplicationsProject)
+	* [Package Details](#PackageDetails)
+* [THE END](#THEEND)
 
-### Common
+<!-- vscode-markdown-toc-config
+	numbering=false
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
+## <a name='RequiredInformation'></a>Required Information
+
+### <a name='Common'></a>Common
 
 1. Naming convention for project-id : `<client-code><environment-code><region-code><data-classification>`-`<project-owner>`-`<user defined string>`
 
@@ -16,53 +32,96 @@
 
 1. Billing Account ID to be associated with this project
 
-### Experimentation
+### <a name='Experimentation'></a>Experimentation
 
 1. user, group or serviceAccount with editor role at project level
 
     **user or group has to exist in a Google Cloud Identity (any existing domain)**
 
-### DEV, PREPROD, PROD (UNDER CONSTRUCTION)
+### <a name='DevPreProdProd'></a>Dev, PreProd, Prod
 
 1. Host Project ID (with a Shared VPC) that exist to connect this workload/service project
 
-## Pre-requisite
+## <a name='Createtier34Monorepo'></a>1. Create `tier34` Monorepo
 
-1. Ensure service account `projects-sa` has been granted `Billing Account User` role on the Billing Account.
-1. Locally clone the landing zone repo for this environment
-1. Create a branch from main
+- For Experimentation, we do not require this step as all packages are deploy in a single monorepo `gcp-experimentation-tier1`.
 
-## Add client's application to the landing zone repository
+- For Dev, PreProd and Prod, follow the "Create New Deployment Monorepo" section in [Repositories.md](./Repositories.md) to create one `gcp-<x-project-id>-tier34` monorepos.
 
-1. Move into source-base folder
+> **!!! You need to replace the environment-code of the project-id with character "x" as this repo will contain the configuration for all environments. !!!**
 
-    ```shell
-    cd source-base
-    ```
+## <a name='BuildtheApplicationsProject'></a>2. Build the Application's Project
 
-1. Get the workload package
+We will build the application's project by adding packages to the `tier2` monorepo.
 
-    *Some folders may need to be created beforehand like `<data classification>`
-    - Experimentation
+At a high level, the process below needs to be completed for each package :
 
-      ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@main ./landing-zone/hierarchy/clients/<client name>/applications/<project-id>
-      ```
+1. Setup your change, follow step 1 of [Changing.md](./Changing.md#step-1---setup)
+1. Add a Package, follow step 2A of [Changing.md](./Changing.md#a-add-a-package)
+1. Generate hydrated files, follow step 3 of [Changing.md](./Changing.md#step-3---hydrate).
+1. Publish changes to repository, follow step 4 of [Changing.md](./Changing.md#step-4---publish).
+1. Once the PR is merged, note the new tag version or commit SHA.  It will be required in the next section.
+1. Synchronize and promote configuration, follow step 5 of [Changing.md](./Changing.md#step-5---synchronize--promote-configs).
 
-    - DEV, PREPROD, PROD
+### <a name='PackageDetails'></a>Package Details
 
-      ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/project/project-experimentation@main ./landing-zone/hierarchy/clients/<client name>/applications/<data classification>/<project-id>
-      ```
+> **!!! It's important that all of the steps listed above are completed for each package before proceeding with the next package. !!!**
 
-1. To modify any of the files in this package (like setters.yaml) follow this generic guidance
+1. The client project setup package
+    - For Experimentation, we do not require this package.
 
-    Refer to the `Add a Package` section of the [Changing.md](Changing.md)
+    - For Dev, PreProd and Prod, we deploy this package inside the `gcp-<client-name>-tier2` repo.
 
-1. Generate hydrated files
+      - Package details:
 
-    Refer to the `Hydrate` section of the [Changing.md](Changing.md)
+          ```shell
+          export TIER='tier2'
 
-1. Add changes to repository
+          export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
 
-    Refer to the `Publish` section of the [Changing.md](Changing.md)
+          export PKG_PATH='solutions/client-project-setup'
+
+          # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
+          export VERSION=''
+
+          # replace <x-project-id> with project-id with character "x" as the environment code
+          export LOCAL_DEST_DIRECTORY='projects/<x-project-id>/client-project-setup'
+          ```
+
+      - Customization:
+
+          ```shell
+          # replace <x-project-id> with project-id with character "x" as the environment code
+          export FILE_TO_CUSTOMIZE='projects/<x-project-id>/client-project-setup/setters.yaml'
+          ```
+
+1. The client project package:
+
+    - For Experimentation, we deploy this package inside the `gcp-experimentation-tier1` repo.
+
+      - Package details:
+
+        ```shell
+        export TIER='tier1'
+
+        export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
+
+        export PKG_PATH='solutions/experimentation/client-project'
+
+        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
+        export VERSION=''
+
+        export LOCAL_DEST_DIRECTORY='projects/<project-id>/client-project'
+        ```
+
+      - Customization:
+
+          ```shell
+          export FILE_TO_CUSTOMIZE='projects/<project-id>/client-project/setters.yaml'
+          ```
+
+    - For Dev, PreProd and Prod,  we do not require this package.
+
+## <a name='THEEND'></a>THE END
+
+Congratulations! You have completed the deployment of a client's project as per SSC implementation.

@@ -71,7 +71,8 @@ The git repos are organized in different categories:
   - `gcp-experimentation-tier1` contains all the experimentation resources.
   - `gcp-env-tier1` contains the core level resources for dev, preprod and prod.
   - `gcp-<client-name>-tier2` contains the client level resources for dev, preprod and prod.
-  - `gcp-<project-id>-tier34` contains the security and application resources for dev, preprod and prod.
+  - `gcp-<x-project-id>-tier34` contains the security and application resources for dev, preprod and prod.
+                                Replace the environment-code of the project-id with character "x" as this repo will contain the configuration for all environments
 
 ## <a name='DeploymentRepos'></a>Deployment Repos
 

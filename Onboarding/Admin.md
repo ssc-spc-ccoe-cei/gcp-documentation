@@ -1,32 +1,70 @@
 # Platform or Security Admin Onboarding
 
-## Pre-requisite
+<!-- vscode-markdown-toc -->
+* [Required Information](#RequiredInformation)
+* [1. Build the Admin Folder](#BuildtheAdminFolder)
+	* [Package Details](#PackageDetails)
+* [THE END](#THEEND)
 
-1. locally clone the experimentation landing zone repo
-1. create a branch of main
+<!-- vscode-markdown-toc-config
+	numbering=false
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
 
-## Add admin folder(s) to the landing zone repository
+## <a name='RequiredInformation'></a>Required Information
 
-1. Move into the landing folder
+1. The admin name
 
-    ```shell
-    cd source-base
-    ```
+1. The Group or User email to grant permission on the admin folder
 
-1. get the hierarchy/admin-experimentation package
+## <a name='BuildtheAdminFolder'></a>1. Build the Admin Folder
 
-      ```shell
-      kpt pkg get https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git/solutions/hierarchy/admin-experimentation@main ./landing-zone/hierarchy/tests/admins/<admin name>
-      ```
+This package creates a folder in GCP and grant admin privileges on that folder to a user. This user can use this folder to experiment solutions in GCP.
 
-1. To modify any of the files in this package (like setters.yaml) follow this generic guidance
+We will build this admin folder by adding a package to the `gcp-experimentation-tier1` monorepo.
 
-    Refer to the `Add a Package` section of the [Changing.md](Changing.md)
+At a high level, the process below needs to be completed for each package :
 
-1. Generate hydrated files
+1. Setup your change, follow step 1 of [Changing.md](./Changing.md#step-1---setup)
+1. Add a Package, follow step 2A of [Changing.md](./Changing.md#a-add-a-package)
+1. Generate hydrated files, follow step 3 of [Changing.md](./Changing.md#step-3---hydrate).
+1. Publish changes to repository, follow step 4 of [Changing.md](./Changing.md#step-4---publish).
+1. Once the PR is merged, note the new tag version or commit SHA.  It will be required in the next section.
+1. Synchronize and promote configuration, follow step 5 of [Changing.md](./Changing.md#step-5---synchronize--promote-configs).
 
-    Refer to the `Hydrate` section of the [Changing.md](Changing.md)
+### <a name='PackageDetails'></a>Package Details
 
-1. Add changes to repository
+> **!!! It's important that all of the steps listed above are completed for each package before proceeding with the next package. !!!**
 
-    Refer to the `Publish` section of the [Changing.md](Changing.md)
+1. The client project setup package
+    - For Experimentation, we deploy this package inside the `gcp-experimentation-tier1` repo.
+
+      - Package details:
+
+          ```shell
+          export TIER='tier1'
+
+          export REPO_URI='https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
+
+          export PKG_PATH='solutions/experimentation/admin-folder'
+
+          # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
+          export VERSION=''
+
+          # replace <admin-name> with the name of the admin
+          export LOCAL_DEST_DIRECTORY='admins/<admin-name>/admin-folder'
+          ```
+
+      - Customization:
+
+          ```shell
+          # replace <admin-name> with the name of the admin
+          export FILE_TO_CUSTOMIZE='admins/<admin-name>/admin-folder/setters.yaml'
+          ```
+
+    - For Dev, PreProd and Prod,  we do not deploy this package.
+
+## <a name='THEEND'></a>THE END
+
+Congratulations! You have completed the deployment of an admin folder as per SSC implementation.
