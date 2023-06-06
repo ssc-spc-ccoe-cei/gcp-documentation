@@ -2,14 +2,14 @@
 
 <!-- vscode-markdown-toc -->
 * [Repos Definitions and Roles](#ReposDefinitionsandRoles)
-	* [Tier1](#Tier1)
-	* [Tier2](#Tier2)
-	* [Tier34](#Tier34)
+  * [Tier1](#Tier1)
+  * [Tier2](#Tier2)
+  * [Tier34](#Tier34)
 * [Gitops](#Gitops)
 * [Git](#Git)
 * [Deployment Repos](#DeploymentRepos)
-	* [Git Submodule: `tools`](#GitSubmodule:tools)
-	* [Hydration Process](#HydrationProcess)
+  * [Git Submodule: `tools`](#GitSubmodule:tools)
+  * [Hydration Process](#HydrationProcess)
 * [Versioning](#Versioning)
 
 <!-- vscode-markdown-toc-config
@@ -80,7 +80,7 @@ These monorepos have a common directory structure with slight variations.
 
 Below is a brief explanation of key repo components.  Some directories include sub-directories for each environment it configures (experimentation, dev, preprod, prod).  For simplicity, they will be expressed below as `<env_subdirs>`.
 
-```
+```text
 repo-root/
 ├── .azure-pipelines or .github : pipelines YAML files.
 ├── bootstrap/: (only in the "tier1" repos)

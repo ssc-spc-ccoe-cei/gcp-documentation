@@ -2,9 +2,9 @@
 
 <!-- vscode-markdown-toc -->
 * [Azure DevOps YAML Pipelines](#AzureDevOpsYAMLPipelines)
-	* [Add Pipeline](#AddPipeline)
-	* [Add PR Trigger](#AddPRTrigger)
-	* [Delete Pipeline](#DeletePipeline)
+  * [Add Pipeline](#AddPipeline)
+  * [Add PR Trigger](#AddPRTrigger)
+  * [Delete Pipeline](#DeletePipeline)
 * [GitHub Actions Workflows](#GitHubActionsWorkflows)
 
 <!-- vscode-markdown-toc-config

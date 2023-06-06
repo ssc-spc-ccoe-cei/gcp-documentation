@@ -3,7 +3,7 @@
 <!-- vscode-markdown-toc -->
 * [Required Information](#RequiredInformation)
 * [1. Build the Admin Folder](#BuildtheAdminFolder)
-	* [Package Details](#PackageDetails)
+  * [Package Details](#PackageDetails)
 * [THE END](#THEEND)
 
 <!-- vscode-markdown-toc-config

@@ -2,13 +2,13 @@
 
 <!-- vscode-markdown-toc -->
 * [Create New Deployment Monorepo](#CreateNewDeploymentMonorepo)
-	* [1. Build the Monorepo](#BuildtheMonorepo)
-	* [2. Add Branch Protection](#AddBranchProtection)
-	* [3. Verify Service Account Permissions](#VerifyServiceAccountPermissions)
-	* [4. Add Pipelines](#AddPipelines)
+  * [1. Build the Monorepo](#BuildtheMonorepo)
+  * [2. Add Branch Protection](#AddBranchProtection)
+  * [3. Verify Service Account Permissions](#VerifyServiceAccountPermissions)
+  * [4. Add Pipelines](#AddPipelines)
 * [Update Deployment Repo](#UpdateDeploymentRepo)
-	* [Update from Template](#UpdatefromTemplate)
-	* [Update `tools` Submodule](#UpdatetoolsSubmodule)
+  * [Update from Template](#UpdatefromTemplate)
+  * [Update `tools` Submodule](#UpdatetoolsSubmodule)
 
 <!-- vscode-markdown-toc-config
 	numbering=false

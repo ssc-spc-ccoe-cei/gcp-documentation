@@ -2,12 +2,12 @@
 
 <!-- vscode-markdown-toc -->
 * [Required Information](#RequiredInformation)
-	* [Common](#Common)
-	* [Experimentation](#Experimentation)
-	* [Dev, PreProd, Prod](#DevPreProdProd)
+  * [Common](#Common)
+  * [Experimentation](#Experimentation)
+  * [Dev, PreProd, Prod](#DevPreProdProd)
 * [1. Create `tier34` Monorepo](#Createtier34Monorepo)
 * [2. Build the Application's Project](#BuildtheApplicationsProject)
-	* [Package Details](#PackageDetails)
+  * [Package Details](#PackageDetails)
 * [THE END](#THEEND)
 
 <!-- vscode-markdown-toc-config

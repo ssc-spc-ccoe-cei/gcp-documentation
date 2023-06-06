@@ -2,10 +2,10 @@
 
 <!-- vscode-markdown-toc -->
 * [Required Information](#RequiredInformation)
-	* [TODO: Future enhancement](#TODO:Futureenhancement)
+  * [TODO: Future enhancement](#TODO:Futureenhancement)
 * [1. Create `tier2` monorepo](#Createtier2monorepo)
 * [2. Build the Client Landing Zone](#BuildtheClientLandingZone)
-	* [Package Details](#PackageDetails)
+  * [Package Details](#PackageDetails)
 * [3. Perform the post-deployment steps](#Performthepost-deploymentsteps)
 * [THE END](#THEEND)
 

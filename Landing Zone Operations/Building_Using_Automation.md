@@ -5,7 +5,7 @@
 * [1. Create `tier1` monorepo](#Createtier1monorepo)
 * [2. Bootstrap the Config Controller Project](#BootstraptheConfigControllerProject)
 * [3. Build the Core Landing Zone](#BuildtheCoreLandingZone)
-	* [Package Details](#PackageDetails)
+  * [Package Details](#PackageDetails)
 * [4. Perform the post-deployment steps](#Performthepost-deploymentsteps)
 * [THE END](#THEEND)
 
