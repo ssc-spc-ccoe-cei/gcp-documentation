@@ -2,7 +2,7 @@
 
 <!-- vscode-markdown-toc -->
 * [Required Information](#RequiredInformation)
-  * [TODO: Future enhancement](#TODO:Futureenhancement)
+  * [TODO: Essential Contacts](#TODO:EssentialContacts)
 * [1. Create `tier2` monorepo](#Createtier2monorepo)
 * [2. Build the Client Landing Zone](#BuildtheClientLandingZone)
   * [Package Details](#PackageDetails)
@@ -36,7 +36,7 @@
 
     ![folder](img/folder-structure-ssc-spc.png)
 
-### <a name='TODO:Futureenhancement'></a>TODO: Future enhancement
+### <a name='TODO:EssentialContacts'></a>TODO: Essential Contacts
 
 1. User or Group that should be granted `Essential Contacts` Admin role on the client's folder structure
 
