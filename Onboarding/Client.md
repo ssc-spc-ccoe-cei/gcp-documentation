@@ -1,23 +1,17 @@
 # Client Onboarding
 
-<!-- vscode-markdown-toc -->
-* [Required Information](#RequiredInformation)
-  * [TODO: Essential Contacts](#TODO:EssentialContacts)
-* [1. Create `tier2` monorepo](#Createtier2monorepo)
-* [2. Build the Client Landing Zone](#BuildtheClientLandingZone)
-  * [Package Details](#PackageDetails)
-* [3. Perform the post-deployment steps](#Performthepost-deploymentsteps)
-* [THE END](#THEEND)
-
-<!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
+- [Client Onboarding](#client-onboarding)
+  - [Required Information](#required-information)
+    - [TODO: Essential Contacts](#todo-essential-contacts)
+  - [1. Create `tier2` monorepo](#1-create-tier2-monorepo)
+  - [2. Build the Client Landing Zone](#2-build-the-client-landing-zone)
+    - [Package Details](#package-details)
+  - [3. Perform the post-deployment steps](#3-perform-the-post-deployment-steps)
+  - [THE END](#the-end)
 
 --------------------------------------
 
-## <a name='RequiredInformation'></a>Required Information
+## Required Information
 
 1. Client's Name
 1. When creating the name of a client folder, it must adhere to a bilingual nomenclature and leverage the official abbreviation list of current Government of Canada departments, agencies, Crown Corporations and special operating agencies: [https://www.canada.ca/en/government/dept.html](https://www.canada.ca/en/government/dept.html).
@@ -36,7 +30,7 @@
 
     ![folder](img/folder-structure-ssc-spc.png)
 
-### <a name='TODO:EssentialContacts'></a>TODO: Essential Contacts
+### TODO: Essential Contacts
 
 1. User or Group that should be granted `Essential Contacts` Admin role on the client's folder structure
 
@@ -44,13 +38,13 @@
 
 1. User or Group that should be granted `Essential Contacts` Viewer role on the client's folder structure
 
-## <a name='Createtier2monorepo'></a>1. Create `tier2` monorepo
+## 1. Create `tier2` monorepo
 
 - For Experimentation, you do not require this step as all packages are deploy in a single monorepo `gcp-experimentation-tier1`.
 
 - For Dev, PreProd and Prod, follow the "Create New Deployment Monorepo" section in [Repositories.md](./Repositories.md) to create one `gcp-<client-name>-tier2` monorepos.
 
-## <a name='BuildtheClientLandingZone'></a>2. Build the Client Landing Zone
+## 2. Build the Client Landing Zone
 
 You will build the client landing zone by adding packages to the `tier1` and `tier2` monorepos.
 
@@ -63,7 +57,7 @@ At a high level, the process below needs to be completed for each package :
 1. Once the PR is merged, note the new tag version or commit SHA.  It will be required in the next section.
 1. Synchronize and promote configuration, follow step 5 of [Changing.md](./Changing.md#step-5---synchronize--promote-configs).
 
-### <a name='PackageDetails'></a>Package Details
+### Package Details
 
 > **!!! It's important that all of the steps listed above are completed for each package before proceeding with the next package. !!!**
 
@@ -143,12 +137,12 @@ At a high level, the process below needs to be completed for each package :
           export FILE_TO_CUSTOMIZE='client-landing-zone/setters.yaml'
           ```
 
-## <a name='Performthepost-deploymentsteps'></a>3. Perform the post-deployment steps
+## 3. Perform the post-deployment steps
 
 Some resources from the `client-setup` package won't be able to deploy until the new `<client-name>-projects-sa` is granted `billing.user` role.
 
 Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#5-perform-the-post-deployment-steps) to fix this.
 
-## <a name='THEEND'></a>THE END
+## THE END
 
 Congratulations! You have completed the deployment of your client landing zone as per SSC implementation.

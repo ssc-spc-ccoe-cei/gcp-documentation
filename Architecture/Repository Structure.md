@@ -1,42 +1,36 @@
 # Repository Structure
 
-<!-- vscode-markdown-toc -->
-* [Repos Definitions and Roles](#ReposDefinitionsandRoles)
-  * [Tier1](#Tier1)
-  * [Tier2](#Tier2)
-  * [Tier34](#Tier34)
-* [Gitops](#Gitops)
-* [Git](#Git)
-* [Deployment Repos](#DeploymentRepos)
-  * [Git Submodule: `tools`](#GitSubmodule:tools)
-  * [Hydration Process](#HydrationProcess)
-* [Versioning](#Versioning)
+- [Repository Structure](#repository-structure)
+  - [Repos Definitions and Roles](#repos-definitions-and-roles)
+    - [Tier1](#tier1)
+    - [Tier2](#tier2)
+    - [Tier34](#tier34)
+  - [Gitops](#gitops)
+  - [Git](#git)
+  - [Deployment Repos](#deployment-repos)
+    - [Git Submodule: `tools`](#git-submodule-tools)
+    - [Hydration Process](#hydration-process)
+  - [Versioning](#versioning)
 
-<!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
-
-## <a name='ReposDefinitionsandRoles'></a>Repos Definitions and Roles
+## Repos Definitions and Roles
 
 SSC adopted the [monorepo](https://monorepo.tools/) structure for repositories. Monorepos are great for managing multiple solutions inside a single repository.
 
 The diagrams below show all the repositories **types** and the **roles** that are granted to teams for each one of them.
 
-### <a name='Tier1'></a>Tier1
+### Tier1
 
 ![img](img/tier1.png)
 
-### <a name='Tier2'></a>Tier2
+### Tier2
 
 ![img](img/tier2.png)
 
-### <a name='Tier34'></a>Tier34
+### Tier34
 
 ![img](img/tier34.png)
 
-## <a name='Gitops'></a>Gitops
+## Gitops
 
 The current solution is using [Config Sync](https://cloud.google.com/anthos-config-management/docs/config-sync-overview) with git repos to pull configurations for deploying GCP infrastructure.
 
@@ -59,7 +53,7 @@ The process to implement a code change goes like this:
 11. It deploys resources accordingly in GCP.
  &nbsp;
 
-## <a name='Git'></a>Git
+## Git
 
 The git repos are organized in different categories:
 
@@ -74,7 +68,7 @@ The git repos are organized in different categories:
   - `gcp-<x-project-id>-tier34` contains the security and application resources for dev, preprod and prod.
                                 Replace the environment-code of the project-id with character "x" as this repo will contain the configuration for all environments
 
-## <a name='DeploymentRepos'></a>Deployment Repos
+## Deployment Repos
 
 These monorepos have a common directory structure with slight variations.
 
@@ -113,13 +107,13 @@ Here are the links to the repositories templates for each deployment repos:
 - [gcp-tier2-template](https://github.com/ssc-spc-ccoe-cei/gcp-tier2-template)
 - [gcp-tier34-template](https://github.com/ssc-spc-ccoe-cei/gcp-tier34-template)
 
-### <a name='GitSubmodule:tools'></a>Git Submodule: `tools`
+### Git Submodule: `tools`
 
 As mentioned above, the [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools) repo is configured as a git submodule in `.gitmodules`.  This git configuration is limited to specifying a branch.
 
 To overcome this limitation and checkout a specific tag or commit SHA, run `modupdate.sh` to checkout the version configured in `modversions.yaml`.
 
-### <a name='HydrationProcess'></a>Hydration Process
+### Hydration Process
 
 The tools submodule contains a `hydrate.sh` script to hydrate the configs with `kpt`.  The script must be executed when any changes to `source-base` and/or `source-customization` are made.  It can be executed locally or in a pre-commit hook and also in a validation pipeline during PR creation.
 
@@ -136,7 +130,7 @@ A failure ensures proper behavior when running from a pre-commit hook or a pipel
 
 ![img](img/hydrate-script-flowchart.png)
 
-## <a name='Versioning'></a>Versioning
+## Versioning
 
 It is good practice to pin a repo and folder reference to a specific commit using tags or commit SHA.
 

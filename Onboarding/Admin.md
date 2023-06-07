@@ -1,26 +1,20 @@
 # Platform or Security Admin Onboarding
 
-<!-- vscode-markdown-toc -->
-* [Required Information](#RequiredInformation)
-* [1. Build the Admin Folder](#BuildtheAdminFolder)
-  * [Package Details](#PackageDetails)
-* [THE END](#THEEND)
-
-<!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
+- [Platform or Security Admin Onboarding](#platform-or-security-admin-onboarding)
+  - [Required Information](#required-information)
+  - [1. Build the Admin Folder](#1-build-the-admin-folder)
+    - [Package Details](#package-details)
+  - [THE END](#the-end)
 
 --------------------------------------
 
-## <a name='RequiredInformation'></a>Required Information
+## Required Information
 
 1. The admin name
 
 1. The Group or User email to grant permission on the admin folder
 
-## <a name='BuildtheAdminFolder'></a>1. Build the Admin Folder
+## 1. Build the Admin Folder
 
 This package creates a folder in GCP and grant admin privileges on that folder to a user. This user can use this folder to experiment solutions in GCP.
 
@@ -35,7 +29,7 @@ At a high level, the process below needs to be completed for each package :
 1. Once the PR is merged, note the new tag version or commit SHA.  It will be required in the next section.
 1. Synchronize and promote configuration, follow step 5 of [Changing.md](./Changing.md#step-5---synchronize--promote-configs).
 
-### <a name='PackageDetails'></a>Package Details
+### Package Details
 
 > **!!! It's important that all of the steps listed above are completed for each package before proceeding with the next package. !!!**
 
@@ -67,6 +61,6 @@ At a high level, the process below needs to be completed for each package :
 
     - For Dev, PreProd and Prod,  you do not deploy this package.
 
-## <a name='THEEND'></a>THE END
+## THE END
 
 Congratulations! You have completed the deployment of an admin folder as per SSC implementation.

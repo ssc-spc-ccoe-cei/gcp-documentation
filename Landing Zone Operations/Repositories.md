@@ -1,20 +1,14 @@
 # Git Repositories
 
-<!-- vscode-markdown-toc -->
-* [Create New Deployment Monorepo](#CreateNewDeploymentMonorepo)
-  * [1. Build the Monorepo](#BuildtheMonorepo)
-  * [2. Add Branch Protection](#AddBranchProtection)
-  * [3. Verify Service Account Permissions](#VerifyServiceAccountPermissions)
-  * [4. Add Pipelines](#AddPipelines)
-* [Update Deployment Repo](#UpdateDeploymentRepo)
-  * [Update from Template](#UpdatefromTemplate)
-  * [Update `tools` Submodule](#UpdatetoolsSubmodule)
-
-<!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
+- [Git Repositories](#git-repositories)
+  - [Create New Deployment Monorepo](#create-new-deployment-monorepo)
+    - [1. Build the Monorepo](#1-build-the-monorepo)
+    - [2. Add Branch Protection](#2-add-branch-protection)
+    - [3. Verify Service Account Permissions](#3-verify-service-account-permissions)
+    - [4. Add Pipelines](#4-add-pipelines)
+  - [Update Deployment Repo](#update-deployment-repo)
+    - [Update from Template](#update-from-template)
+    - [Update `tools` Submodule](#update-tools-submodule)
 
 --------------------------------------
 
@@ -23,15 +17,15 @@ Documentation to setup and manage git monorepos used with Config Sync to deploy 
 SSC is using Azure Devops Repositories (AzDO Repos) and Pipelines as its git solution.
 
 SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/landing-zone-v2#gitops---git) deployment.
-As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator observes several folders from our [monorepos](https://monorepo.tools/).
+As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator observes several folders from the [monorepos](https://monorepo.tools/).
 
-## <a name='CreateNewDeploymentMonorepo'></a>Create New Deployment Monorepo
+## Create New Deployment Monorepo
 
 Deployment monorepos are initially created the same way, from cloning a template monorepo.  These steps will need to be repeated for each monorepo name.  For example, `gcp-env-tier1`, `gcp-<client-name>-tier2` or `gcp-<x-project-id>-tier34`.
 
 The git credentials will need to be appropriately set for your AzDO org.
 
-### <a name='BuildtheMonorepo'></a>1. Build the Monorepo
+### 1. Build the Monorepo
 
 > If your AzDO org has project-wide branch policies set on repositories, you may need to work with branches / Pull Requests or temporarily give yourself permission to "Bypass policies when pushing" on the monorepo.
 
@@ -146,7 +140,7 @@ The git credentials will need to be appropriately set for your AzDO org.
 
 1. The monorepo is created! It's now time to protect the main branch.
 
-### <a name='AddBranchProtection'></a>2. Add Branch Protection
+### 2. Add Branch Protection
 
 It's recommended to protect the `main` branch and use pull requests for any changes to the monorepos.
 
@@ -168,7 +162,7 @@ These other policies can also be enabled as needed:
 
 > TODO: Extra policy for "Automatically included reviewers" with path filters.
 
-### <a name='VerifyServiceAccountPermissions'></a>3. Verify Service Account Permissions
+### 3. Verify Service Account Permissions
 
 An AzDO service account should be used for authenticating Config Sync.  It requires read access to the monorepo.
 
@@ -182,7 +176,7 @@ To confirm:
 
 A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with scope of **Code (Read)** will also need to be created for the service account.  This should only need to be done once per service account.  **Note the expiration date, it will need to be periodically re-generated.**
 
-### <a name='AddPipelines'></a>4. Add Pipelines
+### 4. Add Pipelines
 
 The monorepo is now created and the main branch is protected.  [Pipelines](./Pipelines.md) can be created.
 
@@ -190,13 +184,13 @@ The monorepo is now created and the main branch is protected.  [Pipelines](./Pip
 
 - To use semantic versioning during deployment operations, the monorepos can be setup with a git tagging pipeline, such as [version-tagging](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging).
 
-## <a name='UpdateDeploymentRepo'></a>Update Deployment Repo
+## Update Deployment Repo
 
 This section is for updating the deployment monorepo itself, not the YAML configs.
 
 As with any other change, they should be done through a PR process.
 
-### <a name='UpdatefromTemplate'></a>Update from Template
+### Update from Template
 
 The templates remain fairly static, but they can sometimes contain important changes.
 
@@ -208,7 +202,7 @@ Follow these steps to update your deployment monorepo with changes from the temp
 
 TODO: test and add steps
 
-### <a name='UpdatetoolsSubmodule'></a>Update `tools` Submodule
+### Update `tools` Submodule
 
 The tools submodule can easily be updated to a new version.
 

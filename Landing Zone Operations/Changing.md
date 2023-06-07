@@ -1,21 +1,15 @@
 # Implementing a change on the landing zone
 
-<!-- vscode-markdown-toc -->
-* [Step 1 - Setup](#Step1-Setup)
-* [Step 2 - Change](#Step2-Change)
-  * [A) Add a Package](#AAddaPackage)
-  * [B) Modify a Package](#BModifyaPackage)
-  * [C) Update a Package](#CUpdateaPackage)
-  * [D) Remove a Package](#DRemoveaPackage)
-* [Step 3 - Hydrate](#Step3-Hydrate)
-* [Step 4 - Publish](#Step4-Publish)
-* [Step 5 - Synchronize / Promote Configs](#Step5-SynchronizePromoteConfigs)
-
-<!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
+- [Implementing a change on the landing zone](#implementing-a-change-on-the-landing-zone)
+  - [Step 1 - Setup](#step-1---setup)
+  - [Step 2 - Change](#step-2---change)
+    - [A) Add a Package](#a-add-a-package)
+    - [B) Modify a Package](#b-modify-a-package)
+    - [C) Update a Package](#c-update-a-package)
+    - [D) Remove a Package](#d-remove-a-package)
+  - [Step 3 - Hydrate](#step-3---hydrate)
+  - [Step 4 - Publish](#step-4---publish)
+  - [Step 5 - Synchronize / Promote Configs](#step-5---synchronize--promote-configs)
 
 --------------------------------------
 
@@ -30,7 +24,7 @@ As a high level overview, a package will usually include files that are used spe
 - `setters.yaml`: used to set customizable data.
 - `Kptfile`: used to keep track of package versions and [declaratively set which functions](https://kpt.dev/book/04-using-functions/01-declarative-function-execution) should run during rendering. For example, [apply-setters](https://catalog.kpt.dev/apply-setters/v0.2/).
 
-## <a name='Step1-Setup'></a>Step 1 - Setup
+## Step 1 - Setup
 
 For any type of change, you should start with a new branch and a clean git working tree (all files are staged and committed).  This will make it easier to visualize changes in [VSCode's Git Source Control](https://code.visualstudio.com/docs/sourcecontrol/overview) (or `git diff`) and revert if needed.
 You can confirm that a working tree is clean by running `git status`.
@@ -61,11 +55,11 @@ From your local environment:
     bash modupdate.sh
     ```
 
-## <a name='Step2-Change'></a>Step 2 - Change
+## Step 2 - Change
 
 There are different types of changes.  Follow the appropriate section for instructions.
 
-### <a name='AAddaPackage'></a>A) Add a Package
+### A) Add a Package
 
 This is accomplished with the [`kpt pkg get`](https://kpt.dev/reference/cli/pkg/get/) command.
 
@@ -84,7 +78,7 @@ Follow these steps to add a package:
     export REPO_URI=''
 
     # subdirectory of the package, relative to root of repo
-    # for example, 'solutions/hierarchy/core-landing-zone'
+    # for example, 'solutions/core-landing-zone'
     export PKG_PATH=''
 
     # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
@@ -138,7 +132,7 @@ It will need to be customized for each environment.  This is a manual process, a
         - The hydration process will then ignore this commented resource definition, effectively removing it.
 1. Review all customizations with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-### <a name='BModifyaPackage'></a>B) Modify a Package
+### B) Modify a Package
 
 By design, this is accomplished by modifying configs in the `tierX/source-customization/<env>`.  Files in other directories should never be modified manually.
 
@@ -149,7 +143,7 @@ Follow these steps to modify a package:
 1. Modify the configs for each applicable environment in `tierX/source-customization/<env>`
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-### <a name='CUpdateaPackage'></a>C) Update a Package
+### C) Update a Package
 
 This is accomplished with the [`kpt pkg update`](https://kpt.dev/reference/cli/pkg/update/) command.
 
@@ -203,7 +197,7 @@ For example, if the landing-zone package is updated, compare `tier1/source-custo
     - If a change is detected, manually update the file in `source-customization/<env>`.
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-### <a name='DRemoveaPackage'></a>D) Remove a Package
+### D) Remove a Package
 
 This is accomplished by simply deleting the package files in `tierX/source-base` and its customizations in `tierX/source-customization/<env>`.
 
@@ -250,7 +244,7 @@ Follow these steps to remove a package:
 
 1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-## <a name='Step3-Hydrate'></a>Step 3 - Hydrate
+## Step 3 - Hydrate
 
 This is accomplished with the `hydrate.sh` script located in the tools submodule.  In part, it uses the [`kpt fn render`](https://kpt.dev/reference/cli/fn/render/) command.
 
@@ -272,7 +266,7 @@ Follow these steps to hydrate your change:
 1. Address errors, if any.
 1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`, specifically the hydrated files in the `deploy/<env>` folders.  If satisfied, it's time for publishing.
 
-## <a name='Step4-Publish'></a>Step 4 - Publish
+## Step 4 - Publish
 
 At this point, the changes only exist locally. They are now ready to be published for peer review and approval.
 
@@ -300,7 +294,7 @@ Follow these steps to publish the changes:
 1. Confirm all required checks are successful (approvals, tests, etc.).  If checks are failing, address them in your local branch then stage, commit and push them to origin.
 1. Complete the pull request once all required checks are successful.
 
-## <a name='Step5-SynchronizePromoteConfigs'></a>Step 5 - Synchronize / Promote Configs
+## Step 5 - Synchronize / Promote Configs
 
 This section contains information on how changes can be promoted between environments.
 

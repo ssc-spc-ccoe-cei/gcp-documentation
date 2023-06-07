@@ -1,17 +1,11 @@
 # Pipelines
 
-<!-- vscode-markdown-toc -->
-* [Azure DevOps YAML Pipelines](#AzureDevOpsYAMLPipelines)
-  * [Add Pipeline](#AddPipeline)
-  * [Add PR Trigger](#AddPRTrigger)
-  * [Delete Pipeline](#DeletePipeline)
-* [GitHub Actions Workflows](#GitHubActionsWorkflows)
-
-<!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
+- [Pipelines](#pipelines)
+  - [Azure DevOps YAML Pipelines](#azure-devops-yaml-pipelines)
+    - [Add Pipeline](#add-pipeline)
+    - [Add PR Trigger](#add-pr-trigger)
+    - [Delete Pipeline](#delete-pipeline)
+  - [GitHub Actions Workflows](#github-actions-workflows)
 
 --------------------------------------
 
@@ -19,11 +13,11 @@ Documentation to manage and configure pipelines.
 
 This documentation assumes that proper YAML files are already committed to the repo. Samples can be found in the [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/) repo.
 
-## <a name='AzureDevOpsYAMLPipelines'></a>Azure DevOps YAML Pipelines
+## Azure DevOps YAML Pipelines
 
 The [Azure DevOps pipelines](https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/key-pipelines-concepts?view=azure-devops) need to be manually created using existing YAML definition files located in your repo.  The files could be located in any directory, we'll use the `.azure-pipelines/` directory as a convention.
 
-### <a name='AddPipeline'></a>Add Pipeline
+### Add Pipeline
 
 Repeat the following steps in Azure DevOps for each YAML pipeline definition files:
 
@@ -42,7 +36,7 @@ For example, if your repo's name is `my-repo` and the pipeline YAML file is `fir
 
 > *During a pipeline’s first execution, it may be required to manually authorize it to use agent pools (depending on security settings) and/or access other resources (repos, variable groups, etc.).*
 
-### <a name='AddPRTrigger'></a>Add PR Trigger
+### Add PR Trigger
 
 A pipeline may need to run when a Pull Request (PR) is created/updated. In Azure DevOps, this [trigger](https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml#pr-triggers) cannot be defined in the YAML definitions.  A [build validation policy](https://docs.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation) must be created to accomplish this.
 
@@ -58,7 +52,7 @@ Navigate to **Project Settings > Repos/Repositories > {repo} > Policies > Branch
 
 > *Adding a branch policy will protect the branch.*
 
-### <a name='DeletePipeline'></a>Delete Pipeline
+### Delete Pipeline
 
 Navigate to **Pipelines > Pipelines**:
 
@@ -68,7 +62,7 @@ Navigate to **Pipelines > Pipelines**:
 
 You can now delete the appropriate YAML file from your repo's `.azure-pipelines` directory.
 
-## <a name='GitHubActionsWorkflows'></a>GitHub Actions Workflows
+## GitHub Actions Workflows
 
 Properly formatted YAML file in `.github/workflows` should automatically be added.
 

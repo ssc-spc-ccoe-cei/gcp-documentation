@@ -1,26 +1,20 @@
 # Application Onboarding
 
-<!-- vscode-markdown-toc -->
-* [Required Information](#RequiredInformation)
-  * [Common](#Common)
-  * [Experimentation](#Experimentation)
-  * [Dev, PreProd, Prod](#DevPreProdProd)
-* [1. Create `tier34` Monorepo](#Createtier34Monorepo)
-* [2. Build the Application's Project](#BuildtheApplicationsProject)
-  * [Package Details](#PackageDetails)
-* [THE END](#THEEND)
-
-<!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
+- [Application Onboarding](#application-onboarding)
+  - [Required Information](#required-information)
+    - [Common](#common)
+    - [Experimentation](#experimentation)
+    - [Dev, PreProd, Prod](#dev-preprod-prod)
+  - [1. Create `tier34` Monorepo](#1-create-tier34-monorepo)
+  - [2. Build the Application's Project](#2-build-the-applications-project)
+    - [Package Details](#package-details)
+  - [THE END](#the-end)
 
 --------------------------------------
 
-## <a name='RequiredInformation'></a>Required Information
+## Required Information
 
-### <a name='Common'></a>Common
+### Common
 
 1. Naming convention for project-id : `<client-code><environment-code><region-code><data-classification>`-`<project-owner>`-`<user defined string>`
 
@@ -34,17 +28,17 @@
 
 1. Billing Account ID to be associated with this project
 
-### <a name='Experimentation'></a>Experimentation
+### Experimentation
 
 1. user, group or serviceAccount email with editor role at project level
 
     **user or group has to exist in a Google Cloud Identity (any existing domain)**
 
-### <a name='DevPreProdProd'></a>Dev, PreProd, Prod
+### Dev, PreProd, Prod
 
 1. Host Project ID (with a Shared VPC) that exist to connect this workload/service project
 
-## <a name='Createtier34Monorepo'></a>1. Create `tier34` Monorepo
+## 1. Create `tier34` Monorepo
 
 - For Experimentation, you do not require this step as all packages are deploy in a single monorepo `gcp-experimentation-tier1`.
 
@@ -52,7 +46,7 @@
 
 > **!!! You need to replace the environment-code of the project-id with character "x" as this repo will contain the configuration for all environments. !!!**
 
-## <a name='BuildtheApplicationsProject'></a>2. Build the Application's Project
+## 2. Build the Application's Project
 
 You will build the application's project by adding packages to the `tier2` monorepo.
 
@@ -65,7 +59,7 @@ At a high level, the process below needs to be completed for each package :
 1. Once the PR is merged, note the new tag version or commit SHA.  It will be required in the next section.
 1. Synchronize and promote configuration, follow step 5 of [Changing.md](./Changing.md#step-5---synchronize--promote-configs).
 
-### <a name='PackageDetails'></a>Package Details
+### Package Details
 
 > **!!! It's important that all of the steps listed above are completed for each package before proceeding with the next package. !!!**
 
@@ -124,6 +118,6 @@ At a high level, the process below needs to be completed for each package :
 
     - For Dev, PreProd and Prod,  you do not require this package.
 
-## <a name='THEEND'></a>THE END
+## THE END
 
 Congratulations! You have completed the deployment of a client's project as per SSC implementation.

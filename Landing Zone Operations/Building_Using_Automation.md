@@ -1,19 +1,13 @@
 # Landing zone building
 
-<!-- vscode-markdown-toc -->
-* [Requirements](#Requirements)
-* [1. Create `tier1` monorepo](#Createtier1monorepo)
-* [2. Bootstrap the Config Controller Project](#BootstraptheConfigControllerProject)
-* [3. Build the Core Landing Zone](#BuildtheCoreLandingZone)
-  * [Package Details](#PackageDetails)
-* [4. Perform the post-deployment steps](#Performthepost-deploymentsteps)
-* [THE END](#THEEND)
-
-<!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
+- [Landing zone building](#landing-zone-building)
+  - [Requirements](#requirements)
+  - [1. Create `tier1` monorepo](#1-create-tier1-monorepo)
+  - [2. Bootstrap the Config Controller Project](#2-bootstrap-the-config-controller-project)
+  - [3. Build the Core Landing Zone](#3-build-the-core-landing-zone)
+    - [Package Details](#package-details)
+  - [4. Perform the post-deployment steps](#4-perform-the-post-deployment-steps)
+  - [THE END](#the-end)
 
 --------------------------------------
 
@@ -25,13 +19,13 @@ This document will describe how the automated scripts can be used for building a
 
 **Important** SSC is using Azure Devops Repositories and Pipelines as its git solution.
 
-## <a name='Requirements'></a>Requirements
+## Requirements
 
 Shared Services Canada uses the "[Multiple GCP organizations](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#multiple-gcp-organizations)" architecture.
 
 Review the requirements listed [here](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#requirements).
 
-## <a name='Createtier1monorepo'></a>1. Create `tier1` monorepo
+## 1. Create `tier1` monorepo
 
 SSC implements a [Gitops-Git](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/docs/landing-zone-v2/README.md#gitops---git) deployment.
 As illustrated in the [Gitops](../Architecture/Repository%20Structure.md#Gitops) diagram, the ConfigSync operator is observing our deployment monorepos.
@@ -41,8 +35,7 @@ Follow the "Create New Deployment Monorepo" section in [Repositories.md](./Repos
 - `gcp-experimentation-tier1`: if building an experimentation landing-zone.
 - `gcp-env-tier1`: if building a dev, preprod or prod landing-zone.
 
-
-## <a name='BootstraptheConfigControllerProject'></a>2. Bootstrap the Config Controller Project
+## 2. Bootstrap the Config Controller Project
 
 The automated script creates a project, the FW settings, a Cloud router, a Cloud NAT, a private service connect endpoint and the Anthos Config Controller cluster. It also creates a root-sync.yaml file.
 
@@ -89,7 +82,7 @@ The script requires a `.env` file to deploy the environment.
     nomos status --contexts gke_${PROJECT_ID}_northamerica-northeast1_krmapihost-${CLUSTER}
     ```
 
-## <a name='BuildtheCoreLandingZone'></a>3. Build the Core Landing Zone
+## 3. Build the Core Landing Zone
 
 You will build the core landing zone by adding a collection of packages to the `tier1` monorepo.
 At a high level, the process below needs to be completed for each package :
@@ -101,7 +94,7 @@ At a high level, the process below needs to be completed for each package :
 1. Once the PR is merged, note the new tag version or commit SHA.  It will be required in the next section.
 1. Synchronize and promote configuration, follow step 5 of [Changing.md](./Changing.md#step-5---synchronize--promote-configs).
 
-### <a name='PackageDetails'></a>Package Details
+### Package Details
 
 You will add the 2 packages below to your `tier1` monorepo.
 > **!!! It's important that all of the steps listed above are completed for each package before proceeding with the next package. !!!**
@@ -179,12 +172,12 @@ The details below are required when performing step 2A "Add a Package" of [Chang
           export FILE_TO_CUSTOMIZE='core-landing-zone/setters.yaml'
           ```
 
-## <a name='Performthepost-deploymentsteps'></a>4. Perform the post-deployment steps
+## 4. Perform the post-deployment steps
 
 Some resources from the `core-landing-zone` package won't be able to deploy until the new `projects-sa` is granted `billing.user` role.
 
 Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#5-perform-the-post-deployment-steps) to fix this.
 
-## <a name='THEEND'></a>THE END
+## THE END
 
 Congratulations! You have completed the deployment of your core landing zone as per SSC implementation.
