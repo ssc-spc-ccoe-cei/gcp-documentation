@@ -36,7 +36,7 @@
 
 ## 1. Create `tier2` monorepo
 
-- For Experimentation, you do not require this step as all packages are deploy in a single monorepo `gcp-experimentation-tier1`.
+- For Experimentation, you do not require this step as all packages are deployed in a single monorepo `gcp-experimentation-tier1`.
 
 - For Dev, PreProd and Prod, follow the "Create New Deployment Monorepo" section in [Repositories.md](./Repositories.md) to create one `gcp-<client-name>-tier2` monorepos.
 

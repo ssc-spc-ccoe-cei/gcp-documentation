@@ -77,7 +77,7 @@ At a high level, the process below needs to be completed for each package :
 
           export PKG_PATH='solutions/client-project-setup'
 
-          # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
+          # the version to get, located in the package CHANGELOG.md, use 'main' if not available
           export VERSION=''
 
           # replace <x-project-id> with project-id with character "x" as the environment code
@@ -104,7 +104,7 @@ At a high level, the process below needs to be completed for each package :
 
         export PKG_PATH='solutions/experimentation/client-project'
 
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
+        # the version to get, located in the package CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
         export LOCAL_DEST_DIRECTORY='projects/<project-id>/client-project'
@@ -117,6 +117,31 @@ At a high level, the process below needs to be completed for each package :
           ```
 
     - For Dev, PreProd and Prod,  you do not require this package.
+
+1. Repo-sync secrets
+   - For Experimentation, you don't need to execute this step.
+
+   - For Dev, PreProd and Prod
+       - You now need to add the `git-creds` secret to the `<project-id>-tier3` and `<project-id>-tier4` namespaces that have been created by the client project setup package. This secret has to allow `read` access to the `tier34` Azure DevOps monorepo. It is used by the configsync operator.
+          > **!!! The secrets needs to be populated on each config controlle cluster (Dev, PreProd and Prod) !!!**
+
+        1. Export the necessary variables
+
+            ```shell
+            export NAMESPACE=<project-id>-tier3
+            export GIT_USERNAME=<git username> # For Azure Devops, this is the name of the Organization
+            export TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            ```
+
+        1. Create `git-creds` secret with the required value to access the git repositories
+
+           ```shell
+           kubectl create secret generic git-creds --namespace=${NAMESPACE} --from-literal=username=${GIT_USERNAME} --from-literal=token=${TOKEN}
+           ```
+
+        1. Repeat for `<project-id>-tier4`
+
+        1. Repeat for all other environments
 
 ## THE END
 
