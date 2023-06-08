@@ -38,6 +38,8 @@ For example, if your repo's name is `my-repo` and the pipeline YAML file is `fir
 
 ### Add PR Trigger
 
+> **!!! Check the pipeline yaml file to identify if such trigger is required. It will be mentionned there.**
+
 A pipeline may need to run when a Pull Request (PR) is created/updated. In Azure DevOps, this [trigger](https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml#pr-triggers) cannot be defined in the YAML definitions.  A [build validation policy](https://docs.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation) must be created to accomplish this.
 
 To do so, for each repo / pipeline requiring a PR trigger:
