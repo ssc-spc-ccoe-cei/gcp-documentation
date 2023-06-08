@@ -81,7 +81,7 @@ Follow these steps to add a package:
     # for example, 'solutions/core-landing-zone'
     export PKG_PATH=''
 
-    # the version to get, located in the package's CHANGELOG.md, use 'main' if not available
+    # the version to get, located in the package CHANGELOG.md, use 'main' if not available
     # for example, '0.0.1'
     export VERSION=''
 
