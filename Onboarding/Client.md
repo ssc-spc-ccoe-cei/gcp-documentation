@@ -2,7 +2,7 @@
 
 - [Client Onboarding](#client-onboarding)
   - [Required Information](#required-information)
-    - [TODO: Essential Contacts](#todo-essential-contacts)
+    - [Essential Contacts](#essential-contacts)
   - [1. Create `tier2` monorepo](#1-create-tier2-monorepo)
   - [2. Build the Client Landing Zone](#2-build-the-client-landing-zone)
     - [Package Details](#package-details)
@@ -13,30 +13,26 @@
 
 ## Required Information
 
-1. Client's Name
-1. When creating the name of a client folder, it must adhere to a bilingual nomenclature and leverage the official abbreviation list of current Government of Canada departments, agencies, Crown Corporations and special operating agencies: [https://www.canada.ca/en/government/dept.html](https://www.canada.ca/en/government/dept.html).
+1. Client's Name. It will be used for many resources including the client's root folder.
 
-   For example, when creating a client folder to represent Shared Services Canada, employ both the official English and French abbreviation separated by a dash (e.g. ssc-spc).
+    > When creating the client folder, it's display name must adhere to a bilingual nomenclature and leverage the official abbreviation list of current Government of Canada departments,
+    > agencies, Crown Corporations and special operating agencies: [https://www.canada.ca/en/government/dept.html](https://www.canada.ca/en/government/dept.html).
+    >
+    > For example, when creating a client folder to represent Shared Services Canada, employ both the official English and French abbreviation separated by a dash (e.g. ssc-spc).
+    >
+    > ![folder](img/departments-and-agencies-en-ssc.png)
+    >
+    > ![folder](img/departments-and-agencies-fr-spc.png)
+    >
+    > In order to uphold folder name requirements in the Google Cloud Console ([Creating and managing folders](https://cloud.google.com/resource-manager/docs/creating-managing-folders#:~:text=For%20example%2C%20to%20create%20folders,%2C%20spaces%2C%20hyphens%20and%20underscores)), avoid using accented characters in French.
 
-   ![folder](img/departments-and-agencies-en-ssc.png)
-
-   ![folder](img/departments-and-agencies-fr-spc.png)
-
-   In order to uphold folder name requirements in the Google Cloud Console ([Creating and managing folders](https://cloud.google.com/resource-manager/docs/creating-managing-folders#:~:text=For%20example%2C%20to%20create%20folders,%2C%20spaces%2C%20hyphens%20and%20underscores)), avoid using accented characters in French.
+1. User or Group that should be granted Folder Viewer role on the client's folder structure. The screenshot below provides an example of the folder structure that this entity will view in GCP.
 
     ![folder](img/folder-structure-ssc-spc.png)
 
-1. User or Group that should be granted Folder Viewer role on the client's folder structure
+### Essential Contacts
 
-    ![folder](img/folder-structure-ssc-spc.png)
-
-### TODO: Essential Contacts
-
-1. User or Group that should be granted `Essential Contacts` Admin role on the client's folder structure
-
-    ![folder](img/essential-contacts.png)
-
-1. User or Group that should be granted `Essential Contacts` Viewer role on the client's folder structure
+> **!!! FUTURE RELEASE !!!**
 
 ## 1. Create `tier2` monorepo
 
