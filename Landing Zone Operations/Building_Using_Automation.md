@@ -114,7 +114,7 @@ The details below are required when performing step 2A "Add a Package" of [Chang
 
         export PKG_PATH='solutions/gatekeeper-policies'
 
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
+        # the version to get, located in the package CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
         export LOCAL_DEST_DIRECTORY='gatekeeper-policies'
@@ -137,7 +137,7 @@ The details below are required when performing step 2A "Add a Package" of [Chang
 
         export PKG_PATH='solutions/experimentation/core-landing-zone'
 
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
+        # the version to get, located in the package CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
         export LOCAL_DEST_DIRECTORY='core-landing-zone'
@@ -160,7 +160,7 @@ The details below are required when performing step 2A "Add a Package" of [Chang
 
         export PKG_PATH='solutions/core-landing-zone'
 
-        # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
+        # the version to get, located in the package CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
         export LOCAL_DEST_DIRECTORY='core-landing-zone'
