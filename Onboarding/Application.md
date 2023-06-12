@@ -42,7 +42,7 @@
 
 - For Experimentation, you do not require this step as all packages are deploy in a single monorepo `gcp-experimentation-tier1`.
 
-- For Dev, PreProd and Prod, follow the "Create New Deployment Monorepo" section in [Repositories.md](./Repositories.md) to create one `gcp-<x-project-id>-tier34` monorepos.
+- For Dev, PreProd and Prod, follow the "Create New Deployment Monorepo" section in [Repositories.md](../Landing%20Zone%20Operations/Repositories.md) to create one `gcp-<x-project-id>-tier34` monorepos.
 
 > **!!! You need to replace the environment-code of the project-id with character "x" as this repo will contain the configuration for all environments. !!!**
 
