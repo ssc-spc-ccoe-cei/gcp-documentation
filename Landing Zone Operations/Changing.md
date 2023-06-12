@@ -94,7 +94,10 @@ Follow these steps to add a package:
 
     ```shell
     cd ${TIER}/source-base
-    mkdir -p ${LOCAL_DEST_DIRECTORY}
+    # if folder doesnt exist then create it
+    if [ ! -d "${LOCAL_DEST_DIRECTORY}" ]; then
+      mkdir -p ${LOCAL_DEST_DIRECTORY}
+    fi
     ```
 
 1. Add the package with the following command:
