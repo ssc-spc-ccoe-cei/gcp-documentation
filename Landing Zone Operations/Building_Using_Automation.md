@@ -117,7 +117,7 @@ The details below are required when performing step 2A "Add a Package" of [Chang
         # the version to get, located in the package CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
-        export LOCAL_DEST_DIRECTORY='gatekeeper-policies'
+        export LOCAL_DEST_DIRECTORY=''
         ```
 
     - Customization (same for all environments):
@@ -140,7 +140,7 @@ The details below are required when performing step 2A "Add a Package" of [Chang
         # the version to get, located in the package CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
-        export LOCAL_DEST_DIRECTORY='core-landing-zone'
+        export LOCAL_DEST_DIRECTORY=''
         ```
 
       - Customization:
@@ -163,7 +163,7 @@ The details below are required when performing step 2A "Add a Package" of [Chang
         # the version to get, located in the package CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
-        export LOCAL_DEST_DIRECTORY='core-landing-zone'
+        export LOCAL_DEST_DIRECTORY=''
         ```
 
       - Customization:

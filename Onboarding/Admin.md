@@ -49,7 +49,7 @@ At a high level, the process below needs to be completed for each package :
           export VERSION=''
 
           # replace <admin-name> with the name of the admin
-          export LOCAL_DEST_DIRECTORY='admins/<admin-name>/admin-folder'
+          export LOCAL_DEST_DIRECTORY='admins/<admin-name>'
           ```
 
       - Customization:

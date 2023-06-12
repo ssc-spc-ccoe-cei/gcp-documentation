@@ -75,7 +75,7 @@ At a high level, the process below needs to be completed for each package :
           export VERSION=''
 
           # replace <client-name> value
-          export LOCAL_DEST_DIRECTORY='clients/<client-name>/client-setup'
+          export LOCAL_DEST_DIRECTORY='clients/<client-name>'
           ```
 
       - Customization:
@@ -101,7 +101,7 @@ At a high level, the process below needs to be completed for each package :
         # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
         export VERSION=''
 
-        export LOCAL_DEST_DIRECTORY='clients/<client-name>/client-landing-zone'
+        export LOCAL_DEST_DIRECTORY='clients/<client-name>'
         ```
 
       - Customization:
@@ -124,7 +124,7 @@ At a high level, the process below needs to be completed for each package :
         # the version to get, located in the package's CHANGELOG.md, use 'main' if not available'
         export VERSION=''
 
-        export LOCAL_DEST_DIRECTORY='client-landing-zone'
+        export LOCAL_DEST_DIRECTORY=''
         ```
 
       - Customization:

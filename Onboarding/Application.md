@@ -81,7 +81,7 @@ At a high level, the process below needs to be completed for each package :
           export VERSION=''
 
           # replace <x-project-id> with project-id with character "x" as the environment code
-          export LOCAL_DEST_DIRECTORY='projects/<x-project-id>/client-project-setup'
+          export LOCAL_DEST_DIRECTORY='projects/<x-project-id>'
           ```
 
       - Customization:
@@ -107,7 +107,7 @@ At a high level, the process below needs to be completed for each package :
         # the version to get, located in the package CHANGELOG.md, use 'main' if not available
         export VERSION=''
 
-        export LOCAL_DEST_DIRECTORY='projects/<project-id>/client-project'
+        export LOCAL_DEST_DIRECTORY='projects/<project-id>'
         ```
 
       - Customization:
