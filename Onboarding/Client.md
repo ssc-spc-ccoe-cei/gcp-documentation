@@ -8,6 +8,7 @@
     - [Package Details](#package-details)
   - [3. Perform the post-deployment steps](#3-perform-the-post-deployment-steps)
   - [THE END](#the-end)
+  - [Next Step](#next-step)
 
 --------------------------------------
 
@@ -142,3 +143,7 @@ Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubs
 ## THE END
 
 Congratulations! You have completed the deployment of your client landing zone as per SSC implementation.
+
+## Next Step
+
+Execute the Application onboarding [procedure](./Application.md).
