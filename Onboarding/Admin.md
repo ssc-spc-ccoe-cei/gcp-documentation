@@ -36,7 +36,7 @@ At a high level, the process below needs to be completed for each package :
 1. The client project setup package
     - For Experimentation, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/experimentation/admin-folder) inside the `gcp-experimentation-tier1` repo.
 
-      - Package details:
+      - Package details (When executing [step 2A](../Landing%20Zone%20Operations/Changing.md#a-add-a-package)):
 
           ```shell
           export TIER='tier1'

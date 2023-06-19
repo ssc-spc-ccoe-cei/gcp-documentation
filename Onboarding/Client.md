@@ -63,7 +63,7 @@ At a high level, the process below needs to be completed for each package :
 
     - For Dev, PreProd and Prod, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/client-setup) inside the `gcp-env-tier1` repo.
 
-      - Package details:
+      - Package details (When executing [step 2A](../Landing%20Zone%20Operations/Changing.md#a-add-a-package)):
 
           ```shell
           export TIER='tier1'
@@ -90,7 +90,7 @@ At a high level, the process below needs to be completed for each package :
 
     - For Experimentation, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/experimentation/client-landing-zone) inside the `gcp-experimentation-tier1` repo.
 
-      - Package details:
+      - Package details (When executing [step 2A](../Landing%20Zone%20Operations/Changing.md#a-add-a-package)):
 
         ```shell
         export TIER='tier1'
@@ -113,7 +113,7 @@ At a high level, the process below needs to be completed for each package :
 
     - For Dev, PreProd and Prod, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/client-landing-zone) inside the `gcp-<client-name>-tier2` repo.
 
-      - Package details:
+      - Package details (When executing [step 2A](../Landing%20Zone%20Operations/Changing.md#a-add-a-package)):
 
         ```shell
         export TIER='tier2'
