@@ -20,7 +20,7 @@
 
     *Notice the 2 "-" before and after `<project-owner>`
     - client-code (2 characters)
-    - environment-code (1 character)
+    - environment-code (1 character) : "e" - experimentation, "d" - dev, "u" - preprod, "p" - prod
     - region-code (1 character) : "m" projects are always a global/multi-region resource
     - data-classification (1 character): "u" or "a" or "b"
     - project-owner: string (**total project-id string length cannot exceed 30 characters**)
@@ -44,7 +44,7 @@
 
 - For Dev, PreProd and Prod, follow the "Create New Deployment Monorepo" section in [Repositories.md](../Landing%20Zone%20Operations/Repositories.md) to create one `gcp-<x-project-id>-tier34` monorepos.
 
-> **!!! You need to replace the environment-code of the project-id with character "x" as this repo will contain the configuration for all environments. !!!**
+> **!!! You need to replace the environment-code of the project-id with character "x" as this repo will contain the configuration for all environments. This only applies to the repo name. Do not use x as the environment code for your project-id in the `setters.yaml` as this will trigger a Gatekeeper validation error: `admission webhook "validation.gatekeeper.sh" denied the request`!!!**
 
 ## 2. Build the Application's Project
 
@@ -84,6 +84,8 @@ At a high level, the process below needs to be completed for each package :
           export LOCAL_DEST_DIRECTORY='projects/<x-project-id>'
           ```
 
+          > **!!! You need to replace the environment-code of the project-id with character "x" as this folder will contain the configuration for all environments. This only applies to the folder name. Do not use x as the environment code for your project-id in the `setters.yaml` as this will trigger a Gatekeeper validation error: `admission webhook "validation.gatekeeper.sh" denied the request` !!!**
+
       - Customization:
 
           ```shell
@@ -91,7 +93,7 @@ At a high level, the process below needs to be completed for each package :
           export FILE_TO_CUSTOMIZE='projects/<x-project-id>/client-project-setup/setters.yaml'
           ```
 
-1. The client project package:
+2. The client project package:
 
     - For Experimentation, you deploy this [package](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/tree/main/solutions/experimentation/client-project) inside the `gcp-experimentation-tier1` repo.
 
@@ -118,7 +120,7 @@ At a high level, the process below needs to be completed for each package :
 
     - For Dev, PreProd and Prod,  you do not require this package.
 
-1. Repo-sync secrets
+3. Repo-sync secrets
    - For Experimentation, you don't need to execute this step.
 
    - For Dev, PreProd and Prod
@@ -133,15 +135,15 @@ At a high level, the process below needs to be completed for each package :
             export TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             ```
 
-        1. Create `git-creds` secret with the required value to access the git repositories
+        2. Create `git-creds` secret with the required value to access the git repositories
 
            ```shell
            kubectl create secret generic git-creds --namespace=${NAMESPACE} --from-literal=username=${GIT_USERNAME} --from-literal=token=${TOKEN}
            ```
 
-        1. Repeat for `<project-id>-tier4`
+        3. Repeat for `<project-id>-tier4`
 
-        1. Repeat for all other environments
+        4. Repeat for all other environments
 
 ## THE END
 
