@@ -1,5 +1,14 @@
 # Pipelines
 
+- [Pipelines](#pipelines)
+  - [Azure DevOps YAML Pipelines](#azure-devops-yaml-pipelines)
+    - [Add Pipeline](#add-pipeline)
+    - [Add PR Trigger](#add-pr-trigger)
+    - [Delete Pipeline](#delete-pipeline)
+  - [GitHub Actions Workflows](#github-actions-workflows)
+
+--------------------------------------
+
 Documentation to manage and configure pipelines.
 
 This documentation assumes that proper YAML files are already committed to the repo. Samples can be found in the [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/) repo.
@@ -28,6 +37,8 @@ For example, if your repo's name is `my-repo` and the pipeline YAML file is `fir
 > *During a pipeline’s first execution, it may be required to manually authorize it to use agent pools (depending on security settings) and/or access other resources (repos, variable groups, etc.).*
 
 ### Add PR Trigger
+
+> **!!! Check the pipeline yaml file to identify if such trigger is required. It will be mentionned there.**
 
 A pipeline may need to run when a Pull Request (PR) is created/updated. In Azure DevOps, this [trigger](https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml#pr-triggers) cannot be defined in the YAML definitions.  A [build validation policy](https://docs.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation) must be created to accomplish this.
 
