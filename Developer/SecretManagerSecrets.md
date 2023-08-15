@@ -1,4 +1,6 @@
-# Overview
+# Create and access a secret using Secret Manager
+
+## Overview
 
 Storing sensitive data outside the Kubernetes cluster reduces the risk of unauthorized access to the data. External secret store providers such as [Google Secret Manager](https://cloud.google.com/secret-manager) provide a dedicated service for external storage of sensitive data.
 
@@ -9,24 +11,24 @@ Each node in a GKE cluster has an Identity and Access Management (IAM) Service A
 References:
 [Secrets Manager Documentation](https://cloud.google.com/secret-manager/docs/overview)
 
-# Creating a secret
+## Creating a secret
 
 To create a secret from a file:
 
-```
+```bash
 gcloud secrets create my-secret --data-file=/tmp/secret --replication-policy=user-managed --locations=northamerica-northeast1
 ```
 
 To create a secret with value `s3c3t`
 
-```
+```bash
 printf "s3cr3t" | gcloud secrets create my-secret --data-file=- --replication-policy=user-managed --locations=northamerica-northeast1
 ```
 
 References:
 [`gcloud secrets` CLI reference](https://cloud.google.com/sdk/gcloud/reference/secrets)
 
-# Accessing a secret in applications
+## Accessing a secret in applications
 
 To access a secret within an application, the application must programmatically retrieve the secret from Google Cloud Secret Manager.  For implementation samples in various programming languages, refer to [the official documentation](https://cloud.google.com/secret-manager/docs/reference/libraries)
 
