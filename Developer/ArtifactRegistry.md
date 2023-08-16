@@ -66,7 +66,7 @@ References:
 1. Authenticate to the repository:
 
 ```bash
-gcloud auth configure-docker us-east1-docker.pkg.dev
+gcloud auth configure-docker northamerica-northeast1-docker.pkg.dev
 ```
 
 2. Tag the local image with the repository name:

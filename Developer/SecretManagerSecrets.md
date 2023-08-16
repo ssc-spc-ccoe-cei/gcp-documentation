@@ -19,7 +19,7 @@ To create a secret from a file:
 gcloud secrets create my-secret --data-file=/tmp/secret --replication-policy=user-managed --locations=northamerica-northeast1
 ```
 
-To create a secret with value `s3c3t`
+To create a secret with value `s3cr3t`
 
 ```bash
 printf "s3cr3t" | gcloud secrets create my-secret --data-file=- --replication-policy=user-managed --locations=northamerica-northeast1
