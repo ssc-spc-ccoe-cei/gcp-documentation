@@ -66,7 +66,7 @@ The git repos are organized in different categories:
   - `gcp-env-tier1` contains the core level resources for dev, preprod and prod.
   - `gcp-<client-name>-tier2` contains the client level resources for dev, preprod and prod.
   - `gcp-<x-project-id>-tier34` contains the security and application resources for dev, preprod and prod.
-                                Replace the environment-code of the project-id with character "x" as this repo will contain the configuration for all environments
+                                You need to replace the environment-code of the project-id with character "x" as this repo will contain the configuration for all environments. This only applies to the repo name. Do not use x as the environment code for your project-id in the `setters.yaml` as this will trigger a Gatekeeper validation error: `admission webhook "validation.gatekeeper.sh" denied the request` !!!**
 
 ## Deployment Repos
 

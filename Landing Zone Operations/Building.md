@@ -178,9 +178,29 @@ The details below are required when performing step 2A "Add a Package" of [Chang
 
 ## 4. Perform the post-deployment steps
 
-Some resources from the `core-landing-zone` package won't be able to deploy until the new `projects-sa` is granted `billing.user` role.
+1. Some resources from the `core-landing-zone` package won't be able to deploy until the new `projects-sa` is granted `billing.user` role.
 
-Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#5-perform-the-post-deployment-steps) to fix this.
+    Perform step 5 from this [procedure](https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit/blob/main/docs/landing-zone-v2/README.md#5-perform-the-post-deployment-steps) to fix this.
+
+1. You must implement [Policy Controller Metrics](https://cloud.google.com/anthos-config-management/docs/how-to/policy-controller-metrics) to avoid numerous IAM errors on the Config Controller instance.
+    - Most of this procedure is covered by resources in the `core-landing-zone` package but you still need to execute the commands below :
+
+      1. Annotate the Kubernetes service account using the email address of the Google service account:
+
+          ```shell
+          export PROJECT_ID='<management project id>'
+
+          kubectl annotate serviceaccount \
+            --namespace gatekeeper-system \
+            gatekeeper-admin \
+            iam.gke.io/gcp-service-account=gatekeeper-admin-sa@${PROJECT_ID}.iam.gserviceaccount.com
+          ```
+
+      1. Restart the gatekeeper-controller-manager Pod:
+
+          ```shell
+          kubectl rollout restart deployment gatekeeper-controller-manager -n gatekeeper-system
+          ```
 
 ## THE END
 
