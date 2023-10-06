@@ -6,7 +6,8 @@
   - [2. Bootstrap the Config Controller Project](#2-bootstrap-the-config-controller-project)
   - [3. Build the Core Landing Zone](#3-build-the-core-landing-zone)
     - [Package Details](#package-details)
-  - [4. Perform the post-deployment steps](#4-perform-the-post-deployment-steps)
+  - [4. Add Cloud IDS and Compute SSL Certificate to tier1/configcontroller/crds](#4-add-cloud-ids-and-compute-ssl-certificate-to-tier1configcontrollercrds)
+  - [5. Perform the post-deployment steps](#5-perform-the-post-deployment-steps)
   - [THE END](#the-end)
   - [Next Step](#next-step)
 
@@ -176,7 +177,16 @@ The details below are required when performing step 2A "Add a Package" of [Chang
           export FILE_TO_CUSTOMIZE='core-landing-zone/setters.yaml'
           ```
 
-## 4. Perform the post-deployment steps
+## 4. Add Cloud IDS and Compute SSL Certificate to tier1/configcontroller/crds
+
+The following CRDS for Cloud IDS and Compute SSL Certificate should be stored inside tier1/configcontroller/crds.
+
+- [Cloud IDS](https://github.com/GoogleCloudPlatform/k8s-config-connector/blob/master/crds/cloudids_v1alpha1_cloudidsendpoint.yaml)
+
+- [Compute Managed SSL Certificate](https://github.com/GoogleCloudPlatform/k8s-config-connector/blob/master/crds/compute_v1alpha1_computemanagedsslcertificate.yaml)
+
+
+## 5. Perform the post-deployment steps
 
 1. Some resources from the `core-landing-zone` package won't be able to deploy until the new `projects-sa` is granted `billing.user` role.
 
