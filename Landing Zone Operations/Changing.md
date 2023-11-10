@@ -4,9 +4,10 @@
   - [Step 1 - Setup](#step-1---setup)
   - [Step 2 - Change](#step-2---change)
     - [A) Add a Package](#a-add-a-package)
-    - [B) Modify a Package](#b-modify-a-package)
-    - [C) Update a Package](#c-update-a-package)
-    - [D) Remove a Package](#d-remove-a-package)
+    - [B) Kubernetes and Config Controller Folders](#b-kubernetes-and-config-controller-folders)
+    - [C) Modify a Package](#c-modify-a-package)
+    - [D) Update a Package](#d-update-a-package)
+    - [E) Remove a Package](#e-remove-a-package)
   - [Step 3 - Hydrate](#step-3---hydrate)
   - [Step 4 - Publish](#step-4---publish)
   - [Step 5 - Synchronize / Promote Configs](#step-5---synchronize--promote-configs)
@@ -135,7 +136,13 @@ It will need to be customized for each environment.  This is a manual process, a
         - The hydration process will then ignore this commented resource definition, effectively removing it.
 1. Review all customizations with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-### B) Modify a Package
+### B) Kubernetes and Config Controller Folders
+
+**Notice:** source-base, source-customization and deploy have now moved under the additional folders being the [Configcontroller](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/configcontroller), [Kubernetes](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/kubernetes) for tier1, tier2 and tier34.
+
+Under the technology layer: Kubernetes will be observing the Kubernetes folder and the Config Controller will be observing the Config Controller folder with each having their own manifest files. 
+
+### C) Modify a Package
 
 By design, this is accomplished by modifying configs in the `tierX/source-customization/<env>`.  Files in other directories should never be modified manually.
 
@@ -146,7 +153,7 @@ Follow these steps to modify a package:
 1. Modify the configs for each applicable environment in `tierX/source-customization/<env>`
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-### C) Update a Package
+### D) Update a Package
 
 This is accomplished with the [`kpt pkg update`](https://kpt.dev/reference/cli/pkg/update/) command.
 
@@ -200,7 +207,7 @@ For example, if the landing-zone package is updated, compare `tier1/source-custo
     - If a change is detected, manually update the file in `source-customization/<env>`.
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-### D) Remove a Package
+### E) Remove a Package
 
 This is accomplished by simply deleting the package files in `tierX/source-base` and its customizations in `tierX/source-customization/<env>`.
 
