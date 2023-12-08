@@ -179,7 +179,7 @@ These other policies can also be enabled as needed:
 
 An AzDO service account should be used for authenticating Config Sync.  It requires read access to the monorepo.
 
-Depending on your organization, this could be set at different levels and with groups.  These steps assume the service account has already been configured.
+Depending on your organization, this could be set at different levels and with groups.  These steps assume the AzDO service account has already been configured.
 
 To confirm:
 

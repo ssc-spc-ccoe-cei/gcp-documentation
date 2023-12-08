@@ -36,7 +36,7 @@ However, its name defaults to the repo's name which is not ideal if the repo con
 Click the **"three dots" > Rename/move** to provide a meaningful name and optionally move to a folder.
 For example, if your repo's name is `my-repo` and the pipeline YAML file is `firstpipeline.yaml`, the pipeline could be renamed to something like `my-repo__firstpipeline` in a `my-repo` folder.
 
-> *Note: During a pipeline’s first execution, it may be required to manually authorize it to use agent pools (depending on security settings) and/or access other resources (repos, variable groups, etc.).*
+> *Note: During a pipeline’s first run, it may be required to manually authorize the pipeline to use agent pools (depending on security settings) and/or access other resources (repos, variable groups, etc.).*
 
 ### Add PR Trigger
 
