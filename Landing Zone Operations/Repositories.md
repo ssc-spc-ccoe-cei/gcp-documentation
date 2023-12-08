@@ -3,7 +3,7 @@
 - [Git Repositories](#git-repositories)
   - [Create New Deployment Monorepo](#create-new-deployment-monorepo)
     - [1. Build the Monorepo](#1-build-the-monorepo)
-    - [2. Add Branch Protection](#2-add-branch-protection)
+    - [2. Add Branch Policies](#2-add-branch-policies)
     - [3. Verify Service Account Permissions](#3-verify-service-account-permissions)
     - [4. Add Pipelines](#4-add-pipelines)
   - [Update Deployment Repo](#update-deployment-repo)
@@ -25,6 +25,8 @@ Deployment monorepos are initially created the same way, from cloning a monorepo
 
 The git credentials will need to be appropriately set for your AzDO org.
 
+It's important to note that **`.gitkeep` files must never be deleted.**
+
 ### 1. Build the Monorepo
 
 > If your AzDO org has project-wide branch policies set on repositories, you may need to work with branches / Pull Requests or temporarily give yourself permission to "Bypass policies when pushing" on the monorepo.
@@ -38,21 +40,21 @@ The git credentials will need to be appropriately set for your AzDO org.
     export NEW_REPO_URL='<your new monorepo URL>'
     ```
 
-1. Clone the template in a folder named like your new monorepo:
+1. Clone the template in a folder named like your new monorepo by running one of the commands below:
 
-    - tier1
+    - For tier 1:
 
         ```shell
         git clone https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template.git ${NEW_REPO_NAME}
         ```
 
-    - tier2
+    - For tier 2:
 
         ```shell
         git clone https://github.com/ssc-spc-ccoe-cei/gcp-tier2-template.git ${NEW_REPO_NAME}
         ```
 
-    - tier34
+    - For tier 3/4:
 
         ```shell
         git clone https://github.com/ssc-spc-ccoe-cei/gcp-tier34-template.git ${NEW_REPO_NAME}
@@ -80,7 +82,7 @@ The git credentials will need to be appropriately set for your AzDO org.
     ```
 
 1. Edit `modversions.yaml` to pin the `tools` submodule to a specific [release tag](https://github.com/ssc-spc-ccoe-cei/gcp-tools/releases) or commit SHA.
-1. Run the following to get the proper version of the tools submodule:
+1. Run the following to pull the proper version of the tools submodule:
 
     ```shell
     bash modupdate.sh
@@ -101,15 +103,15 @@ The git credentials will need to be appropriately set for your AzDO org.
         rm --recursive '.azure-pipelines'
         ```
 
-1. Remove the environment sub-directories which are not required. **Never delete '.gitkeep' files in folders that remain.**
+1. For tier1 repos, remove the environment sub-directories which are not required.
     - If the monorepo is `gcp-experimentation-tier1`:
 
         ```shell
-        # remove the 'dev', 'preprod' and 'prod' sub-directories
-        for root_dir in csync tier1; do
-          for env_subdir in dev preprod prod; do
-              rm --recursive "${root_dir}/deploy/${env_subdir}/"
-              rm --recursive "${root_dir}/source-customization/${env_subdir}/"
+        # find and remove the 'dev', 'preprod' and 'prod' sub-directories
+        for env_to_rm in dev preprod prod; do
+          for dir_to_rm in $(find . -type d -name "${env_to_rm}" | sort); do
+            echo "removing: ${dir_to_rm}"
+            rm --recursive "${dir_to_rm}"
           done
         done
         ```
@@ -117,16 +119,27 @@ The git credentials will need to be appropriately set for your AzDO org.
     - If the monorepo is `gcp-env-tier1`:
 
         ```shell
-        # remove the 'experimentation' sub-directory
-        for root_dir in csync tier1; do
-          for env_subdir in experimentation; do
-              rm --recursive "${root_dir}/deploy/${env_subdir}/"
-              rm --recursive "${root_dir}/source-customization/${env_subdir}/"
+        # find and remove the 'experimentation' sub-directories
+        for env_to_rm in experimentation; do
+          for dir_to_rm in $(find . -type d -name "${env_to_rm}" | sort); do
+            echo "removing: ${dir_to_rm}"
+            rm --recursive "${dir_to_rm}"
           done
         done
         ```
 
-1. Customize the file `csync/source-customization/<env>/**/<root/repo>-sync-git/setters.yaml` for all environments.
+1. If the repo is not used to deploy native Kubernetes resources, remove the `kubernetes` sub-directories:
+    ```shell
+    # find and remove the 'kubernetes' sub-directories
+    for env_to_rm in kubernetes; do
+        for dir_to_rm in $(find . -type d -name "${env_to_rm}" | sort); do
+        echo "removing: ${dir_to_rm}"
+        rm --recursive "${dir_to_rm}"
+        done
+    done
+    ```
+
+1. Customize the file `csync/tier<N>/configcontroller/source-customization/<env>/**/<root|repo>-sync-git/setters.yaml` for **all** environments.
 
 1. Generate hydrated files, follow step 3 of [Changing.md](./Changing.md#step-3---hydrate).
 
@@ -140,7 +153,7 @@ The git credentials will need to be appropriately set for your AzDO org.
 
 1. The monorepo is created! It's now time to protect the main branch.
 
-### 2. Add Branch Protection
+### 2. Add Branch Policies
 
 It's recommended to protect the `main` branch and use pull requests for any changes to the monorepos.
 
@@ -148,7 +161,7 @@ These settings could also be set at the AzDO Project level.
 
 At the very least, the [Require a minimum number of reviewers](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#require_reviewers) branch policy should be enabled on the `main` branch. By doing so, the branch cannot be deleted and changes must be made via pull request.
 
-To enable the policy:
+To enable the policy on a specific repo:
 
 1. Navigate to **Project Settings > Repos/Repositories > {repo} > Policies > Branch Policies > main**
 1. Toggle on **Require a minimum number of reviewers**, the *Minimum number of reviewers* will default to 2.
@@ -166,7 +179,7 @@ These other policies can also be enabled as needed:
 
 An AzDO service account should be used for authenticating Config Sync.  It requires read access to the monorepo.
 
-Depending on your organization, this could be set at different levels and with groups.  These steps will assume the service account has already been configured.
+Depending on your organization, this could be set at different levels and with groups.  These steps assume the service account has already been configured.
 
 To confirm:
 
@@ -174,15 +187,15 @@ To confirm:
 1. Find and click on the appropriate service account user or group.
 1. Confirm the **Read** permission is set to **Allow**.  All other permissions should be "Not set" or "Deny".
 
-A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with scope of **Code (Read)** will also need to be created for the service account.  This should only need to be done once per service account.  **Note the expiration date, it will need to be periodically re-generated.**
+> *Note: A [personal access token (PAT)](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with scope of **Code (Read)** will also need to be created for the service account.  This should only need to be done once per service account.  **Note the expiration date, it will need to be periodically re-generated.***
 
 ### 4. Add Pipelines
 
 The monorepo is now created and the main branch is protected.  [Pipelines](./Pipelines.md) can be created.
 
-- **All deployment monorepos should have the `validate-yaml` pipeline.**
+1. **All deployment monorepos should have the [`validate-yaml`](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/validate-yaml) pipeline.**
 
-- To use semantic versioning during deployment operations, the monorepos can be setup with a git tagging pipeline, such as [version-tagging](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging).
+- Optional (for future use): to use semantic versioning during deployment operations, the monorepos can be setup with a git tagging pipeline, such as [version-tagging](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/version-tagging).
 
 ## Update Deployment Repo
 

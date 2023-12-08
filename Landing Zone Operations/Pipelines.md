@@ -11,17 +11,19 @@
 
 Documentation to manage and configure pipelines.
 
-This documentation assumes that proper YAML files are already committed to the repo. Samples can be found in the [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/) repo.
+> **This documentation assumes that proper YAML files are already committed to the repo.**
+
+Samples can be found in the [gcp-tools](https://github.com/ssc-spc-ccoe-cei/gcp-tools/tree/main/pipeline-samples/) repo.
 
 ## Azure DevOps YAML Pipelines
 
-The [Azure DevOps pipelines](https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/key-pipelines-concepts?view=azure-devops) need to be manually created using existing YAML definition files located in your repo.  The files could be located in any directory, we'll use the `.azure-pipelines/` directory as a convention.
+The [Azure DevOps pipelines](https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/key-pipelines-concepts?view=azure-devops) need to be manually created using existing YAML definition files located in your repo.  The files could be located in any directory, the `.azure-pipelines/` directory is used as a convention in the repo templates.
 
 ### Add Pipeline
 
 Repeat the following steps in Azure DevOps for each YAML pipeline definition files:
 
-Navigate to **Pipelines > Pipelines**:
+From the left menu, navigate to **Pipelines > Pipelines**:
 
 1. Click the **New pipeline** button.
 1. Select **Azure Repos Git (YAML)**.
@@ -34,17 +36,17 @@ However, its name defaults to the repo's name which is not ideal if the repo con
 Click the **"three dots" > Rename/move** to provide a meaningful name and optionally move to a folder.
 For example, if your repo's name is `my-repo` and the pipeline YAML file is `firstpipeline.yaml`, the pipeline could be renamed to something like `my-repo__firstpipeline` in a `my-repo` folder.
 
-> *During a pipeline’s first execution, it may be required to manually authorize it to use agent pools (depending on security settings) and/or access other resources (repos, variable groups, etc.).*
+> *Note: During a pipeline’s first execution, it may be required to manually authorize it to use agent pools (depending on security settings) and/or access other resources (repos, variable groups, etc.).*
 
 ### Add PR Trigger
 
-> **!!! Check the pipeline yaml file to identify if such trigger is required. It will be mentionned there.**
+> **!!! Check the pipeline YAML file to identify if such trigger is required. It will be mentionned there.**
 
 A pipeline may need to run when a Pull Request (PR) is created/updated. In Azure DevOps, this [trigger](https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml#pr-triggers) cannot be defined in the YAML definitions.  A [build validation policy](https://docs.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation) must be created to accomplish this.
 
 To do so, for each repo / pipeline requiring a PR trigger:
 
-Navigate to **Project Settings > Repos/Repositories > {repo} > Policies > Branch Policies > main**, click the **“+”** next to **Build Validation** and set the following options:
+Navigate to **Project Settings > Repos/Repositories > {repo} > Policies > Branch Policies > main** then click the **“+”** next to **Build Validation** and set the following options:
 
 1. **Build Pipeline**: select the name of the pipeline to trigger on PRs
 1. **Trigger**: *Automatic*
@@ -52,11 +54,13 @@ Navigate to **Project Settings > Repos/Repositories > {repo} > Policies > Branch
 1. **Build expiration**: *Immediately*
 1. **Display name**: optional name
 
-> *Adding a branch policy will protect the branch.*
+> *Note: Adding a branch policy also protects the branch.*
 
 ### Delete Pipeline
 
-Navigate to **Pipelines > Pipelines**:
+Follow the steps in this section if a pipeline is no longer needed.
+
+From the left menu, navigate to **Pipelines > Pipelines**:
 
 1. Find the pipeline to be deleted and click its **"three dots"** on the right side of the screen.
 1. Click **Delete**.
