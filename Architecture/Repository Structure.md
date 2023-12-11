@@ -12,6 +12,8 @@
     - [Hydration Process](#hydration-process)
   - [Versioning](#versioning)
 
+TODO: content to be updated and/or moved to design doc
+
 ## Repos Definitions and Roles
 
 SSC adopted the [monorepo](https://monorepo.tools/) structure for repositories. Monorepos are great for managing multiple solutions inside a single repository.
