@@ -4,10 +4,9 @@
   - [Step 1 - Setup](#step-1---setup)
   - [Step 2 - Change](#step-2---change)
     - [A) Add a Package](#a-add-a-package)
-    - [B) Kubernetes and Config Controller Folders](#b-kubernetes-and-config-controller-folders)
-    - [C) Modify a Package](#c-modify-a-package)
-    - [D) Update a Package](#d-update-a-package)
-    - [E) Remove a Package](#e-remove-a-package)
+    - [B) Modify a Package](#b-modify-a-package)
+    - [C) Update a Package](#c-update-a-package)
+    - [D) Remove a Package](#d-remove-a-package)
   - [Step 3 - Hydrate](#step-3---hydrate)
   - [Step 4 - Publish](#step-4---publish)
   - [Step 5 - Synchronize / Promote Configs](#step-5---synchronize--promote-configs)
@@ -24,6 +23,10 @@ As a high level overview, a package will usually include files that are used spe
 
 - `setters.yaml`: used to set customizable data.
 - `Kptfile`: used to keep track of package versions and [declaratively set which functions](https://kpt.dev/book/04-using-functions/01-declarative-function-execution) should run during rendering. For example, [apply-setters](https://catalog.kpt.dev/apply-setters/v0.2/).
+
+**Notice:** source-base, source-customization and deploy have now moved under the additional folders being the [Configcontroller](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/configcontroller), [Kubernetes](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/kubernetes) for tier1, tier2 and tier34.
+
+Under the technology layer: Kubernetes will be observing the Kubernetes folder and the Config Controller will be observing the Config Controller folder with each having their own manifest files. 
 
 ## Step 1 - Setup
 
@@ -64,7 +67,7 @@ There are different types of changes.  Follow the appropriate section for instru
 
 This is accomplished with the [`kpt pkg get`](https://kpt.dev/reference/cli/pkg/get/) command.
 
-As a rule, packages should only be added in a deployment monorepo's `tierX/source-base` folder and **never** manually edited from there.  All customizations are to be made from the `tierX/source-customization/<env>` folders.
+As a rule, packages should only be added in a deployment monorepo's `tierX/Kubernetes/source-base` and `tierX/Configcontroller/source-base` folder and **never** manually edited from there.  All customizations are to be made from the `tierX/Kubernetes/source-customization/<env>` and `tierX/Configcontroller/source-customization/<env>` folders.
 
 Follow these steps to add a package:
 
@@ -87,7 +90,7 @@ Follow these steps to add a package:
     export VERSION=''
 
     # the local destination directory to save the package, relative to root of the repository
-    # for example, 'tier1/source-base/core-landing-zone'
+    # for example, 'tier1/Kubernetes/source-base/core-landing-zone' and or 'tier1/Configcontroller/source-base/core-landing-zone'
     export LOCAL_DEST_DIRECTORY=''
     ```
 
@@ -120,9 +123,10 @@ It will need to be customized for each environment.  This is a manual process, a
     ```shell
     for env_subdir in experimentation dev preprod prod; do
         # check if env. folder exists in source-customization
-        if [ -d "../source-customization/${env_subdir}" ]; then
+        if [ -d "../Kubernetes/source-customization/${env_subdir}" ] and or [ -d "../Configcontroller/source-customization/${env_subdir}" ]; then
             # copy the file, with no overwrite, keeping full path
-            cp --no-clobber --parents "${FILE_TO_CUSTOMIZE}" "../source-customization/${env_subdir}"
+            cp --no-clobber --parents "${FILE_TO_CUSTOMIZE}" "../Kubernetes/source-customization/${env_subdir}"
+            cp --no-clobber --parents "${FILE_TO_CUSTOMIZE}" "../Configcontroller/source-customization/${env_subdir}"
         fi
     done
     ```
@@ -136,24 +140,18 @@ It will need to be customized for each environment.  This is a manual process, a
         - The hydration process will then ignore this commented resource definition, effectively removing it.
 1. Review all customizations with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-### B) Kubernetes and Config Controller Folders
+### B) Modify a Package
 
-**Notice:** source-base, source-customization and deploy have now moved under the additional folders being the [Configcontroller](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/configcontroller), [Kubernetes](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/kubernetes) for tier1, tier2 and tier34.
-
-Under the technology layer: Kubernetes will be observing the Kubernetes folder and the Config Controller will be observing the Config Controller folder with each having their own manifest files. 
-
-### C) Modify a Package
-
-By design, this is accomplished by modifying configs in the `tierX/source-customization/<env>`.  Files in other directories should never be modified manually.
+By design, this is accomplished by modifying configs in the `tierX/Kubernetes/source-customization/<env>` and `tierX/Configcontroller/source-customization/<env>`.  Files in other directories should never be modified manually.
 
 ***Standard customization should only involve the `setters.yaml` file.***
 
 Follow these steps to modify a package:
 
-1. Modify the configs for each applicable environment in `tierX/source-customization/<env>`
+1. Modify the configs for each applicable environment in `tierX/Kubernetes/source-customization/<env>` and `tierX/Configcontroller/source-customization/<env>`
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-### D) Update a Package
+### C) Update a Package
 
 This is accomplished with the [`kpt pkg update`](https://kpt.dev/reference/cli/pkg/update/) command.
 
@@ -170,7 +168,7 @@ Follow these steps to update a package:
 
     ```shell
     # the folder of the pkg to be updated
-    # for example, 'tier1/source-base/core-landing-zone'
+    # for example, 'tier1/Kubernetes/source-base/core-landing-zone' and 'tier1/Configcontroller/source-base/core-landing-zone'
     export PKG_PATH=''
 
     # the version to update to
@@ -203,13 +201,13 @@ Follow these steps to update a package:
     This strategy can also remove or modify `cnrm.cloud.google.com/blueprint:` annotations in many YAML files.  These changes will unfortunately create a large git diff but can be accepted.
     1. If the changes are as expected, proceed to the next step.
 1. For each file under `source-customization/<env>`, verify if it changed in `source-base`.
-For example, if the landing-zone package is updated, compare `tier1/source-customization/dev/core-landing-zone/setters.yaml` with `tier1/source-base/core-landing-zone/setters.yaml`.
+For example, if the landing-zone package is updated, compare `tier1/Kubernetes/source-customization/dev/core-landing-zone/setters.yaml` with `tier1/Kubernetes/source-base/core-landing-zone/setters.yaml`, this would be the same for `tier1/Configcontroller/source-customization/dev/core-landing-zone/setters.yaml` with `tier1/Configcontroller/source-base/core-landing-zone/setters.yaml`
     - If a change is detected, manually update the file in `source-customization/<env>`.
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
-### E) Remove a Package
+### D) Remove a Package
 
-This is accomplished by simply deleting the package files in `tierX/source-base` and its customizations in `tierX/source-customization/<env>`.
+This is accomplished by simply deleting the package files in `tierX/Kubernetes/source-base` and `tierX/Configcontroller/source-base`and its customizations in `tierX/Kubernetes/source-customization/<env>` and `tierX/|Configcontroller/source-customization/<env>`.
 
 > **!!! IMPORTANT !!!** Before deleting a package, confirm that it does not have subpackages that are still needed.
 
