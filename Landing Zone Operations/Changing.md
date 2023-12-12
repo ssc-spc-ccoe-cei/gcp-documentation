@@ -67,7 +67,7 @@ There are different types of changes.  Follow the appropriate section for instru
 
 This is accomplished with the [`kpt pkg get`](https://kpt.dev/reference/cli/pkg/get/) command.
 
-As a rule, packages should only be added in a deployment monorepo's `tierX/Kubernetes/source-base` and `tierX/Configcontroller/source-base` folder and **never** manually edited from there.  All customizations are to be made from the `tierX/Kubernetes/source-customization/<env>` and `tierX/Configcontroller/source-customization/<env>` folders.
+As a rule, packages should only be added in a deployment monorepo's `tierX/<technology>/source-base` folder and **never** manually edited from there.  All customizations are to be made from the `tierX/<technology>/source-customization/<env>` folders.
 
 Follow these steps to add a package:
 
@@ -90,11 +90,11 @@ Follow these steps to add a package:
     export VERSION=''
 
     # the local destination directory to save the package, relative to root of the repository
-    # for example, 'tier1/Kubernetes/source-base/core-landing-zone' and or 'tier1/Configcontroller/source-base/core-landing-zone'
+    # for example, 'tier1/configcontroller/source-base/core-landing-zone' 
     export LOCAL_DEST_DIRECTORY=''
     ```
 
-1. Create the local destination directory
+2. Create the local destination directory
 
     ```shell
     cd ${TIER}/source-base
@@ -104,14 +104,14 @@ Follow these steps to add a package:
     fi
     ```
 
-1. Add the package with the following command:
+3. Add the package with the following command:
 
     ```shell
     kpt pkg get ${REPO_URI}/${PKG_PATH}@${VERSION} ${LOCAL_DEST_DIRECTORY}
     ```
 
-1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.
-1. Review the package's documentation for specific instructions.  Most will require some sort of customization, such as editing the `setters.yaml`.
+4. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.
+5. Review the package's documentation for specific instructions.  Most will require some sort of customization, such as editing the `setters.yaml`.
 It will need to be customized for each environment.  This is a manual process, a code snippet like below can help with the initial copy:
 
     ```shell
@@ -123,10 +123,9 @@ It will need to be customized for each environment.  This is a manual process, a
     ```shell
     for env_subdir in experimentation dev preprod prod; do
         # check if env. folder exists in source-customization
-        if [ -d "../Kubernetes/source-customization/${env_subdir}" ] and or [ -d "../Configcontroller/source-customization/${env_subdir}" ]; then
+        if [ -d "../<technology>/source-customization/${env_subdir}" ]; then
             # copy the file, with no overwrite, keeping full path
-            cp --no-clobber --parents "${FILE_TO_CUSTOMIZE}" "../Kubernetes/source-customization/${env_subdir}"
-            cp --no-clobber --parents "${FILE_TO_CUSTOMIZE}" "../Configcontroller/source-customization/${env_subdir}"
+            cp --no-clobber --parents "${FILE_TO_CUSTOMIZE}" "../<technology>/source-customization/${env_subdir}"
         fi
     done
     ```
@@ -138,18 +137,18 @@ It will need to be customized for each environment.  This is a manual process, a
         - Copy that org policy's YAML file in the experimentation customization folder, ***making sure to maintain the same directory structure***.
         - Put the entire file in a comment block.
         - The hydration process will then ignore this commented resource definition, effectively removing it.
-1. Review all customizations with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
+2. Review all customizations with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ### B) Modify a Package
 
-By design, this is accomplished by modifying configs in the `tierX/Kubernetes/source-customization/<env>` and `tierX/Configcontroller/source-customization/<env>`.  Files in other directories should never be modified manually.
+By design, this is accomplished by modifying configs in the `tierX/<technology>/source-customization/<env>`. Files in other directories should never be modified manually.
 
 ***Standard customization should only involve the `setters.yaml` file.***
 
 Follow these steps to modify a package:
 
-1. Modify the configs for each applicable environment in `tierX/Kubernetes/source-customization/<env>` and `tierX/Configcontroller/source-customization/<env>`
-1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
+1. Modify the configs for each applicable environment in `tierX/<technology>/source-customization/<env>` 
+2. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ### C) Update a Package
 
@@ -168,7 +167,7 @@ Follow these steps to update a package:
 
     ```shell
     # the folder of the pkg to be updated
-    # for example, 'tier1/Kubernetes/source-base/core-landing-zone' and 'tier1/Configcontroller/source-base/core-landing-zone'
+    # for example, 'tier1/configcontroller/source-base/core-landing-zone'
     export PKG_PATH=''
 
     # the version to update to
@@ -201,13 +200,13 @@ Follow these steps to update a package:
     This strategy can also remove or modify `cnrm.cloud.google.com/blueprint:` annotations in many YAML files.  These changes will unfortunately create a large git diff but can be accepted.
     1. If the changes are as expected, proceed to the next step.
 1. For each file under `source-customization/<env>`, verify if it changed in `source-base`.
-For example, if the landing-zone package is updated, compare `tier1/Kubernetes/source-customization/dev/core-landing-zone/setters.yaml` with `tier1/Kubernetes/source-base/core-landing-zone/setters.yaml`, this would be the same for `tier1/Configcontroller/source-customization/dev/core-landing-zone/setters.yaml` with `tier1/Configcontroller/source-base/core-landing-zone/setters.yaml`
+- For example, if the landing-zone package is updated, compare `tier1/<technology>/source-customization/dev/core-landing-zone/setters.yaml` with `tier1/<technology>/source-base/core-landing-zone/setters.yaml`.
     - If a change is detected, manually update the file in `source-customization/<env>`.
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ### D) Remove a Package
 
-This is accomplished by simply deleting the package files in `tierX/Kubernetes/source-base` and `tierX/Configcontroller/source-base`and its customizations in `tierX/Kubernetes/source-customization/<env>` and `tierX/|Configcontroller/source-customization/<env>`.
+This is accomplished by simply deleting the package files in `tierX/<technology>/source-base` and its customizations in `tierX/<technology>/source-customization/<env>`. 
 
 > **!!! IMPORTANT !!!** Before deleting a package, confirm that it does not have subpackages that are still needed.
 
@@ -219,7 +218,7 @@ Follow these steps to remove a package:
     cd <tierX>/source-base
     ```
 
-1. You can update and set these variables to make it easier to run subsequent commands:
+2. You can update and set these variables to make it easier to run subsequent commands:
 
     ```shell
     # the folder of the pkg to be removed
@@ -227,19 +226,19 @@ Follow these steps to remove a package:
     export PKG_PATH=''
     ```
 
-1. Remove the package:
+3. Remove the package:
 
     ```shell
     rm --recursive ${PKG_PATH}
     ```
 
-1. The package customizations now need to be removed, move to `source-customization`:
+4. The package customizations now need to be removed, move to `source-customization`:
 
     ```shell
     cd ../source-customization
     ```
 
-1. Remove the customization for each environment:
+5. Remove the customization for each environment:
 
     ```shell
     for env_subdir in experimentation dev preprod prod; do
@@ -250,7 +249,7 @@ Follow these steps to remove a package:
     done
     ```
 
-1. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
+6. Review the changes with VSCode's built-in Source Control viewer or by running `git diff`.  If satisfied, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ## Step 3 - Hydrate
 
