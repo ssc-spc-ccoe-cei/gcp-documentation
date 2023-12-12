@@ -24,9 +24,9 @@ As a high level overview, a package will usually include files that are used spe
 - `setters.yaml`: used to set customizable data.
 - `Kptfile`: used to keep track of package versions and [declaratively set which functions](https://kpt.dev/book/04-using-functions/01-declarative-function-execution) should run during rendering. For example, [apply-setters](https://catalog.kpt.dev/apply-setters/v0.2/).
 
-**Notice:** source-base, source-customization and deploy have now moved under the additional folders being the [Configcontroller](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/configcontroller), [Kubernetes](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/kubernetes) for tier1, tier2 and tier34.
+**Notice :** source-base, source-customization and deploy have now moved under the additional folders being the [configcontroller](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/configcontroller), [kubernetes](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/kubernetes) for tier1, tier2 and tier34.
 
-Under the technology layer: Kubernetes will be observing the Kubernetes folder and the Config Controller will be observing the Config Controller folder with each having their own manifest files. 
+Under the technology layer: Kubernetes will be observing the kubernetes folder and the Config Controller will be observing the configcontroller folder with each having their own manifest files.
 
 ## Step 1 - Setup
 
@@ -147,7 +147,7 @@ By design, this is accomplished by modifying configs in the `tierX/<technology>/
 
 Follow these steps to modify a package:
 
-1. Modify the configs for each applicable environment in `tierX/<technology>/source-customization/<env>` 
+1. Modify the configs for each applicable environment in ` tierX/<technology>/source-customization/<env> `
 2. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ### C) Update a Package
@@ -201,12 +201,12 @@ Follow these steps to update a package:
     1. If the changes are as expected, proceed to the next step.
 1. For each file under `source-customization/<env>`, verify if it changed in `source-base`.
 - For example, if the landing-zone package is updated, compare `tier1/<technology>/source-customization/dev/core-landing-zone/setters.yaml` with `tier1/<technology>/source-base/core-landing-zone/setters.yaml`.
-    - If a change is detected, manually update the file in `source-customization/<env>`.
+- If a change is detected, manually update the file in `source-customization/<env>`.
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ### D) Remove a Package
 
-This is accomplished by simply deleting the package files in `tierX/<technology>/source-base` and its customizations in `tierX/<technology>/source-customization/<env>`. 
+This is accomplished by simply deleting the package files in `tierX/<technology>/source-base` and its customizations in `tierX/<technology>/source-customization/<env>`.
 
 > **!!! IMPORTANT !!!** Before deleting a package, confirm that it does not have subpackages that are still needed.
 
