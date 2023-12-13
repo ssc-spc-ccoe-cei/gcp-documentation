@@ -24,6 +24,12 @@ As a high level overview, a package will usually include files that are used spe
 - `setters.yaml`: used to set customizable data.
 - `Kptfile`: used to keep track of package versions and [declaratively set which functions](https://kpt.dev/book/04-using-functions/01-declarative-function-execution) should run during rendering. For example, [apply-setters](https://catalog.kpt.dev/apply-setters/v0.2/).
 
+**Notice :** source-base, source-customization and deploy have now moved under the additional folders being the [configcontroller](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/configcontroller), [kubernetes](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/kubernetes) for tier1, tier2 and tier34.
+
+Under the technology layer: Kubernetes will be observing the `kubernetes` folder and the Config Controller will be observing the `configcontroller` folder with each having their own manifest files.
+
+TODO: review/update code samples
+
 ## Step 1 - Setup
 
 For any type of change, you should start with a new branch and a clean git working tree (all files are staged and committed).  This will make it easier to visualize changes in [VSCode's Git Source Control](https://code.visualstudio.com/docs/sourcecontrol/overview) (or `git diff`) and revert if needed.
@@ -63,7 +69,7 @@ There are different types of changes.  Follow the appropriate section for instru
 
 This is accomplished with the [`kpt pkg get`](https://kpt.dev/reference/cli/pkg/get/) command.
 
-As a rule, packages should only be added in a deployment monorepo's `tierX/source-base` folder and **never** manually edited from there.  All customizations are to be made from the `tierX/source-customization/<env>` folders.
+As a rule, packages should only be added in a deployment monorepo's `tierX/<technology>/source-base` folder and **never** manually edited from there.  All customizations are to be made from the `tierX/<technology>/source-customization/<env>` folders.
 
 Follow these steps to add a package:
 
@@ -86,7 +92,7 @@ Follow these steps to add a package:
     export VERSION=''
 
     # the local destination directory to save the package, relative to root of the repository
-    # for example, 'tier1/source-base/core-landing-zone'
+    # for example, 'tier1/configcontroller/source-base/core-landing-zone'
     export LOCAL_DEST_DIRECTORY=''
     ```
 
@@ -137,13 +143,13 @@ It will need to be customized for each environment.  This is a manual process, a
 
 ### B) Modify a Package
 
-By design, this is accomplished by modifying configs in the `tierX/source-customization/<env>`.  Files in other directories should never be modified manually.
+By design, this is accomplished by modifying configs in the `tierX/<technology>/source-customization/<env>`. Files in other directories should never be modified manually.
 
 ***Standard customization should only involve the `setters.yaml` file.***
 
 Follow these steps to modify a package:
 
-1. Modify the configs for each applicable environment in `tierX/source-customization/<env>`
+1. Modify the configs for each applicable environment in `tierX/<technology>/source-customization/<env>`
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ### C) Update a Package
@@ -163,7 +169,7 @@ Follow these steps to update a package:
 
     ```shell
     # the folder of the pkg to be updated
-    # for example, 'tier1/source-base/core-landing-zone'
+    # for example, 'tier1/configcontroller/source-base/core-landing-zone'
     export PKG_PATH=''
 
     # the version to update to
@@ -196,13 +202,13 @@ Follow these steps to update a package:
     This strategy can also remove or modify `cnrm.cloud.google.com/blueprint:` annotations in many YAML files.  These changes will unfortunately create a large git diff but can be accepted.
     1. If the changes are as expected, proceed to the next step.
 1. For each file under `source-customization/<env>`, verify if it changed in `source-base`.
-For example, if the landing-zone package is updated, compare `tier1/source-customization/dev/core-landing-zone/setters.yaml` with `tier1/source-base/core-landing-zone/setters.yaml`.
+For example, if the landing-zone package is updated, compare `tier1/configcontroller/source-customization/dev/core-landing-zone/setters.yaml` with `tier1/configcontroller/source-base/core-landing-zone/setters.yaml`.
     - If a change is detected, manually update the file in `source-customization/<env>`.
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ### D) Remove a Package
 
-This is accomplished by simply deleting the package files in `tierX/source-base` and its customizations in `tierX/source-customization/<env>`.
+This is accomplished by simply deleting the package files in `tierX/<technology>/source-base` and its customizations in `tierX/<technology>/source-customization/<env>`.
 
 > **!!! IMPORTANT !!!** Before deleting a package, confirm that it does not have subpackages that are still needed.
 
@@ -298,7 +304,7 @@ Follow these steps to publish the changes:
 1. Complete the pull request once all required checks are successful.
 
 ## Step 5 - Synchronize / Promote Configs
-
+TODO: review/update section
 This section contains information on how changes can be promoted between environments.
 
 Changes to deployment monorepos will only be applied to GCP when the `csync/deploy/<env>` folder is updated.
