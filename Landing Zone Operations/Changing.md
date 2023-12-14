@@ -17,18 +17,16 @@ There can be different types of changes on the landing zone but they all start a
 
 Before proceeding, you should familiarize yourself with the concepts in "[Repository Structure.md](../Architecture/Repository%20Structure.md)".
 
+**Notice:** source-base, source-customization and deploy have now moved under the additional folders being the [configcontroller](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/configcontroller), [kubernetes](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/kubernetes) for tier1, tier2 and tier34.
+
+Under the technology layer: Kubernetes will be observing the `kubernetes` folder and the Config Controller will be observing the `configcontroller` folder with each having their own manifest files.
+
 The landing zone solution uses some functionalities of [`kpt`](https://kpt.dev/book/02-concepts/) to manage [packages](https://kpt.dev/book/03-packages/) of YAML configs.
 
 As a high level overview, a package will usually include files that are used specifically by kpt:
 
 - `setters.yaml`: used to set customizable data.
 - `Kptfile`: used to keep track of package versions and [declaratively set which functions](https://kpt.dev/book/04-using-functions/01-declarative-function-execution) should run during rendering. For example, [apply-setters](https://catalog.kpt.dev/apply-setters/v0.2/).
-
-**Notice :** source-base, source-customization and deploy have now moved under the additional folders being the [configcontroller](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/configcontroller), [kubernetes](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/kubernetes) for tier1, tier2 and tier34.
-
-Under the technology layer: Kubernetes will be observing the `kubernetes` folder and the Config Controller will be observing the `configcontroller` folder with each having their own manifest files.
-
-TODO: review/update code samples
 
 ## Step 1 - Setup
 
@@ -37,22 +35,32 @@ You can confirm that a working tree is clean by running `git status`.
 
 From your local environment:
 
+1. Update and export the variables below:
+
+    ```shell
+    export REPO_NAME='<the deployment repo name>'
+    export REPO_URL='<the deployment repo URL>'
+
+    # use naming convention if applicable (for example, add issue/task number in the branch name)
+    export BRANCH_NAME=''
+    ```
+
 1. Clone the repository requiring change:
 
     ```shell
-    git clone <REPO URL>
+    git clone ${REPO_URL}
     ```
 
 1. Move into the new folder corresponding to that repo:
 
     ```shell
-    cd <REPO NAME>
+    cd ${REPO_NAME}
     ```
 
-1. Create a new branch, use naming convention if applicable (for example, add issue/work item # in the branch name):
+1. Create a new branch, :
 
     ```shell
-    git checkout -b <BRANCH NAME>
+    git checkout -b ${BRANCH_NAME}
     ```
 
 1. Run the following to get the proper version of the tools submodule:
@@ -69,21 +77,24 @@ There are different types of changes.  Follow the appropriate section for instru
 
 This is accomplished with the [`kpt pkg get`](https://kpt.dev/reference/cli/pkg/get/) command.
 
-As a rule, packages should only be added in a deployment monorepo's `tierX/<technology>/source-base` folder and **never** manually edited from there.  All customizations are to be made from the `tierX/<technology>/source-customization/<env>` folders.
+As a rule, packages should only be added in a deployment monorepo's `tier<N>/<technology>/source-base` folder and **never** manually edited from there.  All customizations are to be made from the `tier<N>/<technology>/source-customization/<env>` folders.
 
 Follow these steps to add a package:
 
 1. You can update and set these variables to make it easier to run subsequent commands:
 
     ```shell
-    # tierX value
+    # tier<N> value: 'tier1', 'tier2', 'tier3' or 'tier4'
     export TIER=''
+
+    # the technology value: 'configcontroller' or 'kubernetes'
+    export TECHNOLOGY=''
 
     # URI of the git repo containing the package
     # for example, 'https://github.com/GoogleCloudPlatform/pubsec-declarative-toolkit.git'
     export REPO_URI=''
 
-    # subdirectory of the package, relative to root of repo
+    # subdirectory of the package, relative to root of the package repo
     # for example, 'solutions/core-landing-zone'
     export PKG_PATH=''
 
@@ -91,16 +102,20 @@ Follow these steps to add a package:
     # for example, '0.0.1'
     export VERSION=''
 
-    # the local destination directory to save the package, relative to root of the repository
-    # for example, 'tier1/configcontroller/source-base/core-landing-zone'
+    # leave blank by default, the package will be added to the root of 'source-base'
+    # set this variable to add the package in subdirectory, relative to 'source-base'
+    # for example, to add a new 'client-setup' in proper subdirectory, set the variable below to 'clients/<client-name>'
     export LOCAL_DEST_DIRECTORY=''
     ```
 
-1. Create the local destination directory
+1. Change working directory to proper `source-base` and create the local destination directory if it's not the default:
 
     ```shell
-    cd ${TIER}/source-base
-    # if folder doesnt exist then create it
+    # move to root of repo, then the appropriate 'source-base'
+    cd $(git rev-parse --show-toplevel)
+    cd "${TIER}/${TECHNOLOGY}/source-base"
+
+    # if the variable is set and the folder does not exist, then create it
     if [ -n "${LOCAL_DEST_DIRECTORY}" ] && [ ! -d "${LOCAL_DEST_DIRECTORY}" ]; then
       mkdir -p ${LOCAL_DEST_DIRECTORY}
     fi
@@ -117,7 +132,7 @@ Follow these steps to add a package:
 It will need to be customized for each environment.  This is a manual process, a code snippet like below can help with the initial copy:
 
     ```shell
-    # the file path to customize, relative to 'source-base'
+    # the path of the file to customize, relative to 'source-base'
     # for example, 'core-landing-zone/setters.yaml'
     export FILE_TO_CUSTOMIZE=''
     ```
@@ -143,13 +158,13 @@ It will need to be customized for each environment.  This is a manual process, a
 
 ### B) Modify a Package
 
-By design, this is accomplished by modifying configs in the `tierX/<technology>/source-customization/<env>`. Files in other directories should never be modified manually.
+By design, this is accomplished by modifying configs in the `tier<N>/<technology>/source-customization/<env>`. Files in other directories should never be modified manually.
 
 ***Standard customization should only involve the `setters.yaml` file.***
 
 Follow these steps to modify a package:
 
-1. Modify the configs for each applicable environment in `tierX/<technology>/source-customization/<env>`
+1. Modify the configs for each applicable environment in `tier<N>/<technology>/source-customization/<env>`
 1. Once all customizations have been reviewed locally, proceed to [Step 3 - Hydrate](#step-3---hydrate).
 
 ### C) Update a Package
@@ -168,13 +183,27 @@ Follow these steps to update a package:
 1. You can update and set these variables to make it easier to run subsequent commands:
 
     ```shell
-    # the folder of the pkg to be updated
-    # for example, 'tier1/configcontroller/source-base/core-landing-zone'
+    # tier<N> value: 'tier1', 'tier2', 'tier3' or 'tier4'
+    export TIER=''
+
+    # the technology value: 'configcontroller' or 'kubernetes'
+    export TECHNOLOGY=''
+
+    # subdirectory of the local package to update, relative to 'source-base'
+    # for example, 'core-landing-zone'
     export PKG_PATH=''
 
     # the version to update to
     # for example, '0.0.2'
     export VERSION=''
+    ```
+
+1. Change working directory to proper `source-base`:
+
+    ```shell
+    # move to root of repo, then the appropriate 'source-base'
+    cd $(git rev-parse --show-toplevel)
+    cd "${TIER}/${TECHNOLOGY}/source-base"
     ```
 
 1. Update the package with the default `resource-merge` strategy:
@@ -208,24 +237,32 @@ For example, if the landing-zone package is updated, compare `tier1/configcontro
 
 ### D) Remove a Package
 
-This is accomplished by simply deleting the package files in `tierX/<technology>/source-base` and its customizations in `tierX/<technology>/source-customization/<env>`.
+This is accomplished by simply deleting the package files in `tier<N>/<technology>/source-base` and its customizations in `tier<N>/<technology>/source-customization/<env>`.
 
 > **!!! IMPORTANT !!!** Before deleting a package, confirm that it does not have subpackages that are still needed.
 
 Follow these steps to remove a package:
 
-1. Move into the `source-base` folder:
-
-    ```shell
-    cd <tierX>/source-base
-    ```
-
 1. You can update and set these variables to make it easier to run subsequent commands:
 
     ```shell
-    # the folder of the pkg to be removed
+    # tier<N> value: 'tier1', 'tier2', 'tier3' or 'tier4'
+    export TIER=''
+
+    # the technology value: 'configcontroller' or 'kubernetes'
+    export TECHNOLOGY=''
+
+    # subdirectory of the local package to remove, relative to 'source-base'
     # for example, 'core-landing-zone'
     export PKG_PATH=''
+    ```
+
+1. Change working directory to proper `source-base`:
+
+    ```shell
+    # move to root of repo, then the appropriate 'source-base'
+    cd $(git rev-parse --show-toplevel)
+    cd "${TIER}/${TECHNOLOGY}/source-base"
     ```
 
 1. Remove the package:
@@ -234,19 +271,13 @@ Follow these steps to remove a package:
     rm --recursive ${PKG_PATH}
     ```
 
-1. The package customizations now need to be removed, move to `source-customization`:
-
-    ```shell
-    cd ../source-customization
-    ```
-
 1. Remove the customization for each environment:
 
     ```shell
     for env_subdir in experimentation dev preprod prod; do
-        # check if env. folder exists in source-customization
-        if [ -d "${env_subdir}/${PKG_PATH}" ]; then
-            rm --recursive "${env_subdir}/${PKG_PATH}"
+        # check if env. folder exists in source-customization, then delete it
+        if [ -d "../source-customization/${env_subdir}/${PKG_PATH}" ]; then
+            rm --recursive "../source-customization/${env_subdir}/${PKG_PATH}"
         fi
     done
     ```
@@ -269,6 +300,7 @@ Follow these steps to hydrate your change:
 1. Execute the hydration script ***from the root of the repository***:
 
     ```shell
+    cd $(git rev-parse --show-toplevel)
     bash tools/scripts/kpt/hydrate.sh
     ```
 
@@ -281,6 +313,14 @@ At this point, the changes only exist locally. They are now ready to be publishe
 
 Follow these steps to publish the changes:
 
+1. Update and export the variables below:
+
+    ```shell
+    # the branch name created in step 1
+    export BRANCH_NAME=''
+    export COMMIT_MESSAGE=''
+    ```
+
 1. Prepare your commit by staging the files:
 
     ```shell
@@ -290,13 +330,13 @@ Follow these steps to publish the changes:
 1. Commit your changes:
 
     ```shell
-    git commit -m '<MEANINGFUL MESSAGE GOES HERE>'
+    git commit -m "${COMMIT_MESSAGE}"
     ```
 
 1. Push your changes to the monorepo's origin:
 
     ```bash
-    git push --set-upstream origin <branch name>
+    git push --set-upstream origin ${BRANCH_NAME}
     ```
 
 1. Create a new [pull requests (PR)](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops&tabs=browser) on the monorepo to merge this `<branch name>` into `main`.
@@ -307,29 +347,29 @@ Follow these steps to publish the changes:
 TODO: review/update section
 This section contains information on how changes can be promoted between environments.
 
-Changes to deployment monorepos will only be applied to GCP when the `csync/deploy/<env>` folder is updated.
+Changes to deployment monorepos will only be applied to GCP when the `csync/tier<N>/<technology>/deploy/<env>` folder is updated.
 
-This example will focus on `gcp-env-tier1` monorepo:
+For simplicity, this example will focus on a `configcontroller` resource change in the `gcp-env-tier1` monorepo:
 
-1. A change is made in folder `tier1`.
+1. A change is made in folder `tier1/configcontroller`.
     > **!!! It's important to add the `source-customization` for each environment.  This will ensure all environments are rendered, validated and tagged at the same time. !!!**
 1. Once the PR is merged, note the new tag version or commit SHA.
-1. At this point the changes have not been deployed to GCP. Changes of type "Modify a Package" are required in folder `csync/deploy/<env>` for each environment.
+1. At this point the changes have not been deployed to GCP. Changes of type "Modify a Package" are required in folder `csync/tier1/configcontroller/` for each environment.
 1. `dev`:
-    - Set `version:` in `csync/source-customization/dev/root-sync-git/setters-version.yaml` to the new tag or commit SHA noted earlier.
+    - Set `version:` in `csync/tier1/configcontroller/source-customization/dev/root-sync-git/setters-version.yaml` to the new tag or commit SHA noted earlier.
     - Hydrate the monorepo and create a PR.
-    - Once the PR is merged the config sync operator will pick up the updated configs in `csync/deploy/dev`.
+    - Once the PR is merged the Config Sync operator will pick up the updated configs in `csync/tier1/configcontroller/deploy/dev`, then the specific commit for `tier1/configcontroller/deploy/dev`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
     - Validate landing zone and workload functionalities for the `dev` environment in GCP.  Proceed to `preprod` if successful, restart the process if not.
 1. `preprod`:
-    - Set `version:` in `csync/source-customization/preprod/root-sync-git/setters-version.yaml` to the same value as `dev`.
+    - Set `version:` in `csync/tier1/configcontroller/source-customization/preprod/root-sync-git/setters-version.yaml` to the same value as `dev`.
     - Hydrate the monorepo and create a PR.
-    - Once the PR is merged the config sync operator will pick up the updated configs in `csync/deploy/preprod`.
+    - Once the PR is merged the Config Sync operator will pick up the updated configs in `csync/tier1/configcontroller/deploy/preprod`, then the specific commit for `tier1/configcontroller/deploy/preprod`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
     - Validate landing zone and workload functionalities for the `preprod` environment in GCP.  Proceed to `prod` if successful, restart the process if not.
 1. `prod`:
-    - Set `version:` in `csync/source-customization/prod/root-sync-git/setters-version.yaml` to the same value as `preprod`.
+    - Set `version:` in `csync/tier1/configcontroller/source-customization/prod/root-sync-git/setters-version.yaml` to the same value as `preprod`.
     - Hydrate the monorepo and create a PR.
-    - Once the PR is merged the config sync operator will pick up the updated configs in `csync/deploy/prod`.
+    - Once the PR is merged the Config Sync operator will pick up the updated configs in `csync/tier1/configcontroller/deploy/prod`, then the specific commit for `tier1/configcontroller/deploy/prod`.
     - Confirm synchronization of all resources from the [Config Sync Dashboard](https://console.cloud.google.com/kubernetes/config_management/dashboard) or by running `nomos status`.
     - Validate landing zone and workload functionalities for the `prod` environment in GCP.  Restart the process if not successful.
