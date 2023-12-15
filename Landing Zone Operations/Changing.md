@@ -17,10 +17,6 @@ There can be different types of changes on the landing zone but they all start a
 
 Before proceeding, you should familiarize yourself with the concepts in "[Repository Structure.md](../Architecture/Repository%20Structure.md)".
 
-**Notice:** source-base, source-customization and deploy have now moved under the additional folders being the [configcontroller](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/configcontroller), [kubernetes](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/kubernetes) for tier1, tier2 and tier34.
-
-Under the technology layer: Kubernetes will be observing the `kubernetes` folder and the Config Controller will be observing the `configcontroller` folder with each having their own manifest files.
-
 The landing zone solution uses some functionalities of [`kpt`](https://kpt.dev/book/02-concepts/) to manage [packages](https://kpt.dev/book/03-packages/) of YAML configs.
 
 As a high level overview, a package will usually include files that are used specifically by kpt:

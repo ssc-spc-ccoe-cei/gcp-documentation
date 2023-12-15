@@ -12,7 +12,10 @@
     - [Hydration Process](#hydration-process)
   - [Versioning](#versioning)
 
-TODO: content to be updated and/or moved to design doc
+> **Notice:** the `source-base`, `source-customization` and `deploy` directories have recently moved under the additional [configcontroller](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/configcontroller) and [kubernetes](https://github.com/ssc-spc-ccoe-cei/gcp-tier1-template/tree/main/tier1/kubernetes) folders for tier1, tier2 and tier34.
+Under the technology layer: Kubernetes will be observing the `kubernetes` folder and the Config Controller will be observing the `configcontroller` folder with each having their own manifest files.
+
+TODO: as per notice, content to be updated and/or moved to design doc
 
 ## Repos Definitions and Roles
 
