@@ -340,7 +340,7 @@ Follow these steps to publish the changes:
 1. Complete the pull request once all required checks are successful.
 
 ## Step 5 - Synchronize / Promote Configs
-TODO: review/update section
+
 This section contains information on how changes can be promoted between environments.
 
 Changes to deployment monorepos will only be applied to GCP when the `csync/tier<N>/<technology>/deploy/<env>` folder is updated.
